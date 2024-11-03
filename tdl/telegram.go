@@ -1,4 +1,4 @@
-package logic
+package tdl
 
 import (
 	"fmt"
@@ -128,7 +128,7 @@ func DownloadWithFolder(uri, proxy, fname string) error {
 		return err
 	}
 	dir := filepath.Join(home, "Downloads")
-	if path := os.Getenv("PATH"); path != "" {
+	if path := os.Getenv("TDL"); path != "" {
 		dir = path
 	}
 	fmt.Printf("用户的个人文件夹目录: %s\n", home)
