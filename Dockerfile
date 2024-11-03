@@ -1,5 +1,6 @@
 FROM golang:1.23.2-bookworm
-
+#docker run -it --rm --name tdl golang:1.23.2-bookworm bash
+#docker exec -it tdl bash
 LABEL authors="zen"
 
 # 设置非交互模式
@@ -16,9 +17,8 @@ RUN apt update && \
     rm -rf /var/lib/apt/lists/* \
 
 # 复制文件
-COPY tdl_amd64.tar.gz /root
-WORKDIR /root
-RUN tar xvf /root/tdl_amd64.tar.gz
+COPY tdl_amd64.tar.gz /root/tdl_amd64.tar.gz
+RUN tar xvf /root/tdl_amd64.tar.gz -C /root
 RUN ln -s /root/tdl /usr/local/bin/tdl
 
 # 配置 Go 环境
