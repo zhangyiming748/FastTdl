@@ -8,8 +8,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 
 # 更换完整源
 COPY debian.sources /etc/apt/sources.list.d/debian.sources
-# 天朝特色：更换源
-RUN sed -i 's/deb.debian.org/mirrors.ustc.edu.cn/g' /etc/apt/sources.list.d/debian.sources
+
 # 更新软件包并安装依赖
 RUN apt update && \
     apt install -y --no-install-recommends locales \
@@ -48,6 +47,9 @@ RUN echo 'PermitRootLogin yes' >> /etc/ssh/sshd_config && \
 
 # 设置其他环境变量
 ENV PATH="$PATH:/usr/local/go/bin"
+
+# 天朝特色：更换源
+RUN sed -i 's/deb.debian.org/mirrors.ustc.edu.cn/g' /etc/apt/sources.list.d/debian.sources
 
 # 启动 SSH 服务
 WORKDIR /
