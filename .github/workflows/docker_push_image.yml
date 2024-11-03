@@ -23,8 +23,8 @@ jobs:
 
       - name: Download TDL
         run: |
-          wget -O tdl_amd64.tar.gz "https://github.com/iyear/tdl/releases/download/v0.17.7/tdl_Linux_64bit.tar.gz"
-          wget -O tdl_arm64.tar.gz "https://github.com/iyear/tdl/releases/download/v0.17.7/tdl_Linux_arm64.tar.gz"
+          wget -O tdl_Linux_64bit.tar.gz "https://github.com/iyear/tdl/releases/download/v0.17.7/tdl_Linux_64bit.tar.gz"
+#          wget -O tdl_arm64.tar.gz "https://github.com/iyear/tdl/releases/download/v0.17.7/tdl_Linux_arm64.tar.gz"
           ls -ahlt
 
       - name: Extract Docker metadata
