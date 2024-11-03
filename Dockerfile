@@ -18,7 +18,7 @@ RUN apt update && \
 # 复制文件
 COPY tdl_amd64.tar.gz /root
 WORKDIR /root
-RUN tar xvf tdl_amd64.tar.gz
+RUN tar xvf /root/tdl_amd64.tar.gz
 RUN ln -s /root/tdl /usr/local/bin/tdl
 
 # 配置 Go 环境
