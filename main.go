@@ -10,6 +10,10 @@ import (
 	"runtime"
 )
 
+func init() {
+	util.SetLog("tdl.log")
+}
+
 func main() {
 	defer func() {
 		if runtime.GOOS == "linux" {

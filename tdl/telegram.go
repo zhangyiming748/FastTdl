@@ -27,15 +27,13 @@ func DownloadsHelp(urls []string, proxy string) {
 			if strings.Contains(url, "#") {
 				defer func() {
 					if ErrUncatchable := recover(); ErrUncatchable != nil {
-						//log.Println("base = %v\ntag = %v\nstep = %v\nuris = %v\n")
 						log.Println(ErrUncatchable)
 					}
 				}()
-				base := strings.Split(url, " ")[0] //https://t.me/sosiwa/8415#白丝 8
+				base := strings.Split(url, " ")[0]
 				tag := strings.Split(base, "#")[1]
-				base = strings.Split(url, "#")[0]                   //https://t.me/sosiwa/8415#白丝
-				step, _ := strconv.Atoi(strings.Split(url, " ")[1]) //9
-				//https://t.me/acgr18/34406 9
+				base = strings.Split(url, "#")[0]
+				step, _ := strconv.Atoi(strings.Split(url, " ")[1])
 				prefix, suffix, _ := Split(base)
 				var uris []string
 				for i := 0; i < step; i++ {
@@ -47,9 +45,8 @@ func DownloadsHelp(urls []string, proxy string) {
 				}
 				Downloads(uris, proxy, f)
 			} else {
-				base := strings.Split(url, " ")[0]                  //https://t.me/sosiwa/8415#白丝 8
-				step, _ := strconv.Atoi(strings.Split(url, " ")[1]) //9
-				//https://t.me/acgr18/34406 9
+				base := strings.Split(url, " ")[0]
+				step, _ := strconv.Atoi(strings.Split(url, " ")[1])
 				prefix, suffix, _ := Split(base)
 				var uris []string
 				for i := 0; i < step; i++ {
@@ -65,6 +62,7 @@ func DownloadsHelp(urls []string, proxy string) {
 	}
 	f.Sync()
 }
+
 func Downloads(urls []string, proxy string, f *os.File) {
 	var status string
 	var count int
@@ -75,7 +73,7 @@ func Downloads(urls []string, proxy string, f *os.File) {
 	for _, url := range urls {
 		if strings.Contains(url, "@") {
 			if strings.Contains(url, "#") {
-				base := strings.Split(url, "#")[0] //https://t.me/acgr18/34406#3434@feef
+				base := strings.Split(url, "#")[0]
 				dir := strings.Split(url, "#")[1]
 				dir = strings.Split(dir, "@")[0]
 				fname := strings.Split(url, "@")[1]
@@ -89,7 +87,7 @@ func Downloads(urls []string, proxy string, f *os.File) {
 					util.RenameByKey(key, fname)
 				}
 			} else {
-				base := strings.Split(url, "@")[0] //https://t.me/acgr18/34406@feef
+				base := strings.Split(url, "@")[0]
 				fname := strings.Split(url, "@")[1]
 				fail := Download(base, proxy)
 				if fail != nil {
@@ -102,7 +100,7 @@ func Downloads(urls []string, proxy string, f *os.File) {
 				}
 			}
 		} else if strings.Contains(url, "#") {
-			base := strings.Split(url, "#")[0] //https://t.me/acgr18/34406
+			base := strings.Split(url, "#")[0]
 			dir := strings.Split(url, "#")[1]
 			fail := DownloadWithFolder(base, proxy, dir)
 			if fail != nil {
@@ -192,6 +190,7 @@ func Split(s string) (prefix string, suffix int, err error) {
 		return "", -1, err
 	}
 }
+
 func findKeyByUrl(u string) string {
 	//u = "https://t.me/FFLL05/57137?single" // 你可以替换为其他 URL 进行测试
 	var prefix string
