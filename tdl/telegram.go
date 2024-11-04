@@ -14,7 +14,7 @@ func DownloadsHelp(urls []string, proxy string) {
 	var status string
 	var count int
 	defer func() {
-		status = fmt.Sprintf("全部下载结束,失败 %d / %d 个\n", count, len(urls))
+		status = fmt.Sprintf("全部下载结束,失败 %d / %d 个文件夹\n", count, len(urls))
 		log.Println(status)
 	}()
 	f, err := os.OpenFile("failed.txt", os.O_RDWR|os.O_APPEND|os.O_CREATE, 0666)
@@ -24,17 +24,41 @@ func DownloadsHelp(urls []string, proxy string) {
 	defer f.Close()
 	for _, url := range urls {
 		if strings.Contains(url, " ") { //如果url包含空格 需要循环判下载
-			base := strings.Split(url, " ")[0]                  //https://t.me/acgr18/34406 3
-			step, _ := strconv.Atoi(strings.Split(url, " ")[1]) //9
-			//https://t.me/acgr18/34406 9
-			prefix, suffix, _ := Split(base)
-			var uris []string
-			for i := 0; i < step; i++ {
-				uri := strings.Join([]string{prefix, strconv.Itoa(suffix + i)}, "/")
-				log.Printf("Add url %s with %s\n", uri, proxy)
-				uris = append(uris, uri)
+			if strings.Contains(url, "#") {
+				defer func() {
+					if ErrUncatchable := recover(); ErrUncatchable != nil {
+						//log.Println("base = %v\ntag = %v\nstep = %v\nuris = %v\n")
+						log.Println(ErrUncatchable)
+					}
+				}()
+				base := strings.Split(url, " ")[0] //https://t.me/sosiwa/8415#白丝 8
+				tag := strings.Split(base, "#")[1]
+				base = strings.Split(url, "#")[0]                   //https://t.me/sosiwa/8415#白丝
+				step, _ := strconv.Atoi(strings.Split(url, " ")[1]) //9
+				//https://t.me/acgr18/34406 9
+				prefix, suffix, _ := Split(base)
+				var uris []string
+				for i := 0; i < step; i++ {
+					uri := strings.Join([]string{prefix, strconv.Itoa(suffix + i)}, "/")
+					uri = strings.Join([]string{uri, tag}, "#")
+					uri = strings.Join([]string{uri, strconv.Itoa(step + i)}, "@")
+					log.Printf("Add url %s with %s\n", uri, proxy)
+					uris = append(uris, uri)
+				}
+				Downloads(uris, proxy, f)
+			} else {
+				base := strings.Split(url, " ")[0]                  //https://t.me/sosiwa/8415#白丝 8
+				step, _ := strconv.Atoi(strings.Split(url, " ")[1]) //9
+				//https://t.me/acgr18/34406 9
+				prefix, suffix, _ := Split(base)
+				var uris []string
+				for i := 0; i < step; i++ {
+					uri := strings.Join([]string{prefix, strconv.Itoa(suffix + i)}, "/")
+					log.Printf("Add url %s with %s\n", uri, proxy)
+					uris = append(uris, uri)
+				}
+				Downloads(uris, proxy, f)
 			}
-			Downloads(uris, proxy, f)
 		} else { //如果url不含空格
 			Downloads(urls, proxy, f)
 		}
@@ -45,7 +69,7 @@ func Downloads(urls []string, proxy string, f *os.File) {
 	var status string
 	var count int
 	defer func() {
-		status = fmt.Sprintf("全部下载结束,失败 %d / %d 个\n", count, len(urls))
+		status = fmt.Sprintf("全部下载结束,失败 %d / %d 个文件\n", count, len(urls))
 		log.Println(status)
 	}()
 	for _, url := range urls {
