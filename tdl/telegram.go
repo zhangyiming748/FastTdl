@@ -10,7 +10,7 @@ import (
 	"strings"
 )
 
-func Downloads(urls []string, proxy string) {
+func DownloadsHelp(urls []string, proxy string) {
 	var status string
 	var count int
 	defer func() {
@@ -23,22 +23,33 @@ func Downloads(urls []string, proxy string) {
 	}
 	defer f.Close()
 	for _, url := range urls {
-		if strings.Contains(url, " ") {
-			base := strings.Split(url, " ")[0]                  //https://t.me/acgr18/34406
+		if strings.Contains(url, " ") { //如果url包含空格 需要循环判下载
+			base := strings.Split(url, " ")[0]                  //https://t.me/acgr18/34406 3
 			step, _ := strconv.Atoi(strings.Split(url, " ")[1]) //9
 			//https://t.me/acgr18/34406 9
 			prefix, suffix, _ := Split(base)
+			var uris []string
 			for i := 0; i < step; i++ {
 				uri := strings.Join([]string{prefix, strconv.Itoa(suffix + i)}, "/")
-				log.Printf("Downloading %s with %s\n", uri, proxy)
-				fail := Download(uri, proxy)
-				if fail != nil {
-					count++
-					out := fmt.Sprintf("download fail :%s\n", url)
-					f.WriteString(out)
-				}
+				log.Printf("Add url %s with %s\n", uri, proxy)
+				uris = append(uris, uri)
 			}
-		} else if strings.Contains(url, "@") {
+			Downloads(uris, proxy, f)
+		} else { //如果url不含空格
+			Downloads(urls, proxy, f)
+		}
+	}
+	f.Sync()
+}
+func Downloads(urls []string, proxy string, f *os.File) {
+	var status string
+	var count int
+	defer func() {
+		status = fmt.Sprintf("全部下载结束,失败 %d / %d 个\n", count, len(urls))
+		log.Println(status)
+	}()
+	for _, url := range urls {
+		if strings.Contains(url, "@") {
 			if strings.Contains(url, "#") {
 				base := strings.Split(url, "#")[0] //https://t.me/acgr18/34406#3434@feef
 				dir := strings.Split(url, "#")[1]

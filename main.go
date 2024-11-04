@@ -12,5 +12,5 @@ func main() {
 	if proxy == "" {
 		proxy = "http://127.0.0.1:8889"
 	}
-	tdl.Downloads(urls, proxy)
+	tdl.DownloadsHelp(urls, proxy)
 }
