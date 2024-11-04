@@ -39,7 +39,7 @@ func DownloadsHelp(urls []string, proxy string) {
 				for i := 0; i < step; i++ {
 					uri := strings.Join([]string{prefix, strconv.Itoa(suffix + i)}, "/")
 					uri = strings.Join([]string{uri, tag}, "#")
-					uri = strings.Join([]string{uri, strconv.Itoa(step + i)}, "@")
+					uri = strings.Join([]string{uri, strconv.Itoa(suffix + i)}, "@")
 					log.Printf("Add url %s with %s\n", uri, proxy)
 					uris = append(uris, uri)
 				}
