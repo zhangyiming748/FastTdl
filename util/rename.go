@@ -60,7 +60,7 @@ func RenameByKey(key, words string) {
 	prefix := strings.TrimSuffix(fileName, suffix) //文件名部分
 	fmt.Println(prefix, suffix)
 	newAbsFile := strings.Join([]string{dir, string(os.PathSeparator), words, suffix}, "")
-	fmt.Printf("最终的旧文件名:%s\t新文件名:%v\n", absFile, newAbsFile)
+	log.Printf("最终的旧文件名:%s\t新文件名:%v\n", absFile, newAbsFile)
 	if noRename := os.Rename(absFile, newAbsFile); noRename != nil {
 		log.Printf("%s重命名%s失败\n", absFile, newAbsFile)
 	} else {

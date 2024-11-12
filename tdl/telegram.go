@@ -25,35 +25,10 @@ func DownloadsHelp(urls []string, proxy string) {
 	for _, url := range urls {
 		if strings.Contains(url, " ") { //如果url包含空格 需要循环判下载
 			if strings.Contains(url, "#") {
-				defer func() {
-					if ErrUncatchable := recover(); ErrUncatchable != nil {
-						log.Println(ErrUncatchable)
-					}
-				}()
-				base := strings.Split(url, " ")[0]
-				tag := strings.Split(base, "#")[1]
-				base = strings.Split(url, "#")[0]
-				step, _ := strconv.Atoi(strings.Split(url, " ")[1])
-				prefix, suffix, _ := Split(base)
-				var uris []string
-				for i := 0; i < step; i++ {
-					uri := strings.Join([]string{prefix, strconv.Itoa(suffix + i)}, "/")
-					uri = strings.Join([]string{uri, tag}, "#")
-					uri = strings.Join([]string{uri, strconv.Itoa(suffix + i)}, "@")
-					log.Printf("Add url %s with %s\n", uri, proxy)
-					uris = append(uris, uri)
-				}
+				uris := parseUrlWithTagAndOffset(url)
 				Downloads(uris, proxy, f)
 			} else {
-				base := strings.Split(url, " ")[0]
-				step, _ := strconv.Atoi(strings.Split(url, " ")[1])
-				prefix, suffix, _ := Split(base)
-				var uris []string
-				for i := 0; i < step; i++ {
-					uri := strings.Join([]string{prefix, strconv.Itoa(suffix + i)}, "/")
-					log.Printf("Add url %s with %s\n", uri, proxy)
-					uris = append(uris, uri)
-				}
+				uris := parseUrlWithOffset(url)
 				Downloads(uris, proxy, f)
 			}
 		} else { //如果url不含空格
@@ -179,18 +154,6 @@ func DownloadWithFolder(uri, proxy, fname string) error {
 	}
 }
 
-func Split(s string) (prefix string, suffix int, err error) {
-	lastSlashIndex := strings.LastIndex(s, "/")
-	if lastSlashIndex != -1 {
-		// 分割字符串
-		beforeLastSlash := s[:lastSlashIndex]
-		afterLastSlash, _ := strconv.Atoi(s[lastSlashIndex+1:])
-		return beforeLastSlash, afterLastSlash, nil
-	} else {
-		return "", -1, err
-	}
-}
-
 func findKeyByUrl(u string) string {
 	//u = "https://t.me/FFLL05/57137?single" // 你可以替换为其他 URL 进行测试
 	var prefix string
@@ -212,4 +175,61 @@ func findKeyByUrl(u string) string {
 	// 这里假设最后一部分是数字
 	fmt.Println("提取的数字:", lastPart)
 	return lastPart
+}
+
+/*
+https://t.me/${channel}/${fid}#${tag} ${offset}
+*/
+func parseUrlWithTagAndOffset(uri string) (uris []string) {
+	base := strings.Split(uri, " ")[0]
+	offset := strings.Split(uri, " ")[1]
+	offsetNum, _ := strconv.Atoi(offset)
+	fmt.Println(base, offset)
+	baseUrl := strings.Split(base, "#")[0]
+	tag := strings.Split(base, "#")[1]
+	fmt.Printf("baseUrl:%s\ntag:%v\n", baseUrl, tag)
+	prefix, suffix := splitURL(baseUrl)
+	fmt.Printf("prefix = %v\nsuffix = %v\n", prefix, suffix)
+	for i := 0; i < offsetNum; i++ {
+		fid := suffix + i
+		u := strings.Join([]string{prefix, strconv.Itoa(fid)}, "/")
+		u = strings.Join([]string{u, tag}, "#")
+		fmt.Printf("offsetNum = %v\nu = %v\n", offsetNum, u)
+		uris = append(uris, u)
+	}
+	return uris
+}
+
+/*
+https://t.me/${channel}/${fid} ${offset}
+*/
+func parseUrlWithOffset(uri string) (uris []string) {
+	base := strings.Split(uri, " ")[0]
+	offset := strings.Split(uri, " ")[1]
+	offsetNum, _ := strconv.Atoi(offset)
+	fmt.Println(base, offset)
+	prefix, suffix := splitURL(base)
+	fmt.Printf("prefix = %v\nsuffix = %v\n", prefix, suffix)
+	for i := 0; i < offsetNum; i++ {
+		fid := suffix + i
+		u := strings.Join([]string{prefix, strconv.Itoa(fid)}, "/")
+		fmt.Printf("offsetNum = %v\nu = %v\n", offsetNum, u)
+		uris = append(uris, u)
+	}
+	return uris
+}
+
+func splitURL(url string) (string, int) {
+	// 找到最后一个 '/' 的索引
+	lastSlashIndex := strings.LastIndex(url, "/")
+	if lastSlashIndex == -1 {
+		// 如果没有找到 '/'，返回原始 URL 和空字符串
+		return url, 0
+	}
+
+	// 分割 prefix 和 suffix
+	prefix := url[:lastSlashIndex]
+	suffix := url[lastSlashIndex+1:]
+	suffixNum, _ := strconv.Atoi(suffix)
+	return prefix, suffixNum
 }

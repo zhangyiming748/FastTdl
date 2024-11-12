@@ -11,3 +11,4 @@ services:
             - TDL=/data
             - PROXY=http://192.168.1.31:8889
         image: zhangyiming748/tdl:latest
+        user: "1000:1000"
