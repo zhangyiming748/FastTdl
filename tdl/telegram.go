@@ -184,12 +184,11 @@ func parseUrlWithTagAndOffset(uri string) (uris []string) {
 	base := strings.Split(uri, " ")[0]
 	offset := strings.Split(uri, " ")[1]
 	offsetNum, _ := strconv.Atoi(offset)
-	fmt.Println(base, offset)
 	baseUrl := strings.Split(base, "#")[0]
 	tag := strings.Split(base, "#")[1]
-	fmt.Printf("baseUrl:%s\ntag:%v\n", baseUrl, tag)
+	//fmt.Printf("baseUrl:%s\ntag:%v\n", baseUrl, tag)
 	prefix, suffix := splitURL(baseUrl)
-	fmt.Printf("prefix = %v\nsuffix = %v\n", prefix, suffix)
+	//fmt.Printf("prefix = %v\nsuffix = %v\n", prefix, suffix)
 	for i := 0; i < offsetNum; i++ {
 		fid := suffix + i
 		u := strings.Join([]string{prefix, strconv.Itoa(fid)}, "/")
@@ -207,13 +206,12 @@ func parseUrlWithOffset(uri string) (uris []string) {
 	base := strings.Split(uri, " ")[0]
 	offset := strings.Split(uri, " ")[1]
 	offsetNum, _ := strconv.Atoi(offset)
-	fmt.Println(base, offset)
 	prefix, suffix := splitURL(base)
-	fmt.Printf("prefix = %v\nsuffix = %v\n", prefix, suffix)
+	//fmt.Printf("prefix = %v\nsuffix = %v\n", prefix, suffix)
 	for i := 0; i < offsetNum; i++ {
 		fid := suffix + i
 		u := strings.Join([]string{prefix, strconv.Itoa(fid)}, "/")
-		fmt.Printf("offsetNum = %v\nu = %v\n", offsetNum, u)
+		//fmt.Printf("offsetNum = %v\nu = %v\n", offsetNum, u)
 		uris = append(uris, u)
 	}
 	return uris
