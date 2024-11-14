@@ -1,4 +1,4 @@
-FROM golang:1.23.2-bookworm
+FROM golang:1.23.3-bookworm
 #docker run -it --rm --name tdl golang:1.23.2-bookworm bash
 #docker exec -it tdl bash
 LABEL authors="zen"
@@ -12,19 +12,19 @@ COPY debian.sources /etc/apt/sources.list.d/debian.sources
 # 更新软件包并安装依赖
 RUN apt update && \
     apt install -y --no-install-recommends locales \
-    wget curl build-essential  openssh-server nano && \
+    wget curl build-essential  openssh-server nano git && \
     apt clean && \
     rm -rf /var/lib/apt/lists/*
 
-# 复制文件
-COPY tdl_Linux_64bit.tar.gz /root
-RUN tar xvf /root/tdl_Linux_64bit.tar.gz -C /root
-RUN ln -s /root/tdl /usr/local/bin/tdl
-
 # 配置 Go 环境
 RUN go env -w GO111MODULE=on && \
-    go env -w GOPROXY=https://goproxy.cn,direct && \
+    # go env -w GOPROXY=https://goproxy.cn,direct && \
     go env -w GOBIN=/go/bin
+
+# 复制文件
+RUN git clone https://github.com/iyear/tdl.git /root/tdl
+WORKDIR /root/tdl
+RUN go build -o /usr/local/bin/tdl
 
 # 中文支持
 RUN apt update && \
