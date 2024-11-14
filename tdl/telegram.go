@@ -2,12 +2,13 @@ package tdl
 
 import (
 	"fmt"
-	"github.com/zhangyiming748/FastTdl/util"
 	"log"
 	"os"
 	"path/filepath"
 	"strconv"
 	"strings"
+
+	"github.com/zhangyiming748/FastTdl/util"
 )
 
 func DownloadsHelp(urls []string, proxy string) {
@@ -112,7 +113,7 @@ func Download(uri, proxy string) error {
 	}
 	fmt.Printf("用户的个人文件夹目录: %s\n", home)
 	fmt.Printf("用户的下载文件夹目录: %s\n", dir)
-	target := filepath.Join(dir, "telegram")
+	target := filepath.Join(dir, "media")
 	os.MkdirAll(target, 0755)
 	err = util.ExecTdlCommand(proxy, uri, target)
 	if err != nil {
@@ -141,7 +142,7 @@ func DownloadWithFolder(uri, proxy, fname string) error {
 	}
 	fmt.Printf("用户的个人文件夹目录: %s\n", home)
 	fmt.Printf("用户的下载文件夹目录: %s\n", dir)
-	target := filepath.Join(dir, "telegram", fname)
+	target := filepath.Join(dir, "media", fname)
 	os.MkdirAll(target, 0755)
 	err = util.ExecTdlCommand(proxy, uri, target)
 	if err != nil {

@@ -2,12 +2,13 @@ package main
 
 import (
 	"fmt"
-	"github.com/zhangyiming748/FastTdl/tdl"
-	"github.com/zhangyiming748/FastTdl/util"
 	"log"
 	"os"
 	"path/filepath"
 	"runtime"
+
+	"github.com/zhangyiming748/FastTdl/tdl"
+	"github.com/zhangyiming748/FastTdl/util"
 )
 
 func init() {
