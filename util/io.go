@@ -31,6 +31,12 @@ func ReadByLine(fp string) []string {
 		if string(a) == "" {
 			continue
 		}
+		if strings.Contains(string(a), "single") {
+			uri := strings.Replace(string(a), "?single", "", 1)
+			lines = append(lines, uri)
+		} else {
+			lines = append(lines, string(a))
+		}
 		lines = append(lines, string(a))
 	}
 	return lines
