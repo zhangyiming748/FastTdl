@@ -13,6 +13,7 @@ import (
 
 func init() {
 	util.SetLog("tdl.log")
+	util.SetLevelDB()
 }
 
 func main() {
