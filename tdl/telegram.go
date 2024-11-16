@@ -48,12 +48,12 @@ func Downloads(urls []string, proxy string, f *os.File) {
 		log.Println(status)
 	}()
 	for _, url := range urls {
-		stand:=strings.Split(url,"@")[0]
-		stand = strings.Split(stand,"#")[0]
+		stand := strings.Split(url, "@")[0]
+		stand = strings.Split(stand, "#")[0]
 		if val, err := util.GetLevelDB().Get([]byte(stand), nil); err == nil {
-			log.Printf("已经下载过%s\t跳过\n",string(val))
+			log.Printf("已经下载过%s\t跳过\n", string(val))
 			continue
-		} 
+		}
 		if strings.Contains(url, "@") {
 			if strings.Contains(url, "#") {
 				base := strings.Split(url, "#")[0]
@@ -65,8 +65,8 @@ func Downloads(urls []string, proxy string, f *os.File) {
 					count++
 					out := fmt.Sprintf("download fail :%s\n", url)
 					f.WriteString(out)
-				}else{
-					util.GetLevelDB().Put([]byte(base,[]byte("success"),nil)
+				} else {
+					util.GetLevelDB().Put([]byte(base), []byte("success"), nil)
 				}
 				if key := findKeyByUrl(url); key != "" {
 					util.RenameByKey(key, fname)
@@ -79,8 +79,8 @@ func Downloads(urls []string, proxy string, f *os.File) {
 					count++
 					out := fmt.Sprintf("download fail :%s\n", url)
 					f.WriteString(out)
-				}else{
-					util.GetLevelDB().Put([]byte(base),[]byte("success"),nil)
+				} else {
+					util.GetLevelDB().Put([]byte(base), []byte("success"), nil)
 				}
 				if key := findKeyByUrl(url); key != "" {
 					util.RenameByKey(key, fname)
@@ -94,8 +94,8 @@ func Downloads(urls []string, proxy string, f *os.File) {
 				count++
 				out := fmt.Sprintf("download fail :%s\n", url)
 				f.WriteString(out)
-			}else{
-				util.GetLevelDB().Put([]byte(base),[]byte("success"),nil)
+			} else {
+				util.GetLevelDB().Put([]byte(base), []byte("success"), nil)
 			}
 		} else {
 			fail := Download(url, proxy)
@@ -103,8 +103,8 @@ func Downloads(urls []string, proxy string, f *os.File) {
 				count++
 				out := fmt.Sprintf("download fail :%s\n", url)
 				f.WriteString(out)
-			}else{
-				util.GetLevelDB().Put([]byte(base),[]byte("success"),nil)
+			} else {
+				util.GetLevelDB().Put([]byte(url), []byte("success"), nil)
 			}
 		}
 	}
