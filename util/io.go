@@ -49,8 +49,6 @@ func WriteByLine(fp string, s []string) {
 		writer.WriteString("\n")
 	}
 	writer.Flush()
-	return
-
 }
 func IsExist(folderPath string) bool {
 	_, err := os.Stat(folderPath)
