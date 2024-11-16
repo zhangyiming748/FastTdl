@@ -37,7 +37,6 @@ func ReadByLine(fp string) []string {
 		} else {
 			lines = append(lines, string(a))
 		}
-		lines = append(lines, string(a))
 	}
 	return lines
 }
