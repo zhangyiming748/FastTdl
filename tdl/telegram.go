@@ -25,12 +25,16 @@ func DownloadsHelp(urls []string, proxy string) {
 	defer f.Close()
 	for _, url := range urls {
 		url = strings.Replace(url, "?single", "", 1)
+		log.Printf("replace param after %v\n", url)
+		//检测到循环下载
 		if strings.Contains(url, " ") { //如果url包含空格 需要循环判下载
 			if strings.Contains(url, "#") {
 				uris := parseUrlWithTagAndOffset(url)
+				log.Printf("检测到循环下载%v\n", uris)
 				Downloads(uris, proxy, f)
 			} else {
 				uris := parseUrlWithOffset(url)
+				log.Printf("检测到循环下载%v\n", uris)
 				Downloads(uris, proxy, f)
 			}
 		} else { //如果url不含空格

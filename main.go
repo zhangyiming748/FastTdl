@@ -3,6 +3,8 @@ package main
 import (
 	"fmt"
 	"log"
+	"net"
+	uri "net/url"
 	"os"
 	"path/filepath"
 	"runtime"
@@ -35,7 +37,28 @@ func main() {
 	urls := util.ReadByLine("post.link")
 	proxy := os.Getenv("PROXY")
 	if proxy == "" {
-		proxy = "http://127.0.0.1:8889"
+		log.Fatalln("容器中未指定外部可用代理")
+	}
+	if err := ping(proxy); err != nil {
+		log.Fatalf("指定的代理IP地址不可用,错误信息:%v\n", err)
 	}
 	tdl.DownloadsHelp(urls, proxy)
+}
+
+func ping(proxy string) error {
+	u, err := uri.Parse(proxy)
+	if err != nil {
+		fmt.Println("解析URL失败:", err)
+		return err
+	}
+	ip := u.Hostname()
+	port := u.Port()
+
+	address := net.JoinHostPort(ip, port)
+	conn, err := net.Dial("tcp", address)
+	if err != nil {
+		return err
+	}
+	defer conn.Close()
+	return nil
 }

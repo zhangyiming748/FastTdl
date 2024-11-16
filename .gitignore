@@ -4,3 +4,4 @@ telegram
 post.link
 failed.txt
 *.log
+leveldb
