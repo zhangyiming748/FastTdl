@@ -17,8 +17,9 @@ RUN apt update && \
     rm -rf /var/lib/apt/lists/*
 
 # 配置 Go 环境
+
 RUN go env -w GO111MODULE=on && \
-    # go env -w GOPROXY=https://goproxy.cn,direct && \
+    go env -w GOPROXY=https://goproxy.cn,direct && \
     go env -w GOBIN=/go/bin
 
 # 复制文件
