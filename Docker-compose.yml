@@ -5,9 +5,9 @@ services:
         ports:
             - 8022:22
         volumes:
-            - /Users/zen/.tdl:/root/.tdl
-            - /Users/zen/github/FastTdl:/data
+            - C:\Users\zen\.tdl:/root/.tdl
+            - C:\Users\zen\Github\FastTdl:/data
         environment:
             - TDL=/data
             - PROXY=http://192.168.1.31:8889
-        image: zhangyiming748/tdl:v0.0.7
+        image: zhangyiming748/tdl:latest
