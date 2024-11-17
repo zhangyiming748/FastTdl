@@ -52,6 +52,11 @@ ENV PATH="$PATH:/usr/local/go/bin"
 # 天朝特色：更换源
 RUN sed -i 's/deb.debian.org/mirrors.ustc.edu.cn/g' /etc/apt/sources.list.d/debian.sources
 
-# 启动 SSH 服务
-WORKDIR /
-ENTRYPOINT ["service", "ssh", "start", "-D"]
+# # 启动 SSH 服务
+# WORKDIR /
+# ENTRYPOINT ["service", "ssh", "start", "-D"]
+
+
+# 启动程序
+WORKDIR /data
+ENTRYPOINT ["go", "run", "main.go"]
