@@ -42,7 +42,7 @@ func RenameByKey(key, words string) {
 	if err != nil {
 		fmt.Println("无法获取用户的个人文件夹目录:", err)
 	}
-	home = filepath.Join(home, "Downloads", "telegram")
+	home = filepath.Join(home, "Downloads", "media")
 	//key := "6600"
 	if path := os.Getenv("TDL"); path != "" {
 		home = path
