@@ -34,7 +34,14 @@ func main() {
 			util.Chown(target, 1000, 1000)
 		}
 	}()
-	urls := util.ReadByLine("post.link")
+	var urls []string
+	if FileExists("/data/post.link") {
+		urls = util.ReadByLine("/data/post.link")
+	} else if FileExists("post.link") {
+		urls = util.ReadByLine("post.link")
+	} else {
+		log.Fatalln("没有在任何位置找到post.link文件")
+	}
 	proxy := os.Getenv("PROXY")
 	if proxy == "" && runtime.GOOS == "linux" {
 		log.Fatalln("容器中未指定外部可用代理")
@@ -64,4 +71,14 @@ func ping(proxy string) error {
 	}
 	defer conn.Close()
 	return nil
+}
+func FileExists(path string) bool {
+	_, err := os.Stat(path)
+	if err == nil {
+		return true
+	}
+	if os.IsNotExist(err) {
+		return false
+	}
+	return false
 }

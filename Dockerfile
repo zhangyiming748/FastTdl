@@ -56,7 +56,12 @@ RUN sed -i 's/deb.debian.org/mirrors.ustc.edu.cn/g' /etc/apt/sources.list.d/debi
 # WORKDIR /
 # ENTRYPOINT ["service", "ssh", "start", "-D"]
 
+# 复制文件
+RUN git clone https://github.com/zhangyiming748/FastTdl.git /root/fastTDL
+WORKDIR /root/fastTDL
+RUN go build -o /usr/local/bin/fastTDL /root/fastTDL/main.go
+
 
 # 启动程序
 WORKDIR /data
-ENTRYPOINT ["go", "run", "main.go"]
+ENTRYPOINT ["fastTDL"]
