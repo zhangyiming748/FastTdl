@@ -5,8 +5,8 @@ services:
         ports:
             - 8022:22
         volumes:
-            - C:\Users\zen\.tdl:/root/.tdl
-            - C:\Users\zen\tele\post.link:/data/post.link
+            - /Users/zen/.tdl:/root/.tdl
+            - /Users/zen/Documents:/data
         environment:
             - TDL=/data
             - PROXY=http://192.168.1.31:8889

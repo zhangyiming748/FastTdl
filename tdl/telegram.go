@@ -67,7 +67,7 @@ func Downloads(urls []string, proxy string, f *os.File) {
 				fail := DownloadWithFolder(base, proxy, dir)
 				if fail != nil {
 					count++
-					out := fmt.Sprintf("download fail :%s\n", url)
+					out := fmt.Sprintf("%s\n", url)
 					f.WriteString(out)
 				} else {
 					util.GetLevelDB().Put([]byte(base), []byte("success"), nil)
@@ -81,7 +81,7 @@ func Downloads(urls []string, proxy string, f *os.File) {
 				fail := Download(base, proxy)
 				if fail != nil {
 					count++
-					out := fmt.Sprintf("download fail :%s\n", url)
+					out := fmt.Sprintf("%s\n", url)
 					f.WriteString(out)
 				} else {
 					util.GetLevelDB().Put([]byte(base), []byte("success"), nil)
@@ -96,7 +96,7 @@ func Downloads(urls []string, proxy string, f *os.File) {
 			fail := DownloadWithFolder(base, proxy, dir)
 			if fail != nil {
 				count++
-				out := fmt.Sprintf("download fail :%s\n", url)
+				out := fmt.Sprintf("%s\n", url)
 				f.WriteString(out)
 			} else {
 				util.GetLevelDB().Put([]byte(base), []byte("success"), nil)
@@ -105,7 +105,7 @@ func Downloads(urls []string, proxy string, f *os.File) {
 			fail := Download(url, proxy)
 			if fail != nil {
 				count++
-				out := fmt.Sprintf("download fail :%s\n", url)
+				out := fmt.Sprintf("%s\n", url)
 				f.WriteString(out)
 			} else {
 				util.GetLevelDB().Put([]byte(url), []byte("success"), nil)
