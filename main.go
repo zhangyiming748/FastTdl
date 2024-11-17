@@ -6,7 +6,6 @@ import (
 	"net"
 	uri "net/url"
 	"os"
-	"path/filepath"
 	"runtime"
 
 	"github.com/zhangyiming748/FastTdl/tdl"
@@ -19,21 +18,6 @@ func init() {
 }
 
 func main() {
-	defer func() {
-		if runtime.GOOS == "linux" {
-			home, err := os.UserHomeDir()
-			if err != nil {
-				fmt.Println("无法获取用户的个人文件夹目录:", err)
-			}
-			dir := filepath.Join(home, "Downloads")
-			if path := os.Getenv("TDL"); path != "" {
-				dir = path
-			}
-			target := filepath.Join(dir, "telegram")
-			log.Printf("最终下载的文件夹: %s\n", target)
-			util.Chown(target, 1000, 1000)
-		}
-	}()
 	var urls []string
 	if FileExists("/data/post.link") {
 		urls = util.ReadByLine("/data/post.link")

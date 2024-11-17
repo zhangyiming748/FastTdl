@@ -9,5 +9,5 @@ services:
             - /Users/zen/Documents:/data
         environment:
             - TDL=/data
-            - PROXY=http://192.168.1.31:8889
+            - PROXY=http://192.168.1.41:8889
         image: zhangyiming748/tdl:latest
