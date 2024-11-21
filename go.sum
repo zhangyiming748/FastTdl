@@ -13,6 +13,8 @@ github.com/syndtr/goleveldb v1.0.0 h1:fBdIW9lB4Iz0n9khmH8w27SJ3QEJ7+IgjPEwGSZiFd
 github.com/syndtr/goleveldb v1.0.0/go.mod h1:ZVVdQEZoIme9iO1Ch2Jdy24qqXrMMOU6lpPAyBWyWuQ=
 github.com/zhangyiming748/lumberjack v0.0.1 h1:/r1XMBfGVZ/ZrRU56vl0aKeVddidi3388ETLLCWxoW4=
 github.com/zhangyiming748/lumberjack v0.0.1/go.mod h1:11eemyl+ecJVHsV0uA62hHy+geuwthU0Y2owuM9TXdI=
+github.com/zhangyiming748/timing v0.0.4 h1:AdMRdiVNbE6nKH1hFIG7cUn3uACY8nDKhaJd7OkMfUo=
+github.com/zhangyiming748/timing v0.0.4/go.mod h1:F0qznhkMJC9P7yUDuFcjbi8W6IUJXdFs4Xg3ISekAZo=
 golang.org/x/net v0.0.0-20180906233101-161cd47e91fd h1:nTDtHvHSdCn1m6ITfMRqtOd/9+7a3s8RBNOZ3eYZzJA=
 golang.org/x/net v0.0.0-20180906233101-161cd47e91fd/go.mod h1:mL1N/T3taQHkDXs73rZJwtUhF3w3ftmwwsq0BUmARs4=
 golang.org/x/sync v0.0.0-20180314180146-1d60e4601c6f/go.mod h1:RxMgew5VJxzue5/jJTE5uejpjVlOe/izrB70Jof72aM=

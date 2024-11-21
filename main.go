@@ -31,7 +31,7 @@ func main() {
 		log.Fatalln("容器中未指定外部可用代理")
 	}
 	if proxy == "" {
-		proxy = "http://127.0.0.1:8889"
+		proxy = "http://192.168.1.35:8889"
 	}
 	if err := ping(proxy); err != nil {
 		log.Fatalf("指定的代理IP地址不可用,错误信息:%v\n", err)
