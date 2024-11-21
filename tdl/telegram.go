@@ -2,13 +2,12 @@ package tdl
 
 import (
 	"fmt"
+	"github.com/zhangyiming748/FastTdl/util"
 	"log"
 	"os"
 	"path/filepath"
 	"strconv"
 	"strings"
-
-	"github.com/zhangyiming748/FastTdl/util"
 )
 
 func DownloadsHelp(urls []string, proxy string) {
@@ -18,7 +17,7 @@ func DownloadsHelp(urls []string, proxy string) {
 		status = fmt.Sprintf("全部下载结束,失败 %d / %d 个文件夹\n", count, len(urls))
 		log.Println(status)
 	}()
-	f, err := os.OpenFile("failed.txt", os.O_RDWR|os.O_APPEND|os.O_CREATE, 0666)
+	f, err := os.OpenFile("failed.txt", os.O_RDWR|os.O_TRUNC|os.O_CREATE, 0666)
 	if err != nil {
 		log.Fatal(err)
 	}
