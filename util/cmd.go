@@ -3,19 +3,20 @@ package util
 import (
 	"errors"
 	"fmt"
+	"github.com/zhangyiming748/timing"
 	"log"
 	"os/exec"
 	"regexp"
 	"runtime"
 	"strconv"
 	"strings"
+	"time"
 )
 
 /*
 执行命令过程中可以循环打印消息
 */
 func ExecCommand(c *exec.Cmd) (e error) {
-
 	log.Printf("开始执行命令:%v\n", c.String())
 	stdout, err := c.StdoutPipe()
 	c.Stderr = c.Stdout
@@ -51,6 +52,7 @@ func GetPercentageSign(s string) int {
 	}
 	return -1
 }
+
 func getNumberBeforePercent(s string) (int, error) {
 	// 使用正则表达式匹配百分号前的数字
 	re := regexp.MustCompile(`([0-9]+(?:\.[0-9]+)?)%`)
@@ -89,6 +91,13 @@ func GetKey(s string) string {
 执行tdl命令过程中可以循环打印消息
 */
 func ExecTdlCommand(proxy, uri, target string) (e error) {
+	start := time.Now()
+	end := start
+	defer func() {
+		end = time.Now()
+		during := timing.During(start, end)
+		log.Printf("%v用时%v\n", uri, during)
+	}()
 	var tdl string
 	switch runtime.GOOS {
 	case "darwin":
