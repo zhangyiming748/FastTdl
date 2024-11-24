@@ -55,3 +55,12 @@ func TestRename(t *testing.T) {
 	fmt.Printf("最终的旧文件名:%s\n新文件名:%v\n", absFile, newAbsFile)
 	os.Rename(absFile, newAbsFile)
 }
+
+func TestGenerateURL(t *testing.T) {
+	u := "https://t.me/mrwt98/14849"
+	err := GenerateURL(u, 10, "艺舞吧")
+	if err != nil {
+		t.Fatal(err)
+	}
+
+}
