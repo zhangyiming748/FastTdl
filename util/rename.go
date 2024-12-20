@@ -2,6 +2,7 @@ package util
 
 import (
 	"fmt"
+	"github.com/zhangyiming748/FastTdl/constant"
 	"log"
 	"os"
 	"path/filepath"
@@ -38,18 +39,15 @@ func FindUniqueFile(dir string, searchStr string) (string, error) {
 	return absPath, nil
 }
 func RenameByKey(key, words string) {
-	home, err := os.UserHomeDir()
-	if err != nil {
-		fmt.Println("无法获取用户的个人文件夹目录:", err)
-	}
-	home = filepath.Join(home, "Downloads", "media")
+	home := constant.GetMainFolder()
 	//key := "6600"
 	if path := os.Getenv("TDL"); path != "" {
 		home = path
 	}
 	absFile, err := FindUniqueFile(home, key)
 	if err != nil {
-		fmt.Println("无法获取用户的指定文件:", err)
+		log.Printf("无法获取用户的指定文件:%v\t放弃重命名\n", err)
+		return
 	}
 	fmt.Printf("absfile: %s", absFile)
 	dir := filepath.Dir(absFile)       // 获取目录路径
@@ -65,6 +63,5 @@ func RenameByKey(key, words string) {
 		log.Printf("%s重命名%s失败\n", absFile, newAbsFile)
 	} else {
 		log.Printf("%s重命名%s成功\n", absFile, newAbsFile)
-
 	}
 }
