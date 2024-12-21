@@ -3,7 +3,6 @@ package util
 import (
 	"errors"
 	"fmt"
-	"github.com/zhangyiming748/timing"
 	"log"
 	"os/exec"
 	"regexp"
@@ -11,6 +10,8 @@ import (
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/zhangyiming748/timing"
 )
 
 /*
@@ -99,15 +100,13 @@ func ExecTdlCommand(proxy, uri, target string) (e error) {
 		log.Printf("%v用时%v\n", uri, during)
 	}()
 	var tdl string
-	switch runtime.GOOS {
-	case "darwin":
-		tdl = MacosTelegramLocation
-	case "windows":
+	switch runtime.GOARCH {
+	case "amd64":
 		tdl = WindowsTelegramLocation
-	case "linux":
+	case "arm64":
 		tdl = LinuxTelegramLocation
 	default:
-		return errors.New("错误的系统,找不到对应的可执行文件")
+		return errors.New("错误的系统架构,找不到对应的可执行文件")
 	}
 	c := exec.Command(tdl, "download", "--proxy", proxy, "--threads", "8", "--url", uri, "--dir", target)
 	log.Printf("开始执行命令:%v\n", c.String())
