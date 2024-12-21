@@ -48,6 +48,7 @@ func main() {
 	links := tdl.ParseLines(urls, failed)
 	failed.Sync()
 	for _, link := range links {
+		log.Printf("开始下载第个文件%d/%d\n", link.Id, len(links))
 		if link.Offset != 0 && link.Capacity == 0 {
 			link.Id += link.Offset
 			summary := tdl.DownloadWithFolder(link, proxy)
@@ -62,6 +63,7 @@ func main() {
 			summary := tdl.DownloadWithFolder(link, proxy)
 			summaries = append(summaries, summary)
 		}
+		log.Printf("下载完成第个文件%d/%d\n", link.Id, len(links))
 	}
 	for i, status := range summaries {
 		if status.Success {

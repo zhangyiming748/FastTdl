@@ -1,12 +1,10 @@
 package util
 
 import (
-	"errors"
 	"fmt"
 	"log"
 	"os/exec"
 	"regexp"
-	"runtime"
 	"strconv"
 	"strings"
 	"time"
@@ -99,15 +97,8 @@ func ExecTdlCommand(proxy, uri, target string) (e error) {
 		during := timing.During(start, end)
 		log.Printf("%v用时%v\n", uri, during)
 	}()
-	var tdl string
-	switch runtime.GOARCH {
-	case "amd64":
-		tdl = WindowsTelegramLocation
-	case "arm64":
-		tdl = LinuxTelegramLocation
-	default:
-		return errors.New("错误的系统架构,找不到对应的可执行文件")
-	}
+	var tdl = TdlLocation
+
 	c := exec.Command(tdl, "download", "--proxy", proxy, "--threads", "8", "--url", uri, "--dir", target)
 	log.Printf("开始执行命令:%v\n", c.String())
 	stdout, err := c.StdoutPipe()
