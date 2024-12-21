@@ -27,19 +27,32 @@
 完成上述 `docker-compose.yml` 文件的配置修改后，在命令行或终端中进入到该 `docker-compose.yml` 文件所在的目录（即项目目录），然后执行 `docker-compose` 命令（具体的命令语法可能因 `docker-compose` 版本等因素略有不同，常见的如 `docker-compose up -d` 用于在后台启动相关服务等），开始下载操作。下载完成后，文件会自动保存在项目所在文件夹的同级目录下，你可以方便地到该位置去查看和使用下载好的文件。
 
 # 支持的格式
+
 ```
 channle = 频道id
 fid = 文件id
 tag = 归档的文件夹名
+subtag = 归档的子文件夹名
 fname = 下载后重命名的正式文件名(不包含扩展名)
-offset = 向下继续下载n个文件
-
-https://t.me/${channel}/${fid}
-https://t.me/${channel}/${fid}#${tag}
-https://t.me/${channel}/${fid}#${tag}@${fname}
-https://t.me/${channel}/${fid} ${offset}
-https://t.me/${channel}/${fid}#${tag} ${offset}
+capacity = 向下下载n个文件
+offset = 下载之后的第n个文件
 ```
 
-**不支持的格式 `https://t.me/${channel}/${fid}#${tag}@${fname} ${offset}`**
+```
+https://t.me/${channel}/${fid}
+https://t.me/${channel}/${fid}#${tag}
+https://t.me/${channel}/${fid}#${tag}&${subtag}
+https://t.me/${channel}/${fid}#${tag}&${subtag}@${fname}
+
+https://t.me/${channel}/${fid}+${capacity}
+https://t.me/${channel}/${fid}#${tag}+${capacity}
+https://t.me/${channel}/${fid}#${tag}&${subtag}+${capacity}
+https://t.me/${channel}/${fid}#${tag}&${subtag}@${fname}+${capacity}
+
+https://t.me/${channel}/${fid}+${offset}
+https://t.me/${channel}/${fid}#${tag}+${offset}
+https://t.me/${channel}/${fid}#${tag}&${subtag}+${offset}
+https://t.me/${channel}/${fid}#${tag}&${subtag}@${fname}+${offset}
+```
+
 

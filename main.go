@@ -49,7 +49,7 @@ func main() {
 	failed.Sync()
 	for _, link := range links {
 		if link.Offset != 0 && link.Capacity == 0 {
-			link.AddIdByOffset()
+			link.Id += link.Offset
 			summary := tdl.DownloadWithFolder(link, proxy)
 			summaries = append(summaries, summary)
 		} else if link.Offset == 0 && link.Capacity != 0 {

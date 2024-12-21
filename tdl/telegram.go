@@ -79,29 +79,24 @@ func ParseLines(lines []string, f *os.File) (ofs []constant.OneFile) {
 func parseOneLine(line string) (*constant.OneFile, error) {
 	log.Printf("解析行: %s\n", line)
 	of := new(constant.OneFile)
-	if prefix, capacity := getCapacity(line); capacity != 0 {
-		fmt.Printf("获取容量之后:%+v\n%v\n", prefix, capacity)
-		of.SetCapacity(capacity)
-	}
-
+	line = strings.Replace(line, "?single", "", -1)
 	if channel, id, err := getChannelAndFileID(line); err != nil {
 		return nil, fmt.Errorf("URL: %s 不符合格式\n", line)
 	} else {
 		of.SetId(id)
 		of.SetChannel(channel)
 	}
-	if prefix, offset := getOffset(line); offset != 0 {
-		fmt.Printf("获取偏移量之后:prefix:%+v\nsuffix:%v\n", prefix, offset)
-		fmt.Printf("此时的of:%+v\n", of)
-		of.SetOffset(offset + of.Id)
-		fmt.Printf("此时的of:%+v\n", of)
-	}
-	if tag, subtag, filename, _, _, err := getParam(line); err != nil {
-		return nil, fmt.Errorf("URL: %s 不符合格式\n", line)
+	originUrl := strings.Join([]string{"https://t.me", of.Channel, strconv.Itoa(of.Id)}, "/")
+	params := strings.Replace(line, originUrl, "", 1)
+	tag, subtag, filename, offset, capacity, err := getParam(params)
+	if err != nil {
+		return nil, err
 	} else {
 		of.SetTag(tag)
 		of.SetSubtag(subtag)
 		of.SetFileName(filename)
+		of.SetOffset(offset)
+		of.SetCapacity(capacity)
 	}
 	log.Printf("解析结果:%+v\n", of)
 	return of, nil
@@ -129,88 +124,34 @@ func getChannelAndFileID(url string) (channel string, file int, err error) {
 	}
 }
 func getParam(input string) (tag, subtag, filename string, offset, capacity int, err error) {
-	// 定义正则表达式来匹配属性
-	re := regexp.MustCompile(`(#([^&@+%]*))|(&([^@+%]*))|(@([^+%]*))|(\+([^%]*))|(%(.*?))`)
-	matches := re.FindAllStringSubmatch(input, -1)
-	// 创建一个 Attributes 结构体实例
-	// 遍历匹配结果并填充结构体
-	for _, match := range matches {
-		if match[2] != "" {
-			tag = match[2]
-		} else if match[4] != "" {
-			subtag = match[4]
-		} else if match[6] != "" {
-			filename = match[6]
-		} else if match[8] != "" {
-			offset, err = strconv.Atoi(match[8])
-			if err != nil {
-				return "", "", "", 0, 0, err
-			}
-		} else if match[10] != "" {
-			capacity, err = strconv.Atoi(match[10])
-			if err != nil {
-				return "", "", "", 0, 0, err
-			}
+	/*
+		因为 %或+后面不可能再出现其他参数了，这两个属性也不能同时存在，所以单独处理
+	*/
+	if strings.Contains(input, "%") { //包含容量
+		capacity, err = strconv.Atoi(strings.Split(input, "%")[1])
+		if err != nil {
+			return "", "", "", 0, 0, err
 		}
+		input = strings.Split(input, "%")[0]
 	}
-	//fmt.Printf("tag = %v\nsubtag = %v\nfilename = %v\noffset = %v\ncapacity = %d\n", tag, subtag, filename, offset, capacity)
-	return tag, subtag, filename, 0, 0, nil
-}
-
-/*
-https://t.me/TNTsex/27584#其他文字
-https://t.me/TNTsex/27584&其他文字
-https://t.me/TNTsex/27584@其他文字
-https://t.me/TNTsex/27584+其他文字
-https://t.me/TNTsex/27584%其他文字
-go实现分割网址部分和以第一个出现的特殊符号为分割的其他内容
-perfix变量保存url部分 如https://t.me/TNTsex/27584
-suffix保存包含用来分隔的这个特殊符号的其他文字 如 %其他文字
-*/
-func splitUrlAndParams(input string) (string, string) {
-	// 定义特殊符号
-	specialChars := []string{"#", "&", "@", "+", "%"}
-	var firstSpecialChar string
-	var index int
-
-	// 找到第一个出现的特殊符号
-	for _, char := range specialChars {
-		if i := strings.Index(input, char); i != -1 {
-			if firstSpecialChar == "" || i < index {
-				firstSpecialChar = char
-				index = i
-			}
+	if strings.Contains(input, "+") { //包含偏移量
+		offset, err = strconv.Atoi(strings.Split(input, "+")[1])
+		if err != nil {
+			return "", "", "", 0, 0, err
 		}
+		input = strings.Split(input, "+")[0]
 	}
-	// 如果找到了特殊符号，进行分割
-	if firstSpecialChar != "" {
-		prefix := input[:index]
-		suffix := input[index:] // 包含特殊符号
-		return prefix, suffix
+	if strings.Contains(input, "@") {
+		filename = strings.Split(input, "@")[1]
+		input = strings.Split(input, "@")[0]
 	}
-	// 如果没有找到特殊符号，返回原始字符串和空字符串
-	return input, ""
-}
-
-/*
-因为 %或+后面不可能再出现其他参数了，这两个属性也不能同时存在，所以单独处理
-*/
-func getOffset(s string) (line string, offset int) {
-	if strings.Contains(s, "+") {
-		// 偏移量
-		prefix := strings.Split(s, "+")[0]
-		suffix := strings.Split(s, "+")[1]
-		offset, _ = strconv.Atoi(suffix)
-		return prefix, offset
+	if strings.Contains(input, "&") {
+		subtag = strings.Split(input, "&")[1]
+		input = strings.Split(input, "&")[0]
 	}
-	return s, 0
-}
-func getCapacity(s string) (line string, capacity int) {
-	if strings.Contains(s, "%") {
-		prefix := strings.Split(s, "%")[0]
-		suffix := strings.Split(s, "%")[1]
-		capacity, _ = strconv.Atoi(suffix)
-		return prefix, capacity
+	if strings.Contains(input, "#") {
+		tag = strings.Split(input, "#")[1]
+		input = strings.Split(input, "#")[0]
 	}
-	return s, 0
+	return tag, subtag, filename, offset, capacity, nil
 }
