@@ -3,15 +3,16 @@ package tdl
 import (
 	"errors"
 	"fmt"
-	"github.com/syndtr/goleveldb/leveldb"
-	"github.com/zhangyiming748/FastTdl/constant"
-	"github.com/zhangyiming748/FastTdl/util"
 	"log"
 	"os"
 	"path/filepath"
 	"regexp"
 	"strconv"
 	"strings"
+
+	"github.com/syndtr/goleveldb/leveldb"
+	"github.com/zhangyiming748/FastTdl/constant"
+	"github.com/zhangyiming748/FastTdl/util"
 )
 
 //	func GenerateDownloadLinkByOffset(of constant.OneFile) {
@@ -44,6 +45,8 @@ func DownloadWithFolder(of constant.OneFile, proxy string) constant.OneFile {
 		util.GetLevelDB().Put([]byte(uri), []byte("downloaded"), nil)
 	} else {
 		log.Println("文件下载过,跳过")
+		of.SetStatus()
+		return of
 	}
 	target := constant.GetMainFolder()
 	if tag := of.Tag; tag != "" {
