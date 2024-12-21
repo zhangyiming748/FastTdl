@@ -11,40 +11,85 @@ func TestGetParam(t *testing.T) {
 		"https://t.me/TNTsex/27584#主文件夹",
 		"https://t.me/TNTsex/27584&子文件夹",
 		"https://t.me/TNTsex/27584@文件名",
-		"https://t.me/TNTsex/27584+偏移量",
-		"https://t.me/TNTsex/27584%容量",
+		"https://t.me/TNTsex/27584+3",
+		"https://t.me/TNTsex/27584%10",
 		"https://t.me/TNTsex/27584#主文件夹&子文件夹",
 		"https://t.me/TNTsex/27584#主文件夹@文件名",
-		"https://t.me/TNTsex/27584#主文件夹+偏移量",
-		"https://t.me/TNTsex/27584#主文件夹%容量",
+		"https://t.me/TNTsex/27584#主文件夹+3",
+		"https://t.me/TNTsex/27584#主文件夹%10",
 		"https://t.me/TNTsex/27584&子文件夹@文件名",
-		"https://t.me/TNTsex/27584&子文件夹+偏移量",
-		"https://t.me/TNTsex/27584&子文件夹%容量",
-		"https://t.me/TNTsex/27584@文件名+偏移量",
-		"https://t.me/TNTsex/27584@文件名%容量",
-		"https://t.me/TNTsex/27584+偏移量%容量",
+		"https://t.me/TNTsex/27584&子文件夹+3",
+		"https://t.me/TNTsex/27584&子文件夹%10",
+		"https://t.me/TNTsex/27584@文件名+3",
+		"https://t.me/TNTsex/27584@文件名%10",
+		"https://t.me/TNTsex/27584+3%10",
 		"https://t.me/TNTsex/27584#主文件夹&子文件夹@文件名",
-		"https://t.me/TNTsex/27584#主文件夹&子文件夹+偏移量",
-		"https://t.me/TNTsex/27584#主文件夹&子文件夹%容量",
-		"https://t.me/TNTsex/27584#主文件夹@文件名+偏移量",
-		"https://t.me/TNTsex/27584#主文件夹@文件名%容量",
-		"https://t.me/TNTsex/27584#主文件夹+偏移量%容量",
-		"https://t.me/TNTsex/27584&子文件夹@文件名+偏移量",
-		"https://t.me/TNTsex/27584&子文件夹@文件名%容量",
-		"https://t.me/TNTsex/27584&子文件夹+偏移量%容量",
-		"https://t.me/TNTsex/27584@文件名+偏移量%容量",
-		"https://t.me/TNTsex/27584#主文件夹&子文件夹@文件名+偏移量",
-		"https://t.me/TNTsex/27584#主文件夹&子文件夹@文件名%容量",
-		"https://t.me/TNTsex/27584#主文件夹&子文件夹+偏移量%容量",
-		"https://t.me/TNTsex/27584#主文件夹@文件名+偏移量%容量",
-		"https://t.me/TNTsex/27584&子文件夹@文件名+偏移量%容量",
-		"https://t.me/TNTsex/27584#主文件夹&子文件夹@文件名+偏移量%容量",
+		"https://t.me/TNTsex/27584#主文件夹&子文件夹+3",
+		"https://t.me/TNTsex/27584#主文件夹&子文件夹%10",
+		"https://t.me/TNTsex/27584#主文件夹@文件名+3",
+		"https://t.me/TNTsex/27584#主文件夹@文件名%10",
+		"https://t.me/TNTsex/27584#主文件夹+3%10",
+		"https://t.me/TNTsex/27584&子文件夹@文件名+3",
+		"https://t.me/TNTsex/27584&子文件夹@文件名%10",
+		"https://t.me/TNTsex/27584&子文件夹+3%10",
+		"https://t.me/TNTsex/27584@文件名+3%10",
+		"https://t.me/TNTsex/27584#主文件夹&子文件夹@文件名+3",
+		"https://t.me/TNTsex/27584#主文件夹&子文件夹@文件名%10",
+		"https://t.me/TNTsex/27584#主文件夹&子文件夹+3%10",
+		"https://t.me/TNTsex/27584#主文件夹@文件名+3%10",
+		"https://t.me/TNTsex/27584&子文件夹@文件名+3%10",
+		"https://t.me/TNTsex/27584#主文件夹&子文件夹@文件名+3%10",
 	}
-	for i, url := range urls {
-		line, err := parseOneLine(url)
+	for _, url := range urls {
+
+		_, err := parseOneLine(url)
 		if err != nil {
 			continue
 		}
-		fmt.Printf("%d\n%+v\n", i+1, line)
+	}
+}
+func TestSuffix(t *testing.T) {
+	urls := []string{
+		"https://t.me/TNTsex/27584",
+		"https://t.me/TNTsex/27584#主文件夹",
+		"https://t.me/TNTsex/27584&子文件夹",
+		"https://t.me/TNTsex/27584@文件名",
+		"https://t.me/TNTsex/27584+3",
+		"https://t.me/TNTsex/27584%10",
+		"https://t.me/TNTsex/27584#主文件夹&子文件夹",
+		"https://t.me/TNTsex/27584#主文件夹@文件名",
+		"https://t.me/TNTsex/27584#主文件夹+3",
+		"https://t.me/TNTsex/27584#主文件夹%10",
+		"https://t.me/TNTsex/27584&子文件夹@文件名",
+		"https://t.me/TNTsex/27584&子文件夹+3",
+		"https://t.me/TNTsex/27584&子文件夹%10",
+		"https://t.me/TNTsex/27584@文件名+3",
+		"https://t.me/TNTsex/27584@文件名%10",
+		"https://t.me/TNTsex/27584+3%10",
+		"https://t.me/TNTsex/27584#主文件夹&子文件夹@文件名",
+		"https://t.me/TNTsex/27584#主文件夹&子文件夹+3",
+		"https://t.me/TNTsex/27584#主文件夹&子文件夹%10",
+		"https://t.me/TNTsex/27584#主文件夹@文件名+3",
+		"https://t.me/TNTsex/27584#主文件夹@文件名%10",
+		"https://t.me/TNTsex/27584#主文件夹+3%10",
+		"https://t.me/TNTsex/27584&子文件夹@文件名+3",
+		"https://t.me/TNTsex/27584&子文件夹@文件名%10",
+		"https://t.me/TNTsex/27584&子文件夹+3%10",
+		"https://t.me/TNTsex/27584@文件名+3%10",
+		"https://t.me/TNTsex/27584#主文件夹&子文件夹@文件名+3",
+		"https://t.me/TNTsex/27584#主文件夹&子文件夹@文件名%10",
+		"https://t.me/TNTsex/27584#主文件夹&子文件夹+3%10",
+		"https://t.me/TNTsex/27584#主文件夹@文件名+3%10",
+		"https://t.me/TNTsex/27584&子文件夹@文件名+3%10",
+		"https://t.me/TNTsex/27584#主文件夹&子文件夹@文件名+3%10",
+	}
+	for i, url := range urls {
+
+		if prefix, capacity := getCapacity(url); capacity != 0 {
+			fmt.Printf("%d\n%+v\n%v\n", i+1, prefix, capacity)
+		}
+		if prefix, offset := getOffset(url); offset != 0 {
+			fmt.Printf("%d\n%+v\n%v\n", i+1, prefix, offset)
+		}
 	}
 }

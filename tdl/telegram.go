@@ -71,18 +71,39 @@ func ParseLines(lines []string, f *os.File) (ofs []constant.OneFile) {
 			f.WriteString("\n")
 			continue
 		} else {
-			ofs = append(ofs, of)
+			ofs = append(ofs, *of)
 		}
 	}
 	return ofs
 }
-func parseOneLine(line string) (of constant.OneFile, err error) {
-	if of.Channel, of.Id, err = getChannelAndFileID(line); err != nil {
-		return constant.OneFile{}, fmt.Errorf("URL: %s 不符合格式\n", line)
+func parseOneLine(line string) (*constant.OneFile, error) {
+	log.Printf("解析行: %s\n", line)
+	of := new(constant.OneFile)
+	if prefix, capacity := getCapacity(line); capacity != 0 {
+		fmt.Printf("获取容量之后:%+v\n%v\n", prefix, capacity)
+		of.SetCapacity(capacity)
 	}
-	if of.Tag, of.Subtag, of.FileName, of.Offset, of.Capacity, err = getParam(line); err != nil {
-		return constant.OneFile{}, fmt.Errorf("URL: %s 不符合格式\n", line)
+
+	if channel, id, err := getChannelAndFileID(line); err != nil {
+		return nil, fmt.Errorf("URL: %s 不符合格式\n", line)
+	} else {
+		of.SetId(id)
+		of.SetChannel(channel)
 	}
+	if prefix, offset := getOffset(line); offset != 0 {
+		fmt.Printf("获取偏移量之后:prefix:%+v\nsuffix:%v\n", prefix, offset)
+		fmt.Printf("此时的of:%+v\n", of)
+		of.SetOffset(offset + of.Id)
+		fmt.Printf("此时的of:%+v\n", of)
+	}
+	if tag, subtag, filename, _, _, err := getParam(line); err != nil {
+		return nil, fmt.Errorf("URL: %s 不符合格式\n", line)
+	} else {
+		of.SetTag(tag)
+		of.SetSubtag(subtag)
+		of.SetFileName(filename)
+	}
+	log.Printf("解析结果:%+v\n", of)
 	return of, nil
 }
 func getChannelAndFileID(url string) (channel string, file int, err error) {
@@ -94,10 +115,10 @@ func getChannelAndFileID(url string) (channel string, file int, err error) {
 		secondSegment := matches[1] // 第二段
 		thirdSegment := matches[2]  // 第三段
 
-		fmt.Printf("URL: %s\n", url)
-		fmt.Printf("第二段: %s\n", secondSegment)
+		//fmt.Printf("URL: %s\n", url)
+		//fmt.Printf("第二段: %s\n", secondSegment)
+		//fmt.Printf("第三段: %s\n", thirdSegment)
 
-		fmt.Printf("第三段: %s\n", thirdSegment)
 		if thirdSegment_int, e := strconv.Atoi(thirdSegment); e != nil {
 			return "", 0, fmt.Errorf("URL: %s 不符合格式\n", url)
 		} else {
@@ -107,47 +128,33 @@ func getChannelAndFileID(url string) (channel string, file int, err error) {
 		return "", 0, fmt.Errorf("URL: %s 不符合格式\n", url)
 	}
 }
-func getParam(url string) (tag, subtag, filename string, offset, capacity int, err error) {
-	// 提取属性值
-	if strings.Contains(url, "#") {
-		parts := strings.SplitN(url, "#", 2)
-		if len(parts) > 1 {
-			tag = strings.Split(parts[1], "&")[0]
-		}
-	}
-	if strings.Contains(url, "&") {
-		parts := strings.SplitN(url, "&", 2)
-		if len(parts) > 1 {
-			subtag = strings.Split(parts[1], "@")[0]
-		}
-	}
-	if strings.Contains(url, "@") {
-		parts := strings.SplitN(url, "@", 2)
-		if len(parts) > 1 {
-			filename = strings.Split(parts[1], "+")[0]
-		}
-	}
-	if strings.Contains(url, "+") {
-		parts := strings.SplitN(url, "+", 2)
-		if len(parts) > 1 {
-			if offset, err = strconv.Atoi(strings.Split(parts[1], "%")[0]); err != nil {
+func getParam(input string) (tag, subtag, filename string, offset, capacity int, err error) {
+	// 定义正则表达式来匹配属性
+	re := regexp.MustCompile(`(#([^&@+%]*))|(&([^@+%]*))|(@([^+%]*))|(\+([^%]*))|(%(.*?))`)
+	matches := re.FindAllStringSubmatch(input, -1)
+	// 创建一个 Attributes 结构体实例
+	// 遍历匹配结果并填充结构体
+	for _, match := range matches {
+		if match[2] != "" {
+			tag = match[2]
+		} else if match[4] != "" {
+			subtag = match[4]
+		} else if match[6] != "" {
+			filename = match[6]
+		} else if match[8] != "" {
+			offset, err = strconv.Atoi(match[8])
+			if err != nil {
 				return "", "", "", 0, 0, err
 			}
-			//offset = strings.Split(parts[1], "%")[0]
-
-		}
-	}
-	if strings.Contains(url, "%") {
-		parts := strings.SplitN(url, "%", 2)
-		if len(parts) > 1 {
-			if capacity, err = strconv.Atoi(parts[1]); err != nil {
+		} else if match[10] != "" {
+			capacity, err = strconv.Atoi(match[10])
+			if err != nil {
 				return "", "", "", 0, 0, err
 			}
-			//capacity = parts[1]
 		}
 	}
-	fmt.Printf("主文件夹名: %s\n子文件夹名: %s\n文件名: %s\n偏移量: %d\n容量: %d\n", tag, subtag, filename, offset, capacity)
-	return tag, subtag, filename, offset, capacity, nil
+	//fmt.Printf("tag = %v\nsubtag = %v\nfilename = %v\noffset = %v\ncapacity = %d\n", tag, subtag, filename, offset, capacity)
+	return tag, subtag, filename, 0, 0, nil
 }
 
 /*
@@ -183,4 +190,27 @@ func splitUrlAndParams(input string) (string, string) {
 	}
 	// 如果没有找到特殊符号，返回原始字符串和空字符串
 	return input, ""
+}
+
+/*
+因为 %或+后面不可能再出现其他参数了，这两个属性也不能同时存在，所以单独处理
+*/
+func getOffset(s string) (line string, offset int) {
+	if strings.Contains(s, "+") {
+		// 偏移量
+		prefix := strings.Split(s, "+")[0]
+		suffix := strings.Split(s, "+")[1]
+		offset, _ = strconv.Atoi(suffix)
+		return prefix, offset
+	}
+	return s, 0
+}
+func getCapacity(s string) (line string, capacity int) {
+	if strings.Contains(s, "%") {
+		prefix := strings.Split(s, "%")[0]
+		suffix := strings.Split(s, "%")[1]
+		capacity, _ = strconv.Atoi(suffix)
+		return prefix, capacity
+	}
+	return s, 0
 }

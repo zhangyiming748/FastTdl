@@ -48,6 +48,27 @@ type OneFile struct {
 func (f *OneFile) SetStatus() {
 	f.Success = true
 }
-func (f *OneFile) AddIdByOffset() {
-	f.Id += f.Offset
+func (f *OneFile) AddIdByOffset(i int) {
+	f.Id += i
+}
+func (f *OneFile) SetCapacity(i int) {
+	f.Capacity = i
+}
+func (f *OneFile) SetOffset(i int) {
+	f.Offset = i
+}
+func (f *OneFile) SetId(i int) {
+	f.Id = i
+}
+func (f *OneFile) SetChannel(s string) {
+	f.Channel = s
+}
+func (f *OneFile) SetTag(s string) {
+	f.Tag = s
+}
+func (f *OneFile) SetSubtag(s string) {
+	f.Subtag = s
+}
+func (f *OneFile) SetFileName(s string) {
+	f.FileName = s
 }
