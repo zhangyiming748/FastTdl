@@ -9,8 +9,14 @@ jobs:
   build-and-push:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+      # - name: Checkout repository
+      #   uses: actions/checkout@v4
+      - name: get origin tdl
+        run: |
+          git clone https://github.com/iyear/tdl.git
+      - name: get fastTdl
+        run: |
+          git clone https://github.com/zhangyiming748/FastTdl.git
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
       - name: Log in to Docker Hub
@@ -18,11 +24,6 @@ jobs:
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-      # - name: Download TDL
-      #   run: |
-      #     wget -O tdl_Linux_64bit.tar.gz "https://github.com/iyear/tdl/releases/download/v0.17.7/tdl_Linux_64bit.tar.gz"
-      #     wget -O tdl_arm64.tar.gz "https://github.com/iyear/tdl/releases/download/v0.17.7/tdl_Linux_arm64.tar.gz"
-      #     ls -ahlt
       - name: Extract Docker metadata
         id: meta
         uses: docker/metadata-action@v5
