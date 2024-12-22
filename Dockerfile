@@ -33,9 +33,9 @@ COPY --from=builderFastTDL /usr/local/bin/fastTDL /usr/local/bin/fastTDL
 
 # 中文支持
 
-RUN apk add --no-cache musl-locales musl-locales-lang && \
-    echo "zh_CN.UTF-8 UTF-8" >> /etc/locale.gen && \
-    locale-gen zh_CN.UTF-8
+# RUN apk add --no-cache musl-locales musl-locales-lang && \
+#     echo "zh_CN.UTF-8 UTF-8" >> /etc/locale.gen && \
+#     locale-gen zh_CN.UTF-8
 
 # 设置环境变量
 
