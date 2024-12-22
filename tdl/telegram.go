@@ -84,7 +84,7 @@ func parseOneLine(line string) (*constant.OneFile, error) {
 	of := new(constant.OneFile)
 	line = strings.Replace(line, "?single", "", -1)
 	if channel, id, err := getChannelAndFileID(line); err != nil {
-		return nil, fmt.Errorf("URL: %s 不符合格式\n", line)
+		return nil, fmt.Errorf("URL: %s 不符合格式", line)
 	} else {
 		of.SetId(id)
 		of.SetChannel(channel)
@@ -162,7 +162,7 @@ func getParam(input string) (tag, subtag, filename string, offset, capacity int,
 	}
 	if strings.Contains(input, "#") {
 		tag = strings.Split(input, "#")[1]
-		input = strings.Split(input, "#")[0]
 	}
+	fmt.Printf("解析参数后剩下的内容:%s\n", input)
 	return tag, subtag, filename, offset, capacity, nil
 }
