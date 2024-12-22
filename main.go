@@ -51,7 +51,7 @@ func main() {
 	for index, link := range links {
 		log.Printf("开始下载第%d/%d个文件\n", index, len(links))
 		if link.Offset != 0 && link.Capacity == 0 {
-			link.Id += link.Offset
+			link.FileId += link.Offset
 			summary := tdl.DownloadWithFolder(link, proxy)
 			summaries = append(summaries, summary)
 		} else if link.Offset == 0 && link.Capacity != 0 {
@@ -64,14 +64,14 @@ func main() {
 			summary := tdl.DownloadWithFolder(link, proxy)
 			summaries = append(summaries, summary)
 		}
-		log.Printf("下载完成第个文件%d/%d\n", link.Id, len(links))
+		log.Printf("下载完成第个文件%d/%d\n", index, len(links))
 	}
 	for i, status := range summaries {
 		if status.Success {
 			log.Printf("第%d个文件下载成功\n", i+1)
 		} else {
 			log.Printf("第%d个文件%+v下载失败\n", i+1, status)
-			failed.WriteString(fmt.Sprintf("%+v\n", strings.Join([]string{"https://t.me", status.Channel, strconv.Itoa(status.Id)}, "/")))
+			failed.WriteString(fmt.Sprintf("%+v\n", strings.Join([]string{"https://t.me", status.Channel, strconv.Itoa(status.FileId)}, "/")))
 			failed.Sync()
 		}
 

@@ -22,7 +22,7 @@ func GenerateDownloadLinkByCapacity(of constant.OneFile) (ofs []constant.OneFile
 	for i := 0; i < c; i++ {
 		nof := constant.OneFile{
 			Channel:  of.Channel,
-			Id:       of.Id + i,
+			FileId:   of.FileId + i,
 			Tag:      of.Tag,
 			Subtag:   of.Subtag,
 			FileName: "",
@@ -35,7 +35,7 @@ func GenerateDownloadLinkByCapacity(of constant.OneFile) (ofs []constant.OneFile
 	return ofs
 }
 func DownloadWithFolder(of constant.OneFile, proxy string) constant.OneFile {
-	uri := strings.Join([]string{"https://t.me", of.Channel, strconv.Itoa(of.Id)}, "/")
+	uri := strings.Join([]string{"https://t.me", of.Channel, strconv.Itoa(of.FileId)}, "/")
 	fmt.Printf("用户的下载文件夹目录: %s\n", constant.GetMainFolder())
 	fmt.Printf("要下载的链接: %s\n", uri)
 	_, err := util.GetLevelDB().Get([]byte(uri), nil)
@@ -61,7 +61,7 @@ func DownloadWithFolder(of constant.OneFile, proxy string) constant.OneFile {
 	}
 	of.SetStatus()
 	if of.FileName != "" {
-		key := strconv.Itoa(of.Id)
+		key := strconv.Itoa(of.FileId)
 		util.RenameByKey(key, of.FileName)
 	}
 	return of
@@ -88,7 +88,7 @@ func parseOneLine(line string) (*constant.OneFile, error) {
 		of.SetId(id)
 		of.SetChannel(channel)
 	}
-	originUrl := strings.Join([]string{"https://t.me", of.Channel, strconv.Itoa(of.Id)}, "/")
+	originUrl := strings.Join([]string{"https://t.me", of.Channel, strconv.Itoa(of.FileId)}, "/")
 	params := strings.Replace(line, originUrl, "", 1)
 	tag, subtag, filename, offset, capacity, err := getParam(params)
 	if err != nil {

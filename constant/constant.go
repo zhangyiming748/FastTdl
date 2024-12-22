@@ -36,7 +36,7 @@ func GetMainFolder() string {
 
 type OneFile struct {
 	Channel  string // 频道id
-	Id       int    // 文件id
+	FileId   int    // 文件id
 	Tag      string // 主文件夹名 #后面的文件名
 	Subtag   string // 子(二级)文件夹名 &后面的文件名
 	FileName string // 手动设置的文件名 @后面的文件名
@@ -50,7 +50,7 @@ func (f *OneFile) SetChannel(s string) {
 }
 
 func (f *OneFile) SetId(i int) {
-	f.Id = i
+	f.FileId = i
 }
 
 func (f *OneFile) SetTag(s string) {
