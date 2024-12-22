@@ -162,6 +162,7 @@ func getParam(input string) (tag, subtag, filename string, offset, capacity int,
 	}
 	if strings.Contains(input, "#") {
 		tag = strings.Split(input, "#")[1]
+		input = strings.Split(input, "#")[0]
 	}
 	fmt.Printf("解析参数后剩下的内容:%s\n", input)
 	return tag, subtag, filename, offset, capacity, nil
