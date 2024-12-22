@@ -69,6 +69,7 @@ func DownloadWithFolder(of constant.OneFile, proxy string) constant.OneFile {
 func ParseLines(lines []string, f *os.File) (ofs []constant.OneFile) {
 	for _, line := range lines {
 		if of, err := parseOneLine(line); err != nil { // 如果解析失败 则写入文件
+			log.Printf("解析失败:%s\n", line)
 			f.WriteString(line)
 			f.WriteString("\n")
 			continue
