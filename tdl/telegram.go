@@ -6,7 +6,6 @@ import (
 	"log"
 	"os"
 	"path/filepath"
-	"regexp"
 	"strconv"
 	"strings"
 
@@ -105,26 +104,34 @@ func parseOneLine(line string) (*constant.OneFile, error) {
 	return of, nil
 }
 func getChannelAndFileID(url string) (channel string, file int, err error) {
-	// 定义正则表达式
-	pattern := `https?://t\.me/([a-zA-Z0-9]+)/([0-9]+)([@&#+%]?)`
-	re := regexp.MustCompile(pattern)
-	matches := re.FindStringSubmatch(url)
-	if len(matches) == 4 {
-		secondSegment := matches[1] // 第二段
-		thirdSegment := matches[2]  // 第三段
-
-		//fmt.Printf("URL: %s\n", url)
-		//fmt.Printf("第二段: %s\n", secondSegment)
-		//fmt.Printf("第三段: %s\n", thirdSegment)
-
-		if thirdSegment_int, e := strconv.Atoi(thirdSegment); e != nil {
-			return "", 0, fmt.Errorf("URL: %s 不符合格式\n", url)
-		} else {
-			return secondSegment, thirdSegment_int, nil
-		}
+	//https://t.me/guoman_08/2148#&@+%
+	static := "https://t.me/"
+	url = strings.Replace(url, static, "", 1)
+	if strings.Contains(url, "#") {
+		prefix := strings.Split(url, "#")[0]
+		channel = strings.Split(prefix, "/")[0]
+		file, _ = strconv.Atoi(strings.Split(prefix, "/")[1])
+	} else if strings.Contains(url, "&") {
+		prefix := strings.Split(url, "&")[0]
+		channel = strings.Split(prefix, "/")[0]
+		file, _ = strconv.Atoi(strings.Split(prefix, "/")[1])
+	} else if strings.Contains(url, "@") {
+		prefix := strings.Split(url, "@")[0]
+		channel = strings.Split(prefix, "/")[0]
+		file, _ = strconv.Atoi(strings.Split(prefix, "/")[1])
+	} else if strings.Contains(url, "+") {
+		prefix := strings.Split(url, "+")[0]
+		channel = strings.Split(prefix, "/")[0]
+		file, _ = strconv.Atoi(strings.Split(prefix, "/")[1])
+	} else if strings.Contains(url, "%") {
+		prefix := strings.Split(url, "%")[0]
+		channel = strings.Split(prefix, "/")[0]
+		file, _ = strconv.Atoi(strings.Split(prefix, "/")[1])
 	} else {
-		return "", 0, fmt.Errorf("URL: %s 不符合格式\n", url)
+		channel = strings.Split(url, "/")[0]
+		file, _ = strconv.Atoi(strings.Split(url, "/")[1])
 	}
+	return channel, file, nil
 }
 func getParam(input string) (tag, subtag, filename string, offset, capacity int, err error) {
 	/*

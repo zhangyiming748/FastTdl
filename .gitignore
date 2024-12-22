@@ -5,3 +5,6 @@ post.link
 failed.txt
 *.log
 leveldb
+urls.txt
+*.tmp
+*.mp4
