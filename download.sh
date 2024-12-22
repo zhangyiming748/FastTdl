@@ -14,6 +14,6 @@ while IFS= read -r url; do
     # 确保网址不为空
     if [[ -n "$url" ]]; then
         echo "正在下载: $url"
-        /Users/zen/Applications/tdl download --proxy http://192.168.1.2:8889 --threads 8 --url "$url"
+        tdl download --proxy http://192.168.1.12:8889 --threads 8 --url "$url"
     fi
 done < "$url_file"
