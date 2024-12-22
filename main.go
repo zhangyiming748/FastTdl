@@ -2,7 +2,6 @@ package main
 
 import (
 	"fmt"
-	"github.com/zhangyiming748/FastTdl/constant"
 	"log"
 	"net"
 	uri "net/url"
@@ -10,6 +9,8 @@ import (
 	"runtime"
 	"strconv"
 	"strings"
+
+	"github.com/zhangyiming748/FastTdl/constant"
 
 	"github.com/zhangyiming748/FastTdl/tdl"
 	"github.com/zhangyiming748/FastTdl/util"
@@ -47,8 +48,8 @@ func main() {
 	}
 	links := tdl.ParseLines(urls, failed)
 	failed.Sync()
-	for _, link := range links {
-		log.Printf("开始下载第个文件%d/%d\n", link.Id, len(links))
+	for index, link := range links {
+		log.Printf("开始下载第%d/%d个文件\n", index, len(links))
 		if link.Offset != 0 && link.Capacity == 0 {
 			link.Id += link.Offset
 			summary := tdl.DownloadWithFolder(link, proxy)
