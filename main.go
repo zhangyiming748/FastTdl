@@ -21,6 +21,11 @@ func init() {
 	util.SetLevelDB()
 }
 
+type Info struct {
+	URL  string
+	Base constant.OneFile
+}
+
 func main() {
 	summaries := []constant.OneFile{}
 	failed, err := os.OpenFile("failed.txt", os.O_RDWR|os.O_TRUNC|os.O_CREATE, 0666)
@@ -48,8 +53,14 @@ func main() {
 	}
 	links := tdl.ParseLines(urls, failed)
 	failed.Sync()
+	var current Info
 	for index, link := range links {
 		log.Printf("开始下载第%d/%d个文件\n", index, len(links))
+		current.URL = strings.Join([]string{"https://t.me", link.Channel, strconv.Itoa(link.FileId)}, "/")
+		current.Base = link
+		if err := ping(proxy); err != nil {
+			log.Fatalf("指定的代理IP地址不可用,错误信息:%v\n本次下载解析的结构体为:%+v\n", err, current)
+		}
 		if link.Offset != 0 && link.Capacity == 0 {
 			link.FileId += link.Offset
 			summary := tdl.DownloadWithFolder(link, proxy)
