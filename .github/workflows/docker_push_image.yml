@@ -9,11 +9,11 @@ jobs:
   build-and-push:
     runs-on: ubuntu-latest
     steps:
-      # - name: Checkout repository
-      #   uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
       - name: get origin tdl
         run: |
-          git clone https://github.com/iyear/tdl.git
+          git clone https://github.com/iyear/tdl.git origin_tdl
       - name: get fastTdl
         run: |
           git clone https://github.com/zhangyiming748/FastTdl.git

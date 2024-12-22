@@ -4,7 +4,7 @@ FROM golang:1.23.4-alpine3.21 AS builderTDL
 
 LABEL authors="zen"
 
-COPY tdl /root/tdl
+COPY origin_tdl /root/tdl
 
 WORKDIR /root/tdl
 
