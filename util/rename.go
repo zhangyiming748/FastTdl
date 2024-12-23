@@ -2,11 +2,12 @@ package util
 
 import (
 	"fmt"
-	"github.com/zhangyiming748/FastTdl/constant"
 	"log"
 	"os"
 	"path/filepath"
 	"strings"
+
+	"github.com/zhangyiming748/FastTdl/constant"
 )
 
 func FindUniqueFile(dir string, searchStr string) (string, error) {
@@ -38,8 +39,14 @@ func FindUniqueFile(dir string, searchStr string) (string, error) {
 	}
 	return absPath, nil
 }
-func RenameByKey(key, words string) {
+func RenameByKey(key, words string, of constant.OneFile) {
 	home := constant.GetMainFolder()
+	if of.Tag != "" {
+		home = filepath.Join(home, of.Tag)
+		if of.Subtag != "" {
+			home = filepath.Join(home, of.Subtag)
+		}
+	}
 	//key := "6600"
 	if path := os.Getenv("TDL"); path != "" {
 		home = path
