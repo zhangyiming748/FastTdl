@@ -85,9 +85,9 @@ func main() {
 			failed.WriteString(fmt.Sprintf("%+v\n", strings.Join([]string{"https://t.me", status.Channel, strconv.Itoa(status.FileId)}, "/")))
 			failed.Sync()
 		}
-
 	}
 }
+
 func ping(proxy string) error {
 	u, err := uri.Parse(proxy)
 	if err != nil {
@@ -105,6 +105,7 @@ func ping(proxy string) error {
 	defer conn.Close()
 	return nil
 }
+
 func FileExists(path string) bool {
 	_, err := os.Stat(path)
 	if err == nil {
