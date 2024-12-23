@@ -5,6 +5,7 @@ import (
 	"log"
 	"os"
 	"path/filepath"
+	"strconv"
 	"strings"
 
 	"github.com/zhangyiming748/FastTdl/constant"
@@ -39,7 +40,8 @@ func FindUniqueFile(dir string, searchStr string) (string, error) {
 	}
 	return absPath, nil
 }
-func RenameByKey(key, words string, of constant.OneFile) {
+func RenameByKey(of constant.OneFile) {
+	key := strconv.Itoa(of.FileId)
 	home := constant.GetMainFolder()
 	if of.Tag != "" {
 		home = filepath.Join(home, of.Tag)
@@ -64,7 +66,7 @@ func RenameByKey(key, words string, of constant.OneFile) {
 	suffix := filepath.Ext(fileName)               //扩展名部分 带有.
 	prefix := strings.TrimSuffix(fileName, suffix) //文件名部分
 	fmt.Println(prefix, suffix)
-	newAbsFile := strings.Join([]string{dir, string(os.PathSeparator), words, suffix}, "")
+	newAbsFile := strings.Join([]string{dir, string(os.PathSeparator), of.FileName, suffix}, "")
 	log.Printf("最终的旧文件名:%s\t新文件名:%v\n", absFile, newAbsFile)
 	if noRename := os.Rename(absFile, newAbsFile); noRename != nil {
 		log.Printf("%s重命名%s失败\n", absFile, newAbsFile)

@@ -61,8 +61,7 @@ func DownloadWithFolder(of constant.OneFile, proxy string) constant.OneFile {
 	}
 	of.SetStatus()
 	if of.FileName != "" {
-		key := strconv.Itoa(of.FileId)
-		util.RenameByKey(key, of.FileName)
+		util.RenameByKey(of)
 	}
 	return of
 }
