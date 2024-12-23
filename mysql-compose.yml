@@ -1,0 +1,13 @@
+# docker run -d  --name public-mysql -p 3306:3306 -e MYSQL_ROOT_PASSWORD=163453 -v /my/own/datadir:/var/lib/mysql --restart=unless-stopped mysql:9.1.0
+name: public
+services:
+    mysql:
+        container_name: public-mysql
+        ports:
+            - 3306:3306
+        environment:
+            - MYSQL_ROOT_PASSWORD=163453
+        volumes:
+            - ./datadir:/var/lib/mysql
+        restart: unless-stopped
+        image: mysql:9.1.0
