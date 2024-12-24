@@ -10,4 +10,5 @@ services:
         environment:
             - TDL=/data
             - PROXY=http://192.168.1.35:8889
+            - MYSQL="192.168.1.9:3306"
         image: zhangyiming748/tdl:latest

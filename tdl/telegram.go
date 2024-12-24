@@ -47,6 +47,8 @@ func DownloadWithFolder(of constant.OneFile, proxy string) constant.OneFile {
 		if found, _ := oneline.FindByOriginURL(); found {
 			log.Println("文件下载过,跳过")
 			return of
+		} else {
+			log.Printf("数据库中没有查到相同文件,继续下载\n")
 		}
 	} else {
 		_, err := util.GetLevelDB().Get([]byte(uri), nil)
@@ -71,19 +73,27 @@ func DownloadWithFolder(of constant.OneFile, proxy string) constant.OneFile {
 	if err := util.ExecTdlCommand(proxy, uri, target); err != nil {
 		log.Println("下载命令执行出错", uri)
 		return of
-	} else {
-		if mysql.UseMysql() {
-			oneline := new(model.File)
-			oneline.Channel = of.Channel
-			oneline.FileId = of.FileId
-			oneline.Tag = of.Tag
-			oneline.Subtag = of.Subtag
-			oneline.Filename = of.FileName
-			oneline.Offset = of.Offset
-			oneline.Capacity = of.Capacity
-			oneline.InsertOne()
+	}
+	log.Printf("成功后写入数据库,此时usemysql=%v\n", mysql.UseMysql()
+)
+	if mysql.UseMysql() {
+		oneline := new(model.File)
+		oneline.Channel = of.Channel
+		oneline.FileId = of.FileId
+		oneline.Tag = of.Tag
+		oneline.Subtag = of.Subtag
+		oneline.Filename = of.FileName
+		oneline.Offset = of.Offset
+		oneline.Capacity = of.Capacity
+		log.Printf("成功后写入数据库")
+		_, err := oneline.InsertOne()
+		if err != nil {
+			log.Printf("写入数据库失败")
+		} else {
+			log.Printf("写入数据库成功")
 		}
 	}
+
 	of.SetStatus()
 	if of.FileName != "" {
 		util.RenameByKey(of)

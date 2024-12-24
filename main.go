@@ -11,6 +11,7 @@ import (
 	"strings"
 
 	"github.com/zhangyiming748/FastTdl/constant"
+	"github.com/zhangyiming748/FastTdl/mysql"
 
 	"github.com/zhangyiming748/FastTdl/tdl"
 	"github.com/zhangyiming748/FastTdl/util"
@@ -19,6 +20,7 @@ import (
 func init() {
 	util.SetLog("tdl.log")
 	util.SetLevelDB()
+	mysql.SetMysql()
 }
 
 type Info struct {
