@@ -16,7 +16,6 @@ type File struct {
 	Filename  string    `xorm:"comment('手动设置的文件名 @后面的文件名') VARCHAR(255)"`
 	Offset    int       `xorm:"comment('偏移量 如下载当前媒体之后第n个文件 +后面的数字') Int"`
 	Capacity  int       `xorm:"comment('下载当前文件和之后的n个文件 %后面的数字') Int"`
-	Success   bool      `xorm:"comment('是否下载成功') Bool"`
 	CreatedAt time.Time `xorm:"created"`
 	UpdatedAt time.Time `xorm:"updated"`
 	DeletedAt time.Time `xorm:"deleted"`
@@ -31,18 +30,13 @@ func init() {
 	}
 }
 
-func (of *File) InsertOne() (int64, error) {
-	return mysql.GetMysql().InsertOne(of)
+func (f *File) InsertOne() (int64, error) {
+	return mysql.GetMysql().InsertOne(f)
 }
 
 /*
 根据分割后的原始url判断是否下载过
 */
-func (of *File) FindByOriginURL() (bool, error) {
-	return mysql.GetMysql().Where("channel = ? AND file_id = ?", of.Channel, of.FileId).Get(&of)
-}
-func GetAll() []File {
-	ofs := make([]File, 0)
-	mysql.GetMysql().Table(File{}).Find(&ofs)
-	return ofs
+func (f *File) FindByOriginURL() (bool, error) {
+	return mysql.GetMysql().Where("channel = ? AND file_id = ?", f.Channel, f.FileId).Get(&f)
 }

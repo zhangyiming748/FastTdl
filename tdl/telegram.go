@@ -11,6 +11,8 @@ import (
 
 	"github.com/syndtr/goleveldb/leveldb"
 	"github.com/zhangyiming748/FastTdl/constant"
+	"github.com/zhangyiming748/FastTdl/model"
+	"github.com/zhangyiming748/FastTdl/mysql"
 	"github.com/zhangyiming748/FastTdl/util"
 )
 
@@ -38,15 +40,26 @@ func DownloadWithFolder(of constant.OneFile, proxy string) constant.OneFile {
 	uri := strings.Join([]string{"https://t.me", of.Channel, strconv.Itoa(of.FileId)}, "/")
 	fmt.Printf("用户的下载文件夹目录: %s\n", constant.GetMainFolder())
 	fmt.Printf("要下载的链接: %s\n", uri)
-	_, err := util.GetLevelDB().Get([]byte(uri), nil)
-	if errors.Is(err, leveldb.ErrNotFound) {
-		log.Println("文件未下载过")
-		util.GetLevelDB().Put([]byte(uri), []byte("downloaded"), nil)
+	if mysql.UseMysql() {
+		oneline := new(model.File)
+		oneline.Channel = of.Channel
+		oneline.FileId = of.FileId
+		if found, _ := oneline.FindByOriginURL(); found {
+			log.Println("文件下载过,跳过")
+			return of
+		}
 	} else {
-		log.Println("文件下载过,跳过")
-		of.SetStatus()
-		return of
+		_, err := util.GetLevelDB().Get([]byte(uri), nil)
+		if errors.Is(err, leveldb.ErrNotFound) {
+			log.Println("文件未下载过")
+			util.GetLevelDB().Put([]byte(uri), []byte("downloaded"), nil)
+		} else {
+			log.Println("文件下载过,跳过")
+			of.SetStatus()
+			return of
+		}
 	}
+
 	target := constant.GetMainFolder()
 	if tag := of.Tag; tag != "" {
 		target = filepath.Join(target, tag)
@@ -58,6 +71,18 @@ func DownloadWithFolder(of constant.OneFile, proxy string) constant.OneFile {
 	if err := util.ExecTdlCommand(proxy, uri, target); err != nil {
 		log.Println("下载命令执行出错", uri)
 		return of
+	} else {
+		if mysql.UseMysql() {
+			oneline := new(model.File)
+			oneline.Channel = of.Channel
+			oneline.FileId = of.FileId
+			oneline.Tag = of.Tag
+			oneline.Subtag = of.Subtag
+			oneline.Filename = of.FileName
+			oneline.Offset = of.Offset
+			oneline.Capacity = of.Capacity
+			oneline.InsertOne()
+		}
 	}
 	of.SetStatus()
 	if of.FileName != "" {
