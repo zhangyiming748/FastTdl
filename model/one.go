@@ -1,12 +1,14 @@
 package model
 
 import (
-	"github.com/zhangyiming748/FastTdl/mysql"
 	"time"
+
+	"github.com/zhangyiming748/FastTdl/mysql"
 )
 
 type File struct {
 	Id        int64     `xorm:"not null pk autoincr comment('主键id') INT(11)"`
+	Origin    string    `xorm:"comment('原始url') VARCHAR(255)"`
 	Channel   string    `xorm:"comment('频道id') VARCHAR(255)"`
 	FileId    int       `xorm:"comment('文件id') Int"` // 文件id
 	Tag       string    `xorm:"comment('主文件夹名 #后面的文件名') VARCHAR(255)"`
