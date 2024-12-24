@@ -36,7 +36,7 @@ func GenerateDownloadLinkByCapacity(of constant.OneFile) (ofs []constant.OneFile
 	}
 	return ofs
 }
-func DownloadWithFolder(of constant.OneFile, proxy string) constant.OneFile {
+func DownloadWithFolder(of constant.OneFile, proxy string, f *os.File) constant.OneFile {
 	uri := strings.Join([]string{"https://t.me", of.Channel, strconv.Itoa(of.FileId)}, "/")
 	fmt.Printf("用户的下载文件夹目录: %s\n", constant.GetMainFolder())
 	fmt.Printf("要下载的链接: %s\n", uri)
@@ -70,13 +70,31 @@ func DownloadWithFolder(of constant.OneFile, proxy string) constant.OneFile {
 		}
 	}
 	os.MkdirAll(target, 0755)
+	origin := uri
+	if of.Tag != "" {
+		origin = strings.Join([]string{origin, of.Tag}, "#")
+	}
+	if of.Subtag != "" {
+		origin = strings.Join([]string{origin, of.Subtag}, "&")
+	}
+	if of.FileName != "" {
+		origin = strings.Join([]string{origin, of.FileName}, "@")
+	}
+	if of.Offset != 0 {
+		origin = strings.Join([]string{origin, strconv.Itoa(of.Offset)}, "+")
+	}
+	if of.Capacity != 0 {
+		origin = strings.Join([]string{origin, strconv.Itoa(of.Capacity)}, "%")
+	}
 	if err := util.ExecTdlCommand(proxy, uri, target); err != nil {
 		log.Println("下载命令执行出错", uri)
+		f.WriteString(fmt.Sprintf("%v\n%v\n", origin, of))
 		return of
 	}
 	log.Printf("成功后写入数据库,此时usemysql=%v\n", mysql.UseMysql())
 	if mysql.UseMysql() {
 		oneline := new(model.File)
+		oneline.Origin = origin
 		oneline.Channel = of.Channel
 		oneline.FileId = of.FileId
 		oneline.Tag = of.Tag

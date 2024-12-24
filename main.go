@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"github.com/zhangyiming748/FastTdl/model"
 	"log"
 	"net"
 	uri "net/url"
@@ -21,6 +22,9 @@ func init() {
 	util.SetLog("tdl.log")
 	util.SetLevelDB()
 	mysql.SetMysql()
+	if mysql.UseMysql() {
+		mysql.GetMysql().Sync(model.File{})
+	}
 }
 
 type Info struct {
@@ -65,16 +69,16 @@ func main() {
 		}
 		if link.Offset != 0 && link.Capacity == 0 {
 			link.FileId += link.Offset
-			summary := tdl.DownloadWithFolder(link, proxy)
+			summary := tdl.DownloadWithFolder(link, proxy, failed)
 			summaries = append(summaries, summary)
 		} else if link.Offset == 0 && link.Capacity != 0 {
 			us := tdl.GenerateDownloadLinkByCapacity(link)
 			for _, u := range us {
-				summary := tdl.DownloadWithFolder(u, proxy)
+				summary := tdl.DownloadWithFolder(u, proxy, failed)
 				summaries = append(summaries, summary)
 			}
 		} else {
-			summary := tdl.DownloadWithFolder(link, proxy)
+			summary := tdl.DownloadWithFolder(link, proxy, failed)
 			summaries = append(summaries, summary)
 		}
 		log.Printf("下载完成第个文件%d/%d\n", index, len(links))
