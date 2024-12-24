@@ -74,8 +74,7 @@ func DownloadWithFolder(of constant.OneFile, proxy string) constant.OneFile {
 		log.Println("下载命令执行出错", uri)
 		return of
 	}
-	log.Printf("成功后写入数据库,此时usemysql=%v\n", mysql.UseMysql()
-)
+	log.Printf("成功后写入数据库,此时usemysql=%v\n", mysql.UseMysql())
 	if mysql.UseMysql() {
 		oneline := new(model.File)
 		oneline.Channel = of.Channel
