@@ -2,7 +2,7 @@
 
 # 指定要查找的扩展名
 extension="mp4"
-root="/mnt/c/Users/zen/Downloads/telegram/dance"
+root="/mnt/c/Users/zen/Downloads/media/dance"
 
 process_files() {
     local dir=$1
