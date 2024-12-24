@@ -1,8 +1,11 @@
 package mysql
 
 import (
-	_ "github.com/go-sql-driver/mysql"
 	"log"
+	"os"
+	"strings"
+
+	_ "github.com/go-sql-driver/mysql"
 	"xorm.io/xorm"
 )
 
@@ -14,7 +17,12 @@ var (
 // CREATE DATABASE `tdl` CHARACTER SET 'utf8mb4' COLLATE 'utf8mb4_unicode_ci';
 func SetMysql() {
 	var err error
-	engine, err = xorm.NewEngine("mysql", "root:163453@tcp(192.168.1.9:3306)/tdl?charset=utf8&parseTime=true&loc=Asia%2FShanghai")
+	var host string
+	if env := os.Getenv("MYSQL"); env == "" {
+		host = "192.168.1.9:8889"
+	}
+	session := strings.Join([]string{"root:163453@tcp(", host, ")/tdl?charset=utf8&parseTime=true&loc=Asia%2FShanghai"}, "")
+	engine, err = xorm.NewEngine("mysql", session)
 	if err != nil {
 		useMysql = false
 	} else {
