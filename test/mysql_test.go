@@ -32,3 +32,7 @@ func TestConnectAndInit(t *testing.T) {
 		log.Printf("写入数据库成功")
 	}
 }
+func TestCreateTable(t *testing.T) {
+	mysql.SetMysql()
+	mysql.GetMysql().Sync(model.Channel{})
+}
