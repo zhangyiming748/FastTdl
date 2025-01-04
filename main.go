@@ -61,7 +61,7 @@ func main() {
 	failed.Sync()
 	var current Info
 	for index, link := range links {
-		log.Printf("开始下载第%d/%d个文件\n", index, len(links))
+		log.Printf("开始下载第%d/%d个文件\n", index+1, len(links))
 		current.URL = strings.Join([]string{"https://t.me", link.Channel, strconv.Itoa(link.FileId)}, "/")
 		current.Base = link
 		if err := ping(proxy); err != nil {

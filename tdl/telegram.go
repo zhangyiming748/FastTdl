@@ -44,11 +44,18 @@ func DownloadWithFolder(of constant.OneFile, proxy string, f *os.File) constant.
 		oneline := new(model.File)
 		oneline.Channel = of.Channel
 		oneline.FileId = of.FileId
+		oneline.Filename = of.FileName
+		if oneline.Filename != "" {
+			if found, _ := oneline.FindByFilename(); !found {
+				log.Println("相同文件名的文件下载过,跳过")
+				return of
+			}
+		}
 		if found, _ := oneline.FindByOriginURL(); found {
-			log.Println("文件下载过,跳过")
+			log.Println("相同url的文件下载过,跳过")
 			return of
 		} else {
-			log.Printf("数据库中没有查到相同文件,继续下载\n")
+			log.Println("数据库中没有查到相同文件,继续下载")
 		}
 	} else {
 		_, err := util.GetLevelDB().Get([]byte(uri), nil)
