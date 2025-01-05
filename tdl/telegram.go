@@ -94,8 +94,8 @@ func DownloadWithFolder(of constant.OneFile, proxy string, f *os.File) constant.
 		origin = strings.Join([]string{origin, strconv.Itoa(of.Capacity)}, "%")
 	}
 	if err := util.ExecTdlCommand(proxy, uri, target); err != nil {
-		log.Println("下载命令执行出错", uri)
-		f.WriteString(fmt.Sprintf("%v\n%v\n", origin, of))
+		log.Printf("下载命令执行出错:%+v\n", of)
+		f.WriteString(fmt.Sprintf("%v\n", origin))
 		return of
 	}
 	log.Printf("成功后写入数据库,此时usemysql=%v\n", mysql.UseMysql())

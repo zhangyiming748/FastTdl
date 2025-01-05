@@ -12,7 +12,7 @@ func SetLog(l string) {
 	fileLogger := &lumberjack.Logger{
 		Filename:   l,
 		MaxSize:    1, // MB
-		MaxBackups: 30,
+		MaxBackups: 1,
 		MaxAge:     28, // days
 	}
 	err := fileLogger.Rotate()
