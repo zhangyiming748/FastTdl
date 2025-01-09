@@ -1,0 +1,1 @@
+docker run -d -me tdl -rm -p 8022:22 -v /Users/zen/.tdl:/root/.tdl -v /Volumes/exchange/tdl:/data -e TDL=/data -e PROXY=http://192.168.1.23:8889 -e MYSQL=192.168.1.9:3306 zhangyiming748/tdl:latest

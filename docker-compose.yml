@@ -5,10 +5,10 @@ services:
         ports:
             - 8022:22
         volumes:
-            - C:\Users\zen\.tdl:/root/.tdl
-            - C:\Users\zen\Github\FastTdl:/data
+            - /Users/zen/.tdl:/root/.tdl
+            - /Volumes/exchange/tdl:/data
         environment:
             - TDL=/data
-            - PROXY=http://192.168.1.35:8889
+            - PROXY=http://192.168.1.23:8889
             - MYSQL="192.168.1.9:3306"
         image: zhangyiming748/tdl:latest
