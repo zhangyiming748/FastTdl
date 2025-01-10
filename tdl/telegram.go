@@ -36,6 +36,7 @@ func GenerateDownloadLinkByCapacity(of constant.OneFile) (ofs []constant.OneFile
 	}
 	return ofs
 }
+
 func DownloadWithFolder(of constant.OneFile, proxy string, f *os.File) constant.OneFile {
 	uri := strings.Join([]string{"https://t.me", of.Channel, strconv.Itoa(of.FileId)}, "/")
 	fmt.Printf("用户的下载文件夹目录: %s\n", constant.GetMainFolder())
@@ -56,7 +57,6 @@ func DownloadWithFolder(of constant.OneFile, proxy string, f *os.File) constant.
 			return of
 		}
 		log.Println("数据库中没有查到相同文件,继续下载")
-
 	} else {
 		_, err := util.GetLevelDB().Get([]byte(uri), nil)
 		if errors.Is(err, leveldb.ErrNotFound) {
@@ -68,7 +68,6 @@ func DownloadWithFolder(of constant.OneFile, proxy string, f *os.File) constant.
 			return of
 		}
 	}
-
 	target := constant.GetMainFolder()
 	if tag := of.Tag; tag != "" {
 		target = filepath.Join(target, tag)
@@ -117,13 +116,13 @@ func DownloadWithFolder(of constant.OneFile, proxy string, f *os.File) constant.
 			log.Printf("写入数据库成功")
 		}
 	}
-
 	of.SetStatus()
 	if of.FileName != "" {
 		util.RenameByKey(of)
 	}
 	return of
 }
+
 func ParseLines(lines []string, f *os.File) (ofs []constant.OneFile) {
 	for _, line := range lines {
 		if of, err := parseOneLine(line); err != nil { // 如果解析失败 则写入文件
@@ -137,6 +136,7 @@ func ParseLines(lines []string, f *os.File) (ofs []constant.OneFile) {
 	}
 	return ofs
 }
+
 func parseOneLine(line string) (*constant.OneFile, error) {
 	log.Printf("解析行: %s\n", line)
 	of := new(constant.OneFile)
@@ -162,6 +162,7 @@ func parseOneLine(line string) (*constant.OneFile, error) {
 	log.Printf("解析结果:%+v\n", of)
 	return of, nil
 }
+
 func getChannelAndFileID(url string) (channel string, file int, err error) {
 	//https://t.me/guoman_08/2148#&@+%
 	static := "https://t.me/"
@@ -192,6 +193,7 @@ func getChannelAndFileID(url string) (channel string, file int, err error) {
 	}
 	return channel, file, nil
 }
+
 func getParam(input string) (tag, subtag, filename string, offset, capacity int, err error) {
 	/*
 		因为 %或+后面不可能再出现其他参数了，这两个属性也不能同时存在，所以单独处理
