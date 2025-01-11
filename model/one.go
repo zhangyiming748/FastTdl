@@ -48,12 +48,12 @@ func (f *File) InsertOne() (int64, error) {
 根据分割后的原始url判断是否下载过
 */
 func (f *File) FindByOriginURL() (bool, error) {
-	return mysql.GetMysql().Where("channel = ? AND file_id = ?", f.Channel, f.FileId).Get(&f)
+	return mysql.GetMysql().Where("channel = ? AND file_id = ?", f.Channel, f.FileId).Get(f)
 }
 
 /*
 根据自定义文件名判断是否下载过
 */
 func (f *File) FindByFilename() (bool, error) {
-	return mysql.GetMysql().Where("filename = ?", f.Filename).Get(&f)
+	return mysql.GetMysql().Where("filename = ?", f.Filename).Get(f)
 }
