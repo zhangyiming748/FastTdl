@@ -2,8 +2,10 @@ package constant
 
 import (
 	"fmt"
+	"log"
 	"os"
 	"path/filepath"
+	"runtime"
 )
 
 var proxy = "192.168.1.35:8889"
@@ -29,6 +31,11 @@ func init() {
 	if p := os.Getenv("TDL"); p != "" {
 		MainFolder = p
 	}
+	if runtime.GOARCH == "arm64" && runtime.GOOS == "android" {
+		MainFolder = filepath.Join(home, "storage", "down")
+		log.Printf("在termux上运行,下载位置为%s", MainFolder)
+	}
+
 }
 func GetMainFolder() string {
 	return MainFolder
