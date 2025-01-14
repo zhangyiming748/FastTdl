@@ -32,7 +32,7 @@ func init() {
 		MainFolder = p
 	}
 	if runtime.GOARCH == "arm64" && runtime.GOOS == "android" {
-		MainFolder = filepath.Join(home, "storage", "down")
+		MainFolder = filepath.Join(home, "storage", "downloads", "Telegram")
 		log.Printf("在termux上运行,下载位置为%s", MainFolder)
 	}
 
