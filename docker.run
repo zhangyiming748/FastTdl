@@ -1,1 +1,1 @@
-docker run -d --name tdl --rm -p 8022:22 -v /Users/zen/.tdl:/root/.tdl -v ./data:/data -e TDL=/data -e PROXY=http://192.168.1.20:8889 -e MYSQL=192.168.1.9:3306 zhangyiming748/tdl:latest
+docker run -d --name tdl --rm -p 8022:22 -v /Users/zen/.tdl:/root/.tdl -v /Users/zen/github/FastTdl/data:/data -e TDL=/data -e PROXY=http://192.168.1.20:8889 -e MYSQL=192.168.1.9:3306 zhangyiming748/tdl:latest
