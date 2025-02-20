@@ -35,3 +35,5 @@
 |Morrigan Aensland|莫莉卡·安斯兰德;莫莉卡;魔璃卡|
 |Nyotengu|女天狗;女天狗妖|
 |Mai Shiranui|不知火舞;麻衣;Mai;mai|
+|Monica|莫妮卡|
+|Helena|海莲娜;海莲那|
