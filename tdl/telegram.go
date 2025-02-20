@@ -16,6 +16,12 @@ import (
 	"github.com/zhangyiming748/FastTdl/util"
 )
 
+var zh2enMap map[string]string
+
+func init() {
+	zh2enMap = zh2en("zh_cn2en_us.md")
+}
+
 //	func GenerateDownloadLinkByOffset(of constant.OneFile) {
 //		of.AddIdByOffset()
 //	}
@@ -157,8 +163,8 @@ func parseOneLine(line string) (*constant.OneFile, error) {
 	if err != nil {
 		return nil, err
 	} else {
-		of.SetTag(tag)
-		of.SetSubtag(subtag)
+		of.SetTag(replace(tag))
+		of.SetSubtag(replace(subtag))
 		of.SetFileName(filename)
 		of.SetOffset(offset)
 		of.SetCapacity(capacity)
@@ -230,4 +236,44 @@ func getParam(input string) (tag, subtag, filename string, offset, capacity int,
 	}
 	fmt.Printf("解析参数后剩下的内容:%s\n", input)
 	return tag, subtag, filename, offset, capacity, nil
+}
+func replace(src string) string {
+	if v, ok := zh2enMap[src]; ok {
+		return v
+	}
+	return src
+}
+func zh2en(fp string) map[string]string {
+	result := make(map[string]string)
+	content, err := os.ReadFile(fp)
+	if err != nil {
+		log.Printf("读取文件失败: %v\n", err)
+		return result
+	}
+	lines := strings.Split(string(content), "\n")
+	// 跳过表头的两行
+	for _, line := range lines[2:] {
+		if line == "" || !strings.Contains(line, "|") {
+			continue
+		}
+		// 分割每一行
+		parts := strings.Split(line, "|")
+		if len(parts) != 4 { // 格式应该是 |原名|中文说法|
+			continue
+		}
+
+		original := strings.TrimSpace(parts[1])
+		translations := strings.TrimSpace(parts[2])
+		if original == "" || translations == "" {
+			continue
+		}
+
+		// 处理多个中文翻译的情况（用分号分隔）
+		for _, trans := range strings.Split(translations, ";") {
+			if trans != "" {
+				result[strings.TrimSpace(trans)] = original
+			}
+		}
+	}
+	return result
 }

@@ -31,6 +31,9 @@ func ReadByLine(fp string) []string {
 		if string(a) == "" {
 			continue
 		}
+		if strings.HasPrefix(string(a),"#")  {
+			continue
+		}
 		if strings.Contains(string(a), "single") {
 			uri := strings.Replace(string(a), "?single", "", 1)
 			lines = append(lines, uri)
