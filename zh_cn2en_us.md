@@ -31,3 +31,7 @@
 |Eve|伊芙;伊夫;eve|
 |Scarlet|思嘉莱特;斯卡蕾特|
 |Oerba Dia Vanille|欧尔芭·迪亚·香草;香草;瓦尼尔;vanille|
+|Darkstalkers|恶魔战士;暗黑战士;黑暗追击者|
+|Morrigan Aensland|莫莉卡·安斯兰德;莫莉卡;魔璃卡|
+|Nyotengu|女天狗;女天狗妖|
+|Mai Shiranui|不知火舞;麻衣;Mai;mai|
