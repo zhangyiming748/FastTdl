@@ -29,3 +29,5 @@
 |Aerith Gainsborough|爱丽丝;Aerith;alice|
 |Stellar Blade|剑星|
 |Eve|伊芙;伊夫;eve|
+|Scarlet|思嘉莱特;斯卡蕾特|
+|Oerba Dia Vanille|欧尔芭·迪亚·香草;香草;瓦尼尔;vanille|
