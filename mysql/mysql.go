@@ -64,9 +64,11 @@ func SetMysql() {
 		log.Printf("连接数据库失败: %v\n", err)
 		useMysql = false
 		return
+	}else{
+		log.Printf("成功Ping到数据库\n")
+		useMysql = true
 	}
 
-	useMysql = true
 	log.Printf("成功连接到数据库\n")
 }
 
