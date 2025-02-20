@@ -251,11 +251,13 @@ func zh2en(fp string) map[string]string {
 		return result
 	}
 	lines := strings.Split(string(content), "\n")
-	// 跳过表头的两行
-	for _, line := range lines[2:] {
-		if line == "" || !strings.Contains(line, "|") {
+	
+	for _, line := range lines {
+		// 跳过空行、标题行和分隔符行
+		if line == "" || strings.HasPrefix(line, "#") || !strings.Contains(line, "|") || strings.Contains(line, ":---:") {
 			continue
 		}
+		
 		// 分割每一行
 		parts := strings.Split(line, "|")
 		if len(parts) != 4 { // 格式应该是 |原名|中文说法|
