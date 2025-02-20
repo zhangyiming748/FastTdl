@@ -12,6 +12,7 @@ import (
 
 	"github.com/h2non/filetype"
 	"github.com/zhangyiming748/FastMediaInfo"
+	"github.com/zhangyiming748/FastTdl/constant"
 )
 
 var (
@@ -32,6 +33,12 @@ func init() {
 
 	if !hasFFmpeg || !hasMediainfo {
 		panic("缺少必要的软件依赖：ffmpeg 或 mediainfo 未安装")
+	}
+}
+func Archive() {
+	files, _ := GetAllFiles(constant.GetMainFolder())
+	for _, file := range files {
+		ConvertH265(file)
 	}
 }
 
@@ -84,17 +91,17 @@ func isH265(fp string) bool {
 }
 
 func ConvertH265(src string) {
-	purgePath:=filepath.Dir(src)
+	purgePath := filepath.Dir(src)
 	seed := rand.New(rand.NewSource(time.Now().Unix()))
 	b := seed.Intn(2000)
 	tmp := strconv.Itoa(b)
-	tmp=strings.Join([]string{tmp,".mp4"}, "")
+	tmp = strings.Join([]string{tmp, ".mp4"}, "")
 	dst := filepath.Join(purgePath, tmp)
 	cmd := exec.Command("ffmpeg", "-i", src, "-c:v", "libx265", "-tag:v", "hvc1", "-c:a", "libmp3lame", dst)
 	err := cmd.Run()
 	if err != nil {
 		log.Fatalln("转换失败：", err)
-	}else{
+	} else {
 		os.Remove(src)
 		os.Rename(dst, src)
 	}
