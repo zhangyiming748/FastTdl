@@ -29,6 +29,10 @@ func SetMysql() {
 		useMysql = true
 		log.Printf("连接数据库成功:%v\n", engine)
 	}
+	if err= engine.Ping();err!= nil {
+		log.Printf("连接数据库失败:%v\n", err)
+		useMysql = false
+	}
 }
 
 func GetMysql() *xorm.Engine {
