@@ -237,9 +237,10 @@ func getParam(input string) (tag, subtag, filename string, offset, capacity int,
 	fmt.Printf("解析参数后剩下的内容:%s\n", input)
 	return tag, subtag, filename, offset, capacity, nil
 }
+
 func replace(src string) string {
-	if v, ok := zh2enMap[src]; ok {
-		return v
+	for k, v := range zh2enMap {
+		src = strings.Replace(src, k, v, -1)
 	}
 	return src
 }
