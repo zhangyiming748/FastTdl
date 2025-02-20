@@ -13,11 +13,12 @@
 |Gentiana|根蒂亚娜|
 |Iris Amicitia|伊莉丝·阿米西提亚 伊莉丝|
 |Lunafreya Nox Fleuret|露娜芙蕾亚·诺克斯·芙洛雷 露娜|
-|||
-|||
-|||
-|||
-|||
+|Vanille|香草|
+|Na'Oh|娜瑶|
+|Jihl Nabaat|吉尔F|
+|Tekken|铁拳|
+|Lili|莉莉|
+|Kunimitsu|州光|
 |||
 |||
 |||
