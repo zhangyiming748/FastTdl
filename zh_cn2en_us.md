@@ -6,7 +6,7 @@
 |Lady Dimitrescu|吸血鬼夫人;蒂米特雷斯库夫人;蒂米特雷斯库|
 |DOA|死或生|
 |Honoka|穗香|
-|Marie Rose|玛丽·萝丝;玛丽萝丝|
+|Marie Rose|玛丽·萝丝;玛丽萝丝;Marie;玛丽|
 |Ayane|绫音|
 |Kasumi|霞|
 |Final Fantasy|最终幻想|

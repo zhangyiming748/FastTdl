@@ -91,6 +91,12 @@ func isH265(fp string) bool {
 }
 
 func ConvertH265(src string) {
+	if !isVideo(src) {
+		return
+	}
+	if isH265(src) {
+		return
+	}
 	purgePath := filepath.Dir(src)
 	seed := rand.New(rand.NewSource(time.Now().Unix()))
 	b := seed.Intn(2000)
