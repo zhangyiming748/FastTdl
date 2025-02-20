@@ -37,3 +37,6 @@
 |Mai Shiranui|不知火舞;麻衣;Mai;mai|
 |Monica|莫妮卡|
 |Helena|海莲娜;海莲那|
+|Anabella Rosfield|安娜贝拉·罗兹菲尔德;安娜贝拉|
+|Detroit Become Human|底特律变人|
+|Chloe|克洛伊|
