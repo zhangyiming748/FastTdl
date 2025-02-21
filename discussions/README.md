@@ -19,3 +19,31 @@ tdl.exe dl -f C:\tdl\tdl-export.json -d C:\TG\ -t 64 -l 5 --continue
 -f 是json文件所在目录
 -d为下载目录
 ok，坐等下载完毕
+
+----
+https://t.me/plmmpron/4137
+https://t.me/miaomiaowuhouzuo33/13914
+https://t.me/miaomiaowu333/1460?comment=14288
+
+tdl download --proxy http://127.0.0.1:8889 --threads 8 --file https://t.me/miaomiaowuhouzuo33/13914
+
+
+tdl chat export -c 2386513401 --proxy http://127.0.0.1:8889  --reply 14288
+
+tdl download --proxy http://127.0.0.1:8889 --url https://t.me/DWdmic/3318
+
+艺术家收藏夹(互联网精神传承)(2197919991):3318
+
+https://t.me/DWdmic/3318?comment=44861
+
+tdl chat export -c 2197919991 --proxy http://127.0.0.1:8889  --reply 3318
+
+tdl download --proxy http://127.0.0.1:8889 --threads 8 --file 
+
+https://t.me/plmmpron/4134?single
+https://t.me/plmmpron/4134?comment=20612
+
+tdl chat export -c plmmpron --proxy http://127.0.0.1:8889 --reply 4136
+tdl download --proxy http://127.0.0.1:8889 --threads 8 --file tdl-export.json
+https://t.me/c/2300646256/4136
+https://t.me/plmmpron/4136
