@@ -5,6 +5,7 @@ import (
 	"log"
 
 	_ "github.com/go-sql-driver/mysql"
+	"github.com/zhangyiming748/FastTdl/constant"
 	"xorm.io/xorm"
 )
 
@@ -14,14 +15,16 @@ var (
 )
 
 func SetMysql() {
+
 	var err error
-	user := "root"
-	password := "163453"
-	host := "127.0.0.1"
-	port := 3306
+	p:=constant.GetParams()
+	user := p.GetUser()
+	password :=p.GetPassword()
+	host := p.GetHost()
+	port :=p.GetPort()
 	
 	// 先连接到 MySQL 服务器（不指定数据库）
-	rootDSN := fmt.Sprintf("%s:%s@tcp(%s:%d)/?charset=utf8", user, password, host, port)
+	rootDSN := fmt.Sprintf("%s:%s@tcp(%s:%s)/?charset=utf8", user, password, host, port)
 	tempEngine, err := xorm.NewEngine("mysql", rootDSN)
 	if err != nil {
 		log.Printf("连接MySQL服务器失败: %v\n", err)
@@ -52,7 +55,7 @@ func SetMysql() {
 	tempEngine.Close()
 
 	// 连接到 tdl 数据库
-	dataSourceName := fmt.Sprintf("%s:%s@tcp(%s:%d)/tdl?charset=utf8mb4", user, password, host, port)
+	dataSourceName := fmt.Sprintf("%s:%s@tcp(%s:%s)/tdl?charset=utf8mb4", user, password, host, port)
 	engine, err = xorm.NewEngine("mysql", dataSourceName)
 	if err != nil {
 		log.Printf("连接tdl数据库失败: %v\n", err)

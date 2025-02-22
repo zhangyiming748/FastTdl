@@ -3,10 +3,8 @@ package main
 import (
 	"fmt"
 	"log"
-	"net"
-	uri "net/url"
+	
 	"os"
-	"runtime"
 	"strconv"
 	"strings"
 
@@ -42,17 +40,8 @@ func main() {
 		log.Fatal(err)
 	}
 	defer failed.Close()
-	proxy := os.Getenv("PROXY")
-	if proxy == "" && runtime.GOOS == "linux" {
-		log.Fatalln("容器中未指定外部可用代理")
-	}
-	if proxy == "" {
-		proxy = "http://127.0.0.1:8889"
-	}
-	if err := ping(proxy); err != nil {
-		log.Fatalf("指定的代理IP地址不可用,错误信息:%v\n", err)
-	}
-	defer discussions.DownloadAllDiscussions(proxy)
+	p:=constant.GetParams()
+	defer discussions.DownloadAllDiscussions(p.GetProxy())
 	var urls []string
 	if util.IsExistFile("/data/post.link") {
 		urls = util.ReadByLine("/data/post.link")
@@ -70,21 +59,19 @@ func main() {
 		log.Printf("开始下载第%d/%d个文件\n", index+1, len(links))
 		current.URL = strings.Join([]string{"https://t.me", link.Channel, strconv.Itoa(link.FileId)}, "/")
 		current.Base = link
-		if err := ping(proxy); err != nil {
-			log.Fatalf("指定的代理IP地址不可用,错误信息:%v\n本次下载解析的结构体为:%+v\n", err, current)
-		}
+		
 		if link.Offset != 0 && link.Capacity == 0 {
 			link.FileId += link.Offset
-			summary := tdl.DownloadWithFolder(link, proxy, failed)
+			summary := tdl.DownloadWithFolder(link, p.GetProxy(), failed)
 			summaries = append(summaries, summary)
 		} else if link.Offset == 0 && link.Capacity != 0 {
 			us := tdl.GenerateDownloadLinkByCapacity(link)
 			for _, u := range us {
-				summary := tdl.DownloadWithFolder(u, proxy, failed)
+				summary := tdl.DownloadWithFolder(u, p.GetProxy(), failed)
 				summaries = append(summaries, summary)
 			}
 		} else {
-			summary := tdl.DownloadWithFolder(link, proxy, failed)
+			summary := tdl.DownloadWithFolder(link, p.GetProxy(), failed)
 			summaries = append(summaries, summary)
 		}
 		log.Printf("下载完成第个文件%d/%d\n", index, len(links))
@@ -98,23 +85,5 @@ func main() {
 			failed.Sync()
 		}
 	}
-}
-
-func ping(proxy string) error {
-	u, err := uri.Parse(proxy)
-	if err != nil {
-		fmt.Println("解析URL失败:", err)
-		return err
-	}
-	ip := u.Hostname()
-	port := u.Port()
-
-	address := net.JoinHostPort(ip, port)
-	conn, err := net.Dial("tcp", address)
-	if err != nil {
-		return err
-	}
-	defer conn.Close()
-	return nil
 }
 

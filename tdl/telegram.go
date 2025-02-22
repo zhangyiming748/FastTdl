@@ -45,7 +45,9 @@ func GenerateDownloadLinkByCapacity(of constant.OneFile) (ofs []constant.OneFile
 
 func DownloadWithFolder(of constant.OneFile, proxy string, f *os.File) constant.OneFile {
 	uri := strings.Join([]string{"https://t.me", of.Channel, strconv.Itoa(of.FileId)}, "/")
-	fmt.Printf("用户的下载文件夹目录: %s\n", constant.GetMainFolder())
+	p:=constant.GetParams()
+	
+	fmt.Printf("用户的下载文件夹目录: %s\n", p.GetMainFolder())
 	fmt.Printf("要下载的链接: %s\t%+v\n", uri, of)
 	if mysql.UseMysql() {
 		oneline := new(model.File)
@@ -74,7 +76,7 @@ func DownloadWithFolder(of constant.OneFile, proxy string, f *os.File) constant.
 			return of
 		}
 	}
-	target := constant.GetMainFolder()
+	target := p.GetMainFolder()
 	if tag := of.Tag; tag != "" {
 		target = filepath.Join(target, tag)
 		if subtag := of.Subtag; subtag != "" {

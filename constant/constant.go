@@ -3,42 +3,134 @@ package constant
 import (
 	"fmt"
 	"log"
+	"net"
+	"net/url"
 	"os"
 	"path/filepath"
 	"runtime"
 )
 
-var proxy = "192.168.1.35:8889"
-
-func GetProxy() string {
-	return proxy
-}
-
-func SetProxy(p string) {
-	proxy = p
-}
-
-var (
+type Params struct {
+	Proxy      string
 	MainFolder string
-)
+	Host string
+	Port string
+	User string
+	Password string
+}
+
+var params Params
+
+func GetParams() Params {
+	return params
+}
+
+func init() {
+	proxy := os.Getenv("PROXY")
+	if proxy == "" && runtime.GOOS == "linux" {
+		log.Fatalln("容器中未指定外部可用代理")
+	}
+	if proxy == "" {
+		proxy = "http://127.0.0.1:8889"
+	}
+	if err := ping(proxy); err != nil {
+		log.Fatalf("指定的代理IP地址不可用,错误信息:%v\n", err)
+	}
+}
 
 func init() {
 	home, err := os.UserHomeDir()
 	if err != nil {
 		panic(fmt.Errorf("无法获取用户的个人文件夹目录:%v", err))
+	} else {
+		params.SetMainFolder(filepath.Join(home, "Downloads", "media"))
 	}
-	MainFolder = filepath.Join(home, "Downloads", "media")
-	if p := os.Getenv("TDL"); p != "" {
-		MainFolder = p
+	if tdl := os.Getenv("TDL"); tdl != "" {
+		params.SetMainFolder(tdl)
 	}
 	if runtime.GOARCH == "arm64" && runtime.GOOS == "android" {
-		MainFolder = "/sdcard/.telegram"
-		log.Printf("在termux上运行,下载位置为%s", MainFolder)
+		params.SetMainFolder("/sdcard/.telegram")
+		log.Printf("在termux上运行,下载位置为%v\n", params.GetMainFolder())
 	}
-
 }
-func GetMainFolder() string {
-	return MainFolder
+
+const(
+	DEFAULT_MYSQL_USER="root"
+	DEFAULT_MYSQL_PASSWORD="163453"
+	DEFAULT_MYSQL_HOST="192.168.1.18"
+	DEFAULT_MYSQL_PORT="3306"
+)
+
+func init() {
+	if port:=os.Getenv("MYSQL_PORT"); port!= "" {
+		params.SetPort(port)
+	} else {
+		params.SetPort(DEFAULT_MYSQL_PORT)
+	}
+	if host:=os.Getenv("MYSQL_HOST"); host!= "" {
+		params.SetHost(host)
+	} else {
+		params.SetHost(DEFAULT_MYSQL_HOST)
+	}
+	if user:=os.Getenv("MYSQL_USER"); user!= "" {
+		params.SetUser(user)
+	}else{
+		params.SetUser(DEFAULT_MYSQL_USER)
+	}
+	if password:=os.Getenv("MYSQL_PASSWORD"); password!= "" {
+		params.SetPassword(password)
+	}else{
+		params.SetPassword(DEFAULT_MYSQL_PASSWORD)
+	}
+	
+}
+
+func (p *Params) SetHost(s string) {
+	p.Host = s
+}
+
+func (p *Params) GetHost() string {
+	return p.Host
+}
+
+func (p *Params) SetPort(s string) {
+	p.Port = s
+}
+
+func (p *Params) GetPort() string {
+	return p.Port
+}
+
+func (p *Params) SetUser(s string) {
+	p.User = s
+}
+
+func (p *Params) GetUser() string {
+	return p.User
+}
+
+func (p *Params) SetPassword(s string) {
+	p.Password = s
+}
+
+func (p *Params) GetPassword() string {
+	return p.Password
+}
+
+func (p *Params) GetProxy() string {
+	return p.Proxy
+}
+
+func (p *Params) SetProxy(s string) {
+	p.Proxy = s
+}
+
+func (p *Params) GetMainFolder() string {
+	return p.MainFolder
+}
+
+func (p *Params) SetMainFolder(s string) {
+	p.MainFolder = s
 }
 
 type OneFile struct {
@@ -82,4 +174,22 @@ func (f *OneFile) SetCapacity(i int) {
 
 func (f *OneFile) SetStatus() {
 	f.Success = true
+}
+
+func ping(proxy string) error {
+	u, err := url.Parse(proxy)
+	if err != nil {
+		fmt.Println("解析URL失败:", err)
+		return err
+	}
+	ip := u.Hostname()
+	port := u.Port()
+
+	address := net.JoinHostPort(ip, port)
+	conn, err := net.Dial("tcp", address)
+	if err != nil {
+		return err
+	}
+	defer conn.Close()
+	return nil
 }

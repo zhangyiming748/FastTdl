@@ -36,7 +36,8 @@ func init() {
 	}
 }
 func Archive() {
-	files, _ := GetAllFiles(constant.GetMainFolder())
+	p:=constant.GetParams()
+	files, _ := GetAllFiles(p.GetMainFolder())
 	for _, file := range files {
 		ConvertH265(file)
 	}

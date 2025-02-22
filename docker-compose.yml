@@ -9,6 +9,9 @@ services:
             - /Users/zen/github/FastTdl:/data
         environment:
             - TDL=/data
-            - PROXY=http://172.17.0.1:8889
-            - MYSQL="172.17.0.1:3306"
+            - PROXY=http://192.168.1.18:8889
+            - MYSQL_HOST=192.168.1.18
+            - MYSQL_PORT=3306
+            - MYSQL_USER=root
+            - MYSQL_PASS=163453
         image: zhangyiming748/tdl:latest

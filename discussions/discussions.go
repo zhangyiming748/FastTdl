@@ -8,8 +8,10 @@ import (
 	"path/filepath"
 	"strings"
 
+	"github.com/zhangyiming748/FastTdl/constant"
 	"github.com/zhangyiming748/FastTdl/util"
 )
+
 func DownloadAllDiscussions(proxy string) {
 	var urls []string
 	if util.IsExistFile("/data/discussions.link") {
@@ -25,12 +27,9 @@ func DownloadAllDiscussions(proxy string) {
 	}
 }
 func Discussions(uri, proxy string) {
-	dir, err := os.UserHomeDir()
-	if err != nil {
-		log.Printf("获取用户目录失败: %v\n", err)
-		return
-	}
-	dir = filepath.Join(dir, "Downloads","media")
+	p := constant.GetParams()
+	var dir string
+	dir = p.GetMainFolder()
 	if strings.Contains(uri, "#") {
 		dir = filepath.Join(dir, strings.Split(uri, "#")[1])
 		uri = strings.Split(uri, "#")[0]
@@ -41,7 +40,7 @@ func Discussions(uri, proxy string) {
 		return
 	}
 	log.Printf("最终文件保存位置: %s\n", dir)
-	getJson(channelId, chatId,  proxy)
+	getJson(channelId, chatId, proxy)
 	downloadDiscussions(dir, proxy)
 }
 
@@ -72,9 +71,9 @@ func getJson(channelId, chatId, proxy string) {
 func downloadDiscussions(dir, proxy string) {
 	// tdl download --proxy http://127.0.0.1:8889 --threads 8 --file tdl-export.json
 	file := filepath.Join("tdl-export.json")
-	cmd := exec.Command("tdl", "download", "--continue","--proxy", proxy, "--threads", "8", "--file", file, "--dir", dir)
+	cmd := exec.Command("tdl", "download", "--continue", "--proxy", proxy, "--threads", "8", "--file", file, "--dir", dir)
 	if err := util.ExecCommand(cmd); err == nil {
-		if err:=os.RemoveAll(file);err!=nil {
+		if err := os.RemoveAll(file); err != nil {
 			log.Printf("删除文件失败: %v\n", err)
 		}
 	}
