@@ -18,6 +18,7 @@ func DownloadAllDiscussions(proxy string) {
 		urls = util.ReadByLine("discussions.link")
 	} else {
 		log.Println("没有在任何位置找到讨论组文件")
+		return
 	}
 	for _, u := range urls {
 		Discussions(u, proxy)
