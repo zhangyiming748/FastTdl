@@ -10,7 +10,6 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/zhangyiming748/FastTdl/discussions"
 	"github.com/zhangyiming748/FastTdl/model"
 
 	"github.com/zhangyiming748/FastTdl/archive"
@@ -50,7 +49,7 @@ func main() {
 	} else {
 		log.Fatalln("没有在任何位置找到post.link文件")
 	}
-	
+
 	proxy := os.Getenv("PROXY")
 	if proxy == "" && runtime.GOOS == "linux" {
 		log.Fatalln("容器中未指定外部可用代理")
@@ -61,15 +60,6 @@ func main() {
 	if err := ping(proxy); err != nil {
 		log.Fatalf("指定的代理IP地址不可用,错误信息:%v\n", err)
 	}
-	var filteredUrls []string
-	for _, url := range urls {
-		if strings.Contains(url, "comment") {
-			log.Printf("发现讨论组链接: %s\n", url)
-			discussions.Discussions(url,proxy)
-		}
-		filteredUrls = append(filteredUrls, url)
-	}
-	urls = filteredUrls
 	links := tdl.ParseLines(urls, failed)
 	failed.Sync()
 	var current Info

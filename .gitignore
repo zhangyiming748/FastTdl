@@ -9,3 +9,4 @@ urls.txt
 *.tmp
 *.mp4
 *.jpg
+*json
