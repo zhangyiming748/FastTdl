@@ -6,7 +6,7 @@ services:
             - 8022:22
         volumes:
             - /Users/zen/.tdl:/root/.tdl
-            - /Volumes/exchange/tdl:/data
+            - /Users/zen/github/FastTdl:/data
         environment:
             - TDL=/data
             - PROXY=http://172.17.0.1:8889

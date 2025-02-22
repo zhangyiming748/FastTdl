@@ -33,7 +33,7 @@ COPY --from=builderFastTDL /usr/local/bin/fastTDL /usr/local/bin/fastTDL
 
 # 中文支持
 
-RUN apk add  ffmpeg nano 
+RUN apk add  ffmpeg nano mediainfo
 
 # 设置环境变量
 
