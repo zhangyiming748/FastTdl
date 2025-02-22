@@ -10,6 +10,7 @@ import (
 	"strconv"
 	"strings"
 
+	"github.com/zhangyiming748/FastTdl/discussions"
 	"github.com/zhangyiming748/FastTdl/model"
 
 	"github.com/zhangyiming748/FastTdl/archive"
@@ -42,9 +43,9 @@ func main() {
 	}
 	defer failed.Close()
 	var urls []string
-	if FileExists("/data/post.link") {
+	if util.IsExistFile("/data/post.link") {
 		urls = util.ReadByLine("/data/post.link")
-	} else if FileExists("post.link") {
+	} else if util.IsExistFile("post.link") {
 		urls = util.ReadByLine("post.link")
 	} else {
 		log.Fatalln("没有在任何位置找到post.link文件")
@@ -96,6 +97,7 @@ func main() {
 			failed.Sync()
 		}
 	}
+	discussions.DownloadAllDiscussions(proxy)
 }
 
 func ping(proxy string) error {
@@ -116,13 +118,3 @@ func ping(proxy string) error {
 	return nil
 }
 
-func FileExists(path string) bool {
-	_, err := os.Stat(path)
-	if err == nil {
-		return true
-	}
-	if os.IsNotExist(err) {
-		return false
-	}
-	return false
-}
