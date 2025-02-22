@@ -156,7 +156,8 @@ func ConvertH265(src string) {
 
     // 等待命令完成
     if err := cmd.Wait(); err != nil {
-        log.Fatalln("转换失败：", err)
+        log.Printf("转换失败：%v\n", err)
+		return
     } else {
         os.Remove(src)
         os.Rename(dst, src)
