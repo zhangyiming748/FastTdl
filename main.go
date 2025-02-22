@@ -53,12 +53,12 @@ func main() {
 
 	links := tdl.ParseLines(urls, failed)
 	failed.Sync()
-	var current Info
+	//var current Info
 	defer archive.Archive()
 	for index, link := range links {
 		log.Printf("开始下载第%d/%d个文件\n", index+1, len(links))
-		current.URL = strings.Join([]string{"https://t.me", link.Channel, strconv.Itoa(link.FileId)}, "/")
-		current.Base = link
+		//current.URL = strings.Join([]string{"https://t.me", link.Channel, strconv.Itoa(link.FileId)}, "/")
+		//current.Base = link
 		
 		if link.Offset != 0 && link.Capacity == 0 {
 			link.FileId += link.Offset
