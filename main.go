@@ -42,15 +42,6 @@ func main() {
 		log.Fatal(err)
 	}
 	defer failed.Close()
-	var urls []string
-	if util.IsExistFile("/data/post.link") {
-		urls = util.ReadByLine("/data/post.link")
-	} else if util.IsExistFile("post.link") {
-		urls = util.ReadByLine("post.link")
-	} else {
-		log.Fatalln("没有在任何位置找到post.link文件")
-	}
-
 	proxy := os.Getenv("PROXY")
 	if proxy == "" && runtime.GOOS == "linux" {
 		log.Fatalln("容器中未指定外部可用代理")
@@ -61,6 +52,16 @@ func main() {
 	if err := ping(proxy); err != nil {
 		log.Fatalf("指定的代理IP地址不可用,错误信息:%v\n", err)
 	}
+	defer discussions.DownloadAllDiscussions(proxy)
+	var urls []string
+	if util.IsExistFile("/data/post.link") {
+		urls = util.ReadByLine("/data/post.link")
+	} else if util.IsExistFile("post.link") {
+		urls = util.ReadByLine("post.link")
+	} else {
+		log.Println("没有在任何位置找到post.link文件")
+	}
+
 	links := tdl.ParseLines(urls, failed)
 	failed.Sync()
 	var current Info
@@ -97,7 +98,6 @@ func main() {
 			failed.Sync()
 		}
 	}
-	discussions.DownloadAllDiscussions(proxy)
 }
 
 func ping(proxy string) error {
