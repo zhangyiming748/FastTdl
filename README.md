@@ -44,10 +44,10 @@ https://t.me/${channel}/${fid}#${tag}
 https://t.me/${channel}/${fid}#${tag}&${subtag}
 https://t.me/${channel}/${fid}#${tag}&${subtag}@${fname}
 
-https://t.me/${channel}/${fid}+${capacity}
-https://t.me/${channel}/${fid}#${tag}+${capacity}
-https://t.me/${channel}/${fid}#${tag}&${subtag}+${capacity}
-https://t.me/${channel}/${fid}#${tag}&${subtag}@${fname}+${capacity}
+https://t.me/${channel}/${fid}%${capacity}
+https://t.me/${channel}/${fid}#${tag}%${capacity}
+https://t.me/${channel}/${fid}#${tag}&${subtag}%${capacity}
+https://t.me/${channel}/${fid}#${tag}&${subtag}@${fname}%${capacity}
 
 https://t.me/${channel}/${fid}+${offset}
 https://t.me/${channel}/${fid}#${tag}+${offset}
