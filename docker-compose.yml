@@ -9,6 +9,6 @@ services:
             - /Volumes/exchange/tdl:/data
         environment:
             - TDL=/data
-            - PROXY=http://192.168.1.23:8889
-            - MYSQL="192.168.1.9:3306"
+            - PROXY=http://172.17.0.1:8889
+            - MYSQL="172.17.0.1:3306"
         image: zhangyiming748/tdl:latest
