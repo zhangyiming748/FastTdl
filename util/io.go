@@ -58,15 +58,35 @@ func WriteByLine(fp string, s []string) {
 	}
 	writer.Flush()
 }
-func IsExist(folderPath string) bool {
-	_, err := os.Stat(folderPath)
+
+// IsExistPath 判断文件夹是否存在
+func IsExistPath(folderPath string) bool {
+	info, err := os.Stat(folderPath)
 	if os.IsNotExist(err) {
 		log.Printf("文件夹:%v不存在\n", folderPath)
 		return false
-	} else {
-		log.Printf("文件夹:%v存在\n", folderPath)
-		return true
 	}
+	if !info.IsDir() {
+		log.Printf("路径:%v不是文件夹\n", folderPath)
+		return false
+	}
+	log.Printf("文件夹:%v存在\n", folderPath)
+	return true
+}
+
+// IsExistFile 判断文件是否存在
+func IsExistFile(filePath string) bool {
+	info, err := os.Stat(filePath)
+	if os.IsNotExist(err) {
+		log.Printf("文件:%v不存在\n", filePath)
+		return false
+	}
+	if info.IsDir() {
+		log.Printf("路径:%v是文件夹而不是文件\n", filePath)
+		return false
+	}
+	log.Printf("文件:%v存在\n", filePath)
+	return true
 }
 func IsExistCmd(cmds ...string) bool {
 	for _, cmd := range cmds {
