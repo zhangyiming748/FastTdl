@@ -85,8 +85,10 @@ func isVideo(fp string) bool {
 func isH265(fp string) bool {
 	mi := FastMediaInfo.GetStandMediaInfo(fp)
 	if mi.Video.Format == "HEVC" {
+		log.Printf("视频:%s格式为 HEVC,跳过转换\n", fp)
 		return true
 	} else {
+		log.Printf("视频:%s格式为 %s,开始转换\n", fp, mi.Video.Format)
 		return false
 	}
 }
