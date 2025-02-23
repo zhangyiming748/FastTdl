@@ -17,6 +17,7 @@ type Params struct {
 	Port string
 	User string
 	Password string
+	RealTime bool
 }
 
 var params Params
@@ -84,7 +85,12 @@ func init() {
 	}
 	
 }
-
+func (p *Params) GetRealTime() bool {
+	return p.RealTime
+}
+func (p *Params) SetRealTime(b bool) {
+	p.RealTime = b
+}
 func (p *Params) SetHost(s string) {
 	p.Host = s
 }

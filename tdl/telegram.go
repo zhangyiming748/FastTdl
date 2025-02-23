@@ -10,6 +10,7 @@ import (
 	"strings"
 
 	"github.com/syndtr/goleveldb/leveldb"
+	"github.com/zhangyiming748/FastTdl/archive"
 	"github.com/zhangyiming748/FastTdl/constant"
 	"github.com/zhangyiming748/FastTdl/model"
 	"github.com/zhangyiming748/FastTdl/mysql"
@@ -131,6 +132,9 @@ func DownloadWithFolder(of constant.OneFile, proxy string, f *os.File) constant.
 	of.SetStatus()
 	if of.FileName != "" {
 		util.RenameByKey(of)
+	}
+	if p.GetRealTime(){
+		archive.Archive()
 	}
 	return of
 }

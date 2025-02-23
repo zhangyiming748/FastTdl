@@ -41,6 +41,7 @@ func main() {
 	}
 	defer failed.Close()
 	p:=constant.GetParams()
+	p.SetRealTime(true)
 	defer discussions.DownloadAllDiscussions(p.GetProxy())
 	var urls []string
 	if util.IsExistFile("/data/post.link") {
