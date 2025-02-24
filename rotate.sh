@@ -2,7 +2,7 @@
 
 # 指定要查找的扩展名
 extension="mp4"
-root="/mnt/c/Users/zen/Downloads/media/dance"
+root="/Users/zen/github/FastTdl/dance"
 
 process_files() {
     local dir=$1
@@ -22,8 +22,8 @@ process_files() {
             echo "扩展名： $extension"
 
             # 执行ffmpeg命令
-           # ffmpeg -i "$file" -vf "transpose=$transpose_value" -c:v libx265 -preset medium -c:a copy -map_chapters -1 "$dir/$aftername"
-            ffmpeg -i "$file" -vf "transpose=$transpose_value" -c:v h264_nvenc -preset medium -c:a copy -map_chapters -1 "$dir/$aftername"
+            ffmpeg -i "$file" -vf "transpose=$transpose_value" -c:v libx265 -c:a libmp3lame -tag:v hvc1 -map_chapters -1 "$dir/$aftername"
+            # ffmpeg -i "$file" -vf "transpose=$transpose_value" -c:v h264_nvenc -preset medium -c:a copy -map_chapters -1 "$dir/$aftername"
             if [ $? -eq 0 ]; then
                 echo "旧文件名: $filename 新文件名: $aftername"
                 echo "done"
