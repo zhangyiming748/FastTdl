@@ -14,4 +14,5 @@ services:
             - MYSQL_PORT=3306
             - MYSQL_USER=root
             - MYSQL_PASS=163453
+            - REALTIME=true
         image: zhangyiming748/tdl:latest

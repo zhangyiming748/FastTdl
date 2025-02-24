@@ -8,16 +8,17 @@ import (
 	"os"
 	"path/filepath"
 	"runtime"
+	"strings"
 )
 
 type Params struct {
 	Proxy      string
 	MainFolder string
-	Host string
-	Port string
-	User string
-	Password string
-	RealTime bool
+	Host       string
+	Port       string
+	User       string
+	Password   string
+	RealTime   bool
 }
 
 var params Params
@@ -25,8 +26,14 @@ var params Params
 func GetParams() Params {
 	return params
 }
-
 func init() {
+	initProxy()
+	initDir()
+	initFfmpeg()
+	initMysql()
+}
+
+func initProxy() {
 	params.SetProxy(os.Getenv("PROXY"))
 	if params.Proxy == "" && runtime.GOOS == "linux" {
 		log.Fatalln("容器中未指定外部可用代理")
@@ -39,7 +46,7 @@ func init() {
 	}
 }
 
-func init() {
+func initDir() {
 	home, err := os.UserHomeDir()
 	if err != nil {
 		panic(fmt.Errorf("无法获取用户的个人文件夹目录:%v", err))
@@ -54,36 +61,43 @@ func init() {
 		log.Printf("在termux上运行,下载位置为%v\n", params.GetMainFolder())
 	}
 }
+func initFfmpeg() {
+	if p := os.Getenv("REALTIME"); strings.ToUpper(p) == "TRUE" || strings.ToUpper(p) == "1" || strings.ToUpper(p) == "YES" || strings.ToUpper(p) == "Y" {
+		params.SetRealTime(true)
+	} else {
+		params.SetRealTime(false)
+	}
+}
 
-const(
-	DEFAULT_MYSQL_USER="root"
-	DEFAULT_MYSQL_PASSWORD="163453"
-	DEFAULT_MYSQL_HOST="192.168.1.18"
-	DEFAULT_MYSQL_PORT="3306"
+const (
+	DEFAULT_MYSQL_USER     = "root"
+	DEFAULT_MYSQL_PASSWORD = "163453"
+	DEFAULT_MYSQL_HOST     = "192.168.1.18"
+	DEFAULT_MYSQL_PORT     = "3306"
 )
 
-func init() {
-	if port:=os.Getenv("MYSQL_PORT"); port!= "" {
+func initMysql() {
+	if port := os.Getenv("MYSQL_PORT"); port != "" {
 		params.SetPort(port)
 	} else {
 		params.SetPort(DEFAULT_MYSQL_PORT)
 	}
-	if host:=os.Getenv("MYSQL_HOST"); host!= "" {
+	if host := os.Getenv("MYSQL_HOST"); host != "" {
 		params.SetHost(host)
 	} else {
 		params.SetHost(DEFAULT_MYSQL_HOST)
 	}
-	if user:=os.Getenv("MYSQL_USER"); user!= "" {
+	if user := os.Getenv("MYSQL_USER"); user != "" {
 		params.SetUser(user)
-	}else{
+	} else {
 		params.SetUser(DEFAULT_MYSQL_USER)
 	}
-	if password:=os.Getenv("MYSQL_PASSWORD"); password!= "" {
+	if password := os.Getenv("MYSQL_PASSWORD"); password != "" {
 		params.SetPassword(password)
-	}else{
+	} else {
 		params.SetPassword(DEFAULT_MYSQL_PASSWORD)
 	}
-	
+
 }
 func (p *Params) GetRealTime() bool {
 	return p.RealTime
