@@ -134,7 +134,7 @@ func DownloadWithFolder(of constant.OneFile, proxy string, f *os.File) constant.
 		util.RenameByKey(of)
 	}
 	if p.GetRealTime(){
-		archive.Archive()
+		archive.ConvertH265(p.GetMainFolder())
 	}
 	return of
 }
