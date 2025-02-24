@@ -105,3 +105,9 @@
 |:---:|:---:|
 |Overwatch|守望先锋;overwatch|
 |Mercy|天使;mercy;Angela Ziegle|
+
+# 间谍过家家
+
+|原名|中文可能的说法|
+|:---:|:---:|
+|SPY×FAMILY|间谍过家家|
