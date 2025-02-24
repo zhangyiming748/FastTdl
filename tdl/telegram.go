@@ -46,8 +46,8 @@ func GenerateDownloadLinkByCapacity(of constant.OneFile) (ofs []constant.OneFile
 
 func DownloadWithFolder(of constant.OneFile, proxy string, f *os.File) constant.OneFile {
 	uri := strings.Join([]string{"https://t.me", of.Channel, strconv.Itoa(of.FileId)}, "/")
-	p:=constant.GetParams()
-	
+	p := constant.GetParams()
+
 	fmt.Printf("用户的下载文件夹目录: %s\n", p.GetMainFolder())
 	fmt.Printf("要下载的链接: %s\t%+v\n", uri, of)
 	if mysql.UseMysql() {
@@ -101,13 +101,10 @@ func DownloadWithFolder(of constant.OneFile, proxy string, f *os.File) constant.
 	if of.Capacity != 0 {
 		origin = strings.Join([]string{origin, strconv.Itoa(of.Capacity)}, "%")
 	}
-	if err := util.ExecTdlCommand(proxy, uri, target); err != nil {
-		if err := util.ExecTdlCommand(proxy, uri, target); err != nil {
-			if err := util.ExecTdlCommand(proxy, uri, target); err != nil {
-				log.Printf("下载命令执行出错:%+v\n", of)
-				f.WriteString(fmt.Sprintf("%v\n", origin))
-				return of
-			}
+	if err := util.ExecTdlCommand(proxy, uri, target); err == nil {
+		log.Printf("下载成功准备转换")
+		if p.RealTime {
+			archive.Archive()
 		}
 	}
 	log.Printf("成功后写入数据库,此时usemysql=%v\n", mysql.UseMysql())
@@ -133,9 +130,7 @@ func DownloadWithFolder(of constant.OneFile, proxy string, f *os.File) constant.
 	if of.FileName != "" {
 		util.RenameByKey(of)
 	}
-	if p.GetRealTime(){
-		archive.ConvertH265(p.GetMainFolder())
-	}
+
 	return of
 }
 
@@ -258,13 +253,13 @@ func zh2en(fp string) map[string]string {
 		return result
 	}
 	lines := strings.Split(string(content), "\n")
-	
+
 	for _, line := range lines {
 		// 跳过空行、标题行和分隔符行
 		if line == "" || strings.HasPrefix(line, "#") || !strings.Contains(line, "|") || strings.Contains(line, ":---:") {
 			continue
 		}
-		
+
 		// 分割每一行
 		parts := strings.Split(line, "|")
 		if len(parts) != 4 { // 格式应该是 |原名|中文说法|
