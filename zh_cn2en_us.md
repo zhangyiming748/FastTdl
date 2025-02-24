@@ -5,7 +5,7 @@
 |Resident Evil|恶灵古堡;生化危机|
 |Ada Wong|艾达·王;艾达王|
 |Sheva Alomar|雪瓦·阿洛马;雪瓦|
-|Lady Dimitrescu|吸血鬼夫人;蒂米特雷斯库夫人;蒂米特雷斯库|
+|Lady Dimitrescu|吸血鬼夫人;蒂米特雷斯库夫人;蒂米特雷斯库;迪米特雷斯库|
 
 # 死或生
 
@@ -83,3 +83,25 @@
 |:---:|:---:|
 |Detroit Become Human|底特律变人|
 |Chloe|克洛伊|
+
+# 超能陆战队
+
+|原名|中文可能的说法|
+|:---:|:---:|
+|Big Hero 6|超能陆战队|
+|Aunt Cass|凯斯阿姨;卡斯阿姨;cass;Cass|
+
+# 超人总动员
+
+|原名|中文可能的说法|
+|:---:|:---:|
+|The Incredibles|超人总动员|
+|Helen Parr|海伦·帕尔;弹力女超人;海伦;Helen;helen|
+|Violet Parr|紫罗兰·帕尔;Violet;violet|
+
+# 守望先锋
+
+|原名|中文可能的说法|
+|:---:|:---:|
+|Overwatch|守望先锋;overwatch|
+|Mercy|天使;mercy;Angela Ziegle|
