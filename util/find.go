@@ -1,11 +1,11 @@
 package util
 
 import (
+	"github.com/h2non/filetype"
 	"log"
 	"os"
 	"path/filepath"
 	"strings"
-	"github.com/h2non/filetype"
 )
 
 // ... existing code ...
@@ -34,8 +34,8 @@ func FindLatestFileGo(dir string) string {
 		file.Read(head)
 		if !filetype.IsVideo(head) {
 			return nil
-		} 
-		
+		}
+
 		// 更新最新文件
 		if modTime := info.ModTime().Unix(); modTime > latestTime {
 			latestTime = modTime

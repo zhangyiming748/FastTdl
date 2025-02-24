@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 	"log"
-	
+
 	"os"
 	"strconv"
 	"strings"
@@ -40,7 +40,7 @@ func main() {
 		log.Fatal(err)
 	}
 	defer failed.Close()
-	p:=constant.GetParams()
+	p := constant.GetParams()
 	defer discussions.DownloadAllDiscussions(p.GetProxy())
 	var urls []string
 	if util.IsExistFile("/data/post.link") {
@@ -59,7 +59,7 @@ func main() {
 		log.Printf("开始下载第%d/%d个文件\n", index+1, len(links))
 		//current.URL = strings.Join([]string{"https://t.me", link.Channel, strconv.Itoa(link.FileId)}, "/")
 		//current.Base = link
-		
+
 		if link.Offset != 0 && link.Capacity == 0 {
 			link.FileId += link.Offset
 			summary := tdl.DownloadWithFolder(link, p.GetProxy(), failed)
@@ -86,4 +86,3 @@ func main() {
 		}
 	}
 }
-

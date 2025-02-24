@@ -85,9 +85,9 @@ func TestSuffix(t *testing.T) {
 	t.Log(urls)
 }
 func TestZh2En(t *testing.T) {
-	m:=zh2en("../zh_cn2en_us.md")
+	m := zh2en("../zh_cn2en_us.md")
 
-	for k,v:=range m{
-		t.Logf("\nkey = %s\nvalue = %s\n",k,v)
+	for k, v := range m {
+		t.Logf("\nkey = %s\nvalue = %s\n", k, v)
 	}
 }

@@ -41,7 +41,7 @@ func FindUniqueFile(dir string, searchStr string) (string, error) {
 	return absPath, nil
 }
 func RenameByKey(of constant.OneFile) {
-	p:=constant.GetParams()
+	p := constant.GetParams()
 	key := strconv.Itoa(of.FileId)
 	home := p.GetMainFolder()
 	if of.Tag != "" {

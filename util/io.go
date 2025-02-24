@@ -31,7 +31,7 @@ func ReadByLine(fp string) []string {
 		if string(a) == "" {
 			continue
 		}
-		if strings.HasPrefix(string(a),"#")  {
+		if strings.HasPrefix(string(a), "#") {
 			continue
 		}
 		if strings.Contains(string(a), "single") {

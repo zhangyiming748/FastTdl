@@ -17,12 +17,12 @@ var (
 func SetMysql() {
 
 	var err error
-	p:=constant.GetParams()
+	p := constant.GetParams()
 	user := p.GetUser()
-	password :=p.GetPassword()
+	password := p.GetPassword()
 	host := p.GetHost()
-	port :=p.GetPort()
-	
+	port := p.GetPort()
+
 	// 先连接到 MySQL 服务器（不指定数据库）
 	rootDSN := fmt.Sprintf("%s:%s@tcp(%s:%s)/?charset=utf8", user, password, host, port)
 	tempEngine, err := xorm.NewEngine("mysql", rootDSN)
@@ -67,7 +67,7 @@ func SetMysql() {
 		log.Printf("连接数据库失败: %v\n", err)
 		useMysql = false
 		return
-	}else{
+	} else {
 		log.Printf("成功Ping到数据库\n")
 		useMysql = true
 	}
