@@ -6,12 +6,12 @@
 |Ada Wong|艾达·王;艾达王|
 |Sheva Alomar|雪瓦·阿洛马;雪瓦|
 |Lady Dimitrescu|吸血鬼夫人;蒂米特雷斯库夫人;蒂米特雷斯库;迪米特雷斯库|
-
+|Ashley Graham |Ashley;碍事梨;阿什利|
 # 死或生
 
 |原名|中文可能的说法|
 |:---:|:---:|
-|DOA|死或生|
+|Dead or Alive|死或生;DOA;doa|
 |Honoka|穗香|
 |Marie Rose|玛丽·萝丝;玛丽萝丝;Marie;玛丽|
 |Ayane|绫音;凌音;铃音|
@@ -39,6 +39,7 @@
 |Tifa Lockhart|蒂法;Tifa;tifa|
 |Aerith Gainsborough|爱丽丝;Aerith;alice|
 |Anabella Rosfield|安娜贝拉·罗兹菲尔德;安娜贝拉|
+|Jessie Rasberry|Jessie;jessie;杰西|
 
 # 铁拳
 
