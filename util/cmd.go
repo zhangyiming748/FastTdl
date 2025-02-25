@@ -99,7 +99,7 @@ func ExecTdlCommand(proxy, uri, target string) (e error) {
 	}()
 	var tdl = TdlLocation
 
-	c := exec.Command(tdl, "download", "--proxy", proxy, "--threads", "8", "--url", uri, "--dir", target)
+	c := exec.Command(tdl, "download", "--proxy", proxy,"--continue", "--threads", "8", "--url", uri, "--dir", target)
 	log.Printf("开始执行命令:%v\n", c.String())
 	stdout, err := c.StdoutPipe()
 	c.Stderr = c.Stdout
