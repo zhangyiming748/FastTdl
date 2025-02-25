@@ -3,21 +3,25 @@ package tdl
 import (
 	"errors"
 	"fmt"
-	"log"
-	"os"
-	"path/filepath"
-	"strconv"
-	"strings"
-
 	"github.com/syndtr/goleveldb/leveldb"
 	"github.com/zhangyiming748/FastTdl/archive"
 	"github.com/zhangyiming748/FastTdl/constant"
 	"github.com/zhangyiming748/FastTdl/model"
 	"github.com/zhangyiming748/FastTdl/mysql"
 	"github.com/zhangyiming748/FastTdl/util"
+	"log"
+	"os"
+	"path/filepath"
+	"strconv"
+	"strings"
+	"time"
 )
 
 var zh2enMap map[string]string
+
+const (
+	MaxRetries = 3 // 最大重试次数
+)
 
 func init() {
 	zh2enMap = zh2en("zh_cn2en_us.md")
@@ -101,11 +105,30 @@ func DownloadWithFolder(of constant.OneFile, proxy string, f *os.File) constant.
 	if of.Capacity != 0 {
 		origin = strings.Join([]string{origin, strconv.Itoa(of.Capacity)}, "%")
 	}
-	if err := util.ExecTdlCommand(proxy, uri, target); err == nil {
-		log.Printf("下载成功准备转换")
-		if p.RealTime {
-			archive.Archive()
+	var downloadErr error
+	for i := 0; i < MaxRetries; i++ {
+		if i > 0 {
+			log.Printf("第%d次重试下载\n", i+1)
+			time.Sleep(time.Second * 3) // 重试前等待3秒
 		}
+
+		if err := util.ExecTdlCommand(proxy, uri, target); err == nil {
+			log.Printf("下载成功")
+			if p.RealTime {
+				archive.Archive()
+			}
+			downloadErr = nil
+			break
+		} else {
+			downloadErr = err
+			log.Printf("第%d次下载失败: %v\n", i+1, err)
+		}
+	}
+
+	if downloadErr != nil {
+		log.Printf("达到最大重试次数%d,下载命令执行出错:%+v\n", MaxRetries, of)
+		f.WriteString(fmt.Sprintf("%v\n", origin))
+		return of
 	}
 	log.Printf("成功后写入数据库,此时usemysql=%v\n", mysql.UseMysql())
 	if mysql.UseMysql() {
