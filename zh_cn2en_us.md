@@ -14,7 +14,7 @@
 |DOA|死或生|
 |Honoka|穗香|
 |Marie Rose|玛丽·萝丝;玛丽萝丝;Marie;玛丽|
-|Ayane|绫音|
+|Ayane|绫音;凌音;铃音|
 |Tamaki|环|
 |Kasumi|霞|
 |Nyotengu|女天狗;女天狗妖|

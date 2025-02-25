@@ -1,6 +1,7 @@
 package archive
 
 import (
+	"fmt"
 	"log"
 	"math/rand"
 	"os"
@@ -128,7 +129,7 @@ func ConvertH265(src string) {
 		for {
 			n, err := stdout.Read(buf)
 			if n > 0 {
-				log.Print(string(buf[:n]))
+				fmt.Print(string(buf[:n]))
 			}
 			if err != nil {
 				break
