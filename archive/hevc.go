@@ -94,6 +94,18 @@ func isH265(fp string) bool {
 	}
 }
 
+func outOfFHD(fp string) bool {
+	mi := FastMediaInfo.GetStandMediaInfo(fp)
+	height, _ := strconv.Atoi(mi.Video.Height)
+	width, _ := strconv.Atoi(mi.Video.Width)
+	if height > 1920 || width > 1920 {
+		log.Printf("视频:%s大于1080p,转换\n", fp)
+		return true
+	} else {
+		return false
+	}
+}
+
 func ConvertH265(src string) {
 	if !isVideo(src) {
 		return
@@ -107,7 +119,16 @@ func ConvertH265(src string) {
 	tmp := strconv.Itoa(b)
 	tmp = strings.Join([]string{tmp, ".mp4"}, "")
 	dst := filepath.Join(purgePath, tmp)
-	cmd := exec.Command("ffmpeg", "-i", src, "-c:v", "libx265", "-tag:v", "hvc1", "-c:a", "libmp3lame", dst)
+
+	args := []string{"-i", src}
+	args = append(args, "-c:v", "libx265")
+	args = append(args, "-tag:v", "hvc1")
+	if outOfFHD(src) {
+		args = append(args,"-vf", "scale=if(gt(iw\\,ih)\\,1920\\,-2):if(gt(iw\\,ih)\\,-2\\,1080)")
+	}
+	args = append(args, "-c:a", "libmp3lame")
+	args = append(args, dst)
+	cmd := exec.Command("ffmpeg", args...)
 
 	// 获取输出和错误管道
 	stdout, _ := cmd.StdoutPipe()
