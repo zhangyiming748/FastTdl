@@ -14,8 +14,8 @@ func TestGetAllFiles(t *testing.T) {
 
 // go test -timeout 30h -v -run TestGetAllImages
 func TestGetAllImages(t *testing.T) {
-	files,_:=GetAllImageFiles("/data")
-	for _,v:=range files {
+	files, _ := GetAllImageFiles("/data")
+	for _, v := range files {
 		ConvertAVIF(v)
 	}
 }

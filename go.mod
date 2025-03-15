@@ -21,6 +21,6 @@ require (
 
 require (
 	github.com/go-sql-driver/mysql v1.9.0
-	github.com/golang/snappy v0.0.4 // indirect
+	github.com/golang/snappy v1.0.0 // indirect
 	xorm.io/xorm v1.3.9
 )
