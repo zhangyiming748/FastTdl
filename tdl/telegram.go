@@ -115,7 +115,8 @@ func DownloadWithFolder(of constant.OneFile, proxy string, f *os.File) constant.
 		if err := util.ExecTdlCommand(proxy, uri, target); err == nil {
 			log.Printf("下载成功")
 			if p.RealTime {
-				archive.Archive()
+				archive.ArchiveVideo()
+				archive.ArchiveImage()
 			}
 			downloadErr = nil
 			break
