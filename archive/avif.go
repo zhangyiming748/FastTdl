@@ -52,7 +52,9 @@ func GetAllImageFiles(root string) ([]string, error) {
 				return err
 			}
 			if isImage(absPath) {
-				files = append(files, absPath)
+				if filepath.Ext(absPath) != ".avif" {
+					files = append(files, absPath)
+				}
 			}
 		}
 		return nil
