@@ -2,8 +2,11 @@ package archive
 
 import (
 	"testing"
+	"log"
 )
-
+func init() {
+	log.SetFlags(log.Ltime | log.Lshortfile)
+}
 // go test -timeout 30h -v -run TestGetAllFiles
 func TestGetAllFiles(t *testing.T) {
 	files, _ := GetAllVideoFiles("/Users/zen/github/FastTdl")
