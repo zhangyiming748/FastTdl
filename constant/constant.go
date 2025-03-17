@@ -61,6 +61,7 @@ func initDir() {
 		log.Printf("在termux上运行,下载位置为%v\n", params.GetMainFolder())
 	}
 }
+
 func initFfmpeg() {
 	if p := os.Getenv("REALTIME"); strings.ToUpper(p) == "TRUE" || strings.ToUpper(p) == "1" || strings.ToUpper(p) == "YES" || strings.ToUpper(p) == "Y" {
 		params.SetRealTime(true)
@@ -72,8 +73,8 @@ func initFfmpeg() {
 const (
 	DEFAULT_MYSQL_USER     = "root"
 	DEFAULT_MYSQL_PASSWORD = "163453"
-	DEFAULT_MYSQL_HOST     = "192.168.2.5"
-	DEFAULT_MYSQL_PORT     = "3307"
+	DEFAULT_MYSQL_HOST     = "127.0.0.1"
+	DEFAULT_MYSQL_PORT     = "3306"
 )
 
 func initMysql() {

@@ -25,13 +25,22 @@ func SetMysql() {
 
 	// 先连接到 MySQL 服务器（不指定数据库）
 	rootDSN := fmt.Sprintf("%s:%s@tcp(%s:%s)/?charset=utf8", user, password, host, port)
+	log.Printf("第一次连接数据库的参数%s\n", rootDSN)
 	tempEngine, err := xorm.NewEngine("mysql", rootDSN)
 	if err != nil {
 		log.Printf("连接MySQL服务器失败: %v\n", err)
 		useMysql = false
 		return
 	}
-
+	// 修改这里：使用 tempEngine 而不是 engine
+	if err = tempEngine.Ping(); err != nil {
+		log.Printf("连接数据库失败: %v\n", err)
+		useMysql = false
+		return
+	} else {
+		log.Printf("成功Ping到数据库\n")
+		useMysql = true
+	}
 	// 检查数据库是否存在
 	rows, err := tempEngine.QueryString("SELECT SCHEMA_NAME FROM information_schema.SCHEMATA WHERE SCHEMA_NAME = 'tdl'")
 	if err != nil {
@@ -63,14 +72,7 @@ func SetMysql() {
 		return
 	}
 
-	if err = engine.Ping(); err != nil {
-		log.Printf("连接数据库失败: %v\n", err)
-		useMysql = false
-		return
-	} else {
-		log.Printf("成功Ping到数据库\n")
-		useMysql = true
-	}
+	
 
 	log.Printf("成功连接到数据库\n")
 }
