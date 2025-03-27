@@ -22,6 +22,7 @@
 |Mai Shiranui|不知火舞;麻衣;Mai;mai|
 |Monica|莫妮卡|
 |Helena|海莲娜;海莲那|
+|Momiji|红叶;momiji|
 
 # 最终幻想
 
