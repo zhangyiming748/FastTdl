@@ -38,7 +38,7 @@
 |Na'Oh|娜瑶|
 |Jihl Nabaat|吉尔·娜巴特;吉尔娜巴特|
 |Jessie`s Mom|杰西妈妈;杰西的妈妈|
-|Tifa Lockhart|蒂法;Tifa;tifa|
+|Tifa Lockhart|蒂法;tifa|
 |Aerith Gainsborough|爱丽丝;Aerith;alice|
 |Anabella Rosfield|安娜贝拉|
 |Jessie Rasberry|Jessie;jessie;杰西|
