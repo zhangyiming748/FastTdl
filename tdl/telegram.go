@@ -232,7 +232,7 @@ func parseOneLine(line string) (*constant.OneFile, error) {
 // returns: 频道名，文件ID，错误信息
 func getChannelAndFileID(url string) (channel string, file int, err error) {
 	//https://t.me/guoman_08/2148#&@+%
-	static := "https://t.me/"
+	static := "https://t.me/c/"
 	url = strings.Replace(url, static, "", 1)
 	if strings.Contains(url, "#") {
 		prefix := strings.Split(url, "#")[0]
