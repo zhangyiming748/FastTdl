@@ -212,6 +212,9 @@ func parseOneLine(line string) (*constant.OneFile, error) {
 		of.SetChannel(channel)
 	}
 	originUrl := strings.Join([]string{"https://t.me", of.Channel, strconv.Itoa(of.FileId)}, "/")
+	if strings.Contains(line, "/c/") {
+		originUrl =strings.Join([]string{"https://t.me/c/", of.Channel, strconv.Itoa(of.FileId)}, "/")
+	}
 	params := strings.Replace(line, originUrl, "", 1)
 	tag, subtag, filename, offset, capacity, err := getParam(params)
 	if err != nil {
