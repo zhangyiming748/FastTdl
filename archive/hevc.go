@@ -127,7 +127,8 @@ func ConvertH265(src string) {
 	if outOfFHD(src) {
 		args = append(args,"-vf", "scale=if(gt(iw\\,ih)\\,1920\\,-2):if(gt(iw\\,ih)\\,-2\\,1080)")
 	}
-	args = append(args, "-c:a", "libmp3lame")
+	// args = append(args, "-c:a", "libmp3lame")
+	args = append(args, "-c:a", "aac")
 	args = append(args, dst)
 	cmd := exec.Command("ffmpeg", args...)
 
