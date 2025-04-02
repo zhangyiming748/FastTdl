@@ -8,7 +8,6 @@ import (
 	"os"
 	"path/filepath"
 	"runtime"
-	"strings"
 )
 
 type Params struct {
@@ -29,7 +28,6 @@ func GetParams() Params {
 func init() {
 	initProxy()
 	initDir()
-	initFfmpeg()
 	initMysql()
 }
 
@@ -62,13 +60,7 @@ func initDir() {
 	}
 }
 
-func initFfmpeg() {
-	if p := os.Getenv("REALTIME"); strings.ToUpper(p) == "TRUE" || strings.ToUpper(p) == "1" || strings.ToUpper(p) == "YES" || strings.ToUpper(p) == "Y" {
-		params.SetRealTime(true)
-	} else {
-		params.SetRealTime(false)
-	}
-}
+
 
 const (
 	DEFAULT_MYSQL_USER     = "root"
@@ -100,9 +92,11 @@ func initMysql() {
 	}
 
 }
+
 func (p *Params) GetRealTime() bool {
 	return p.RealTime
 }
+
 func (p *Params) SetRealTime(b bool) {
 	p.RealTime = b
 }

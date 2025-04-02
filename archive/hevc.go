@@ -86,11 +86,19 @@ func isVideo(fp string) bool {
 
 func isH265(fp string) bool {
 	mi := FastMediaInfo.GetStandMediaInfo(fp)
-	if mi.Video.Format == "HEVC" {
+	if mi.Video.Format == "HEVC"&& mi.Video.CodecID == "hvc1" {
 		log.Printf("视频:%s格式为 HEVC,跳过转换\n", fp)
 		return true
 	} else {
 		log.Printf("视频:%s格式为 %s,开始转换\n", fp, mi.Video.Format)
+		return false
+	}
+}
+func isHev1(fp string) bool {
+	mi := FastMediaInfo.GetStandMediaInfo(fp)
+	if mi.Video.CodecID == "hev1" {
+		return true
+	} else {
 		return false
 	}
 }
@@ -111,9 +119,8 @@ func ConvertH265(src string) {
 	if !isVideo(src) {
 		return
 	}
-	if isH265(src) {
-		return
-	}
+	
+	
 	purgePath := filepath.Dir(src)
 	seed := rand.New(rand.NewSource(time.Now().Unix()))
 	b := seed.Intn(2000)
@@ -125,13 +132,19 @@ func ConvertH265(src string) {
 	args = append(args, "-c:v", "libx265")
 	args = append(args, "-tag:v", "hvc1")
 	if outOfFHD(src) {
-		args = append(args,"-vf", "scale=if(gt(iw\\,ih)\\,1920\\,-2):if(gt(iw\\,ih)\\,-2\\,1080)")
+		args = append(args, "-vf", "scale=if(gt(iw\\,ih)\\,1920\\,-2):if(gt(iw\\,ih)\\,-2\\,1080)")
 	}
 	// args = append(args, "-c:a", "libmp3lame")
 	args = append(args, "-c:a", "aac")
 	args = append(args, dst)
 	cmd := exec.Command("ffmpeg", args...)
-
+	if isHev1(src) {
+		cmd = exec.Command("ffmpeg", "-i", src, "-c:v", "copy", "-tag:v", "hvc1", "-c:a", "aac", dst)
+	}else {
+		if isH265(src) {
+			return
+		}
+	}
 	// 获取输出和错误管道
 	stdout, _ := cmd.StdoutPipe()
 	stderr, _ := cmd.StderrPipe()
@@ -167,7 +180,7 @@ func ConvertH265(src string) {
 		for {
 			n, err := stderr.Read(buf)
 			if n > 0 {
-				log.Print(string(buf[:n]))
+				fmt.Print(string(buf[:n]))
 			}
 			if err != nil {
 				break
