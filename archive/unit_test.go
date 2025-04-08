@@ -1,15 +1,19 @@
 package archive
 
 import (
-	"testing"
+	l "github.com/zhangyiming748/FastTdl/util"
 	"log"
+	"testing"
 )
+
 func init() {
 	log.SetFlags(log.Ltime | log.Lshortfile)
 }
+
 // go test -timeout 30h -v -run TestGetAllFiles
 func TestGetAllFiles(t *testing.T) {
-	files, _ := GetAllVideoFiles("/Users/zen/Downloads/media")
+	l.SetLog("h265.log")
+	files, _ := GetAllVideoFiles("C:\\Users\\zen\\Videos\\甄爱SHE")
 	for _, v := range files {
 		ConvertH265(v)
 	}
