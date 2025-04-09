@@ -37,7 +37,7 @@ func TestArchiveAllAudioBookFiles(t *testing.T) {
 
 // go test -timeout 30h -v -run TestArchiveAllRapMusicFiles
 func TestArchiveAllRapMusicFiles(t *testing.T) {
-	files, _ := GetAllAudioFiles("/Users/zen/Downloads/media")
+	files, _ := GetAllAudioFiles("/Volumes/Fanxiang/有声读物3/激情骚麦")
 	for _, v := range files {
 		ConvertAudio(v,RapMusicType)
 	}
