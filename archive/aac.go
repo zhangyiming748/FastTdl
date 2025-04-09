@@ -171,15 +171,25 @@ func ConvertAudio(src, mytype string) {
 		log.Printf("转换失败：%v\n", err)
 		return
 	} else {
+		// 确保目标文件存在
+		if _, err := os.Stat(dst); err != nil {
+			log.Printf("转换后的文件不存在：%v\n", err)
+			return
+		}
+		
 		// 先尝试删除源文件
 		if err := os.Remove(src); err != nil {
-			log.Fatalf("删除源文件失败：%v\n", err)
+			log.Fatalf("删除源文件失败：%v\n保留转换后的文件：%s\n", err,dst)
 		}
+		
+		// 等待文件系统同步
+		time.Sleep(100 * time.Millisecond)
 		
 		// 尝试重命名
 		if err := os.Rename(dst, src); err != nil {
-			log.Fatalf("重命名文件失败：%v\n", err)
+			log.Fatalf("重命名文件失败：%v\n转换后的文件保留为：%s\n", err,dst)
 		}
+		log.Printf("文件处理完成：%s\n", src)
 	}
 }
 
