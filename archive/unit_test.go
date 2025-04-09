@@ -29,7 +29,7 @@ func TestArchiveAllImageFiles(t *testing.T) {
 
 // go test -timeout 30h -v -run TestArchiveAllAudioBookFiles
 func TestArchiveAllAudioBookFiles(t *testing.T) {
-	files, _ := GetAllAudioFiles("/Users/zen/Downloads/media")
+	files, _ := GetAllAudioFiles("/Volumes/Fanxiang/有声读物3/自慰催眠")
 	for _, v := range files {
 		ConvertAudio(v,AudioBookType)
 	}
@@ -37,7 +37,7 @@ func TestArchiveAllAudioBookFiles(t *testing.T) {
 
 // go test -timeout 30h -v -run TestArchiveAllRapMusicFiles
 func TestArchiveAllRapMusicFiles(t *testing.T) {
-	files, _ := GetAllAudioFiles("/Volumes/Fanxiang/有声读物3/激情骚麦")
+	files, _ := GetAllAudioFiles("/Volumes/Fanxiang/有声读物3/增大电平处理后")
 	for _, v := range files {
 		ConvertAudio(v,RapMusicType)
 	}

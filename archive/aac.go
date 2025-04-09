@@ -25,12 +25,8 @@ const (
 	Speed = "1.54" //等效audition的65%
 	// Speed = "1.43" 音频播放速度，等效audition的70%
 	// Volume 音频音量增益值
-	Volume = "3.0"
+	Volume = "2.7"
 )
-
-
-
-
 
 // ArchiveAudio 处理指定类型的音频文件
 // mytype 参数指定音频类型，可以是AudioBookType或RapMusicType
@@ -99,13 +95,15 @@ func ConvertAudio(src, mytype string) {
 
 	// 构建ffmpeg命令参数
 	args := []string{"-i", src}
-	ff := audition2ffmpeg(Speed)
+	ff := audition2ffmpeg("65")
 	atempo := strings.Join([]string{"atempo", ff}, "=")
 	volume := strings.Join([]string{"volume", Volume}, "=")
 	filter := strings.Join([]string{atempo, volume}, ",")
 	//args = append(args, "-c:a", "aac")
 	args = append(args, "-ac", "1")
 	args = append(args, "-map_metadata", "-1")
+	args = append(args, "-ar", "44100")
+	args = append(args, "-ab", "128k")
 	// 根据音频类型设置不同的处理参数
 	switch mytype {
 	case AudioBookType:
