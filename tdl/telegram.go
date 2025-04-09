@@ -213,7 +213,7 @@ func parseOneLine(line string) (*constant.OneFile, error) {
 	}
 	originUrl := strings.Join([]string{"https://t.me", of.Channel, strconv.Itoa(of.FileId)}, "/")
 	if strings.Contains(line, "/c/") {
-		originUrl =strings.Join([]string{"https://t.me/c/", of.Channel, strconv.Itoa(of.FileId)}, "/")
+		originUrl = strings.Join([]string{"https://t.me/c/", of.Channel, strconv.Itoa(of.FileId)}, "/")
 	}
 	params := strings.Replace(line, originUrl, "", 1)
 	tag, subtag, filename, offset, capacity, err := getParam(params)
@@ -316,7 +316,7 @@ func replace(src string) string {
 // returns: 中英文映射表
 func zh2en(fp string) map[string]string {
 	result := make(map[string]string)
-	seen := make(map[string]bool)  // 用于记录已经处理过的key
+	seen := make(map[string]bool) // 用于记录已经处理过的key
 	content, err := os.ReadFile(fp)
 	if err != nil {
 		log.Printf("读取文件失败: %v\n", err)
@@ -342,9 +342,9 @@ func zh2en(fp string) map[string]string {
 
 		for _, trans := range strings.Split(translations, ";") {
 			trans = strings.TrimSpace(trans)
-			if trans != "" && !seen[trans] {  // 只处理未见过的key
+			if trans != "" && !seen[trans] { // 只处理未见过的key
 				result[trans] = original
-				seen[trans] = true  // 标记该key已处理
+				seen[trans] = true // 标记该key已处理
 			}
 		}
 	}

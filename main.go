@@ -2,16 +2,16 @@ package main
 
 import (
 	"fmt"
+	"github.com/zhangyiming748/FastTdl/constant"
+	"github.com/zhangyiming748/FastTdl/discussions"
+	"github.com/zhangyiming748/FastTdl/model"
+	"github.com/zhangyiming748/FastTdl/mysql"
+	"github.com/zhangyiming748/FastTdl/tdl"
+	"github.com/zhangyiming748/FastTdl/util"
 	"log"
 	"os"
 	"strconv"
 	"strings"
-	"github.com/zhangyiming748/FastTdl/discussions"
-	"github.com/zhangyiming748/FastTdl/model"
-	"github.com/zhangyiming748/FastTdl/constant"
-	"github.com/zhangyiming748/FastTdl/mysql"
-	"github.com/zhangyiming748/FastTdl/tdl"
-	"github.com/zhangyiming748/FastTdl/util"
 )
 
 func init() {

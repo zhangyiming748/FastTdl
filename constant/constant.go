@@ -60,8 +60,6 @@ func initDir() {
 	}
 }
 
-
-
 const (
 	DEFAULT_MYSQL_USER     = "root"
 	DEFAULT_MYSQL_PASSWORD = "163453"

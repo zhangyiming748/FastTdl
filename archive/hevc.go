@@ -16,26 +16,6 @@ import (
 	"github.com/zhangyiming748/FastTdl/constant"
 )
 
-var (
-	hasFFmpeg    bool
-	hasMediainfo bool
-)
-
-func init() {
-	// 检查 ffmpeg
-	if _, err := exec.LookPath("ffmpeg"); err == nil {
-		hasFFmpeg = true
-	}
-
-	// 检查 mediainfo
-	if _, err := exec.LookPath("mediainfo"); err == nil {
-		hasMediainfo = true
-	}
-	if !hasFFmpeg || !hasMediainfo {
-		panic("缺少必要的软件依赖：ffmpeg 或 mediainfo 未安装")
-	}
-}
-
 func ArchiveVideo() {
 	p := constant.GetParams()
 	files, _ := GetAllVideoFiles(p.GetMainFolder())
@@ -46,9 +26,6 @@ func ArchiveVideo() {
 
 // GetAllVideoFiles 返回指定目录下所有文件的绝对路径
 func GetAllVideoFiles(root string) ([]string, error) {
-	if !hasFFmpeg || !hasMediainfo {
-		log.Fatalln("缺少必要的软件依赖：ffmpeg 或 mediainfo 未安装,跳过最终存档步骤")
-	}
 	var files []string
 	err := filepath.Walk(root, func(path string, info os.FileInfo, err error) error {
 		if err != nil {
