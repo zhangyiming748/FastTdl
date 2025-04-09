@@ -22,9 +22,8 @@ const (
 	AudioBookType = "audiobook"
 	// RapMusicType 说唱音乐类型标识
 	RapMusicType = "rap"
-	//AudioBook = "1.54" //等效audition的65%
-	// Speed 音频播放速度，等效audition的70%
-	Speed = "1.43"
+	Speed = "1.54" //等效audition的65%
+	// Speed = "1.43" 音频播放速度，等效audition的70%
 	// Volume 音频音量增益值
 	Volume = "3.0"
 )
@@ -104,19 +103,18 @@ func ConvertAudio(src, mytype string) {
 	atempo := strings.Join([]string{"atempo", ff}, "=")
 	volume := strings.Join([]string{"volume", Volume}, "=")
 	filter := strings.Join([]string{atempo, volume}, ",")
-
+	args = append(args, "-c:a", "aac")
+	args = append(args, "-ac", "1")
+	args = append(args, "-map_metadata", "-1")
 	// 根据音频类型设置不同的处理参数
 	switch mytype {
 	case AudioBookType:
 		// 有声书加速65% 电平增加
 		args = append(args, "-filter:a", filter)
-		args = append(args, "-c:a", "aac")
 	// 歌曲类只增加电平
 	case RapMusicType:
 		args = append(args, "-filter:a", volume)
-		args = append(args, "-c:a", "aac")
 	}
-
 	cmd := exec.Command("ffmpeg", args...)
 
 	// 获取输出和错误管道
