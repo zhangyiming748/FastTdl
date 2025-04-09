@@ -26,23 +26,23 @@ func GetParams() Params {
 	return params
 }
 func init() {
-	initProxy()
+	//initProxy()
 	initDir()
 	initMysql()
 }
 
-func initProxy() {
-	params.SetProxy(os.Getenv("PROXY"))
-	if params.Proxy == "" && runtime.GOOS == "linux" {
-		log.Fatalln("容器中未指定外部可用代理")
-	}
-	if params.Proxy == "" {
-		params.Proxy = "http://127.0.0.1:8889"
-	}
-	if err := ping(params.GetProxy()); err != nil {
-		log.Fatalf("指定的代理IP地址不可用,错误信息:%v\n", err)
-	}
-}
+// func initProxy() {
+// 	params.SetProxy(os.Getenv("PROXY"))
+// 	if params.Proxy == "" && runtime.GOOS == "linux" {
+// 		log.Fatalln("容器中未指定外部可用代理")
+// 	}
+// 	if params.Proxy == "" {
+// 		params.Proxy = "http://127.0.0.1:8889"
+// 	}
+// 	if err := ping(params.GetProxy()); err != nil {
+// 		log.Fatalf("指定的代理IP地址不可用,错误信息:%v\n", err)
+// 	}
+// }
 
 func initDir() {
 	home, err := os.UserHomeDir()
