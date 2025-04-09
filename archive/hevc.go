@@ -62,13 +62,20 @@ func GetAllVideoFiles(root string) ([]string, error) {
 			if err != nil {
 				return err
 			}
-			if isVideo(absPath) && !isH265(absPath) {
-				files = append(files, absPath)
+			if isVideo(absPath) {
+				if !isH265(absPath) {
+					files = append(files, absPath)
+				}
+				if filepath.Ext(absPath) == ".mkv" {
+					files = append(files, absPath)
+				}
+				if isHev1(absPath) {
+					files = append(files, absPath)
+				}
 			}
 		}
 		return nil
 	})
-
 	if err != nil {
 		return nil, err
 	}
@@ -80,13 +87,12 @@ func isVideo(fp string) bool {
 	// We only have to pass the file header = first 261 bytes
 	head := make([]byte, 261)
 	file.Read(head)
-
 	return filetype.IsVideo(head)
 }
 
 func isH265(fp string) bool {
 	mi := FastMediaInfo.GetStandMediaInfo(fp)
-	if mi.Video.Format == "HEVC"&& mi.Video.CodecID == "hvc1" {
+	if mi.Video.Format == "HEVC" && mi.Video.CodecID == "hvc1" {
 		log.Printf("视频:%s格式为 HEVC,跳过转换\n", fp)
 		return true
 	} else {
@@ -94,6 +100,7 @@ func isH265(fp string) bool {
 		return false
 	}
 }
+
 func isHev1(fp string) bool {
 	mi := FastMediaInfo.GetStandMediaInfo(fp)
 	if mi.Video.CodecID == "hev1" {
@@ -138,7 +145,7 @@ func ConvertH265(src string) {
 	cmd := exec.Command("ffmpeg", args...)
 	if isHev1(src) {
 		cmd = exec.Command("ffmpeg", "-i", src, "-c:v", "copy", "-tag:v", "hvc1", "-c:a", "aac", dst)
-	}else {
+	} else {
 		if isH265(src) {
 			return
 		}
