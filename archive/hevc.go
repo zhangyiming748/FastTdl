@@ -31,7 +31,6 @@ func init() {
 	if _, err := exec.LookPath("mediainfo"); err == nil {
 		hasMediainfo = true
 	}
-
 	if !hasFFmpeg || !hasMediainfo {
 		panic("缺少必要的软件依赖：ffmpeg 或 mediainfo 未安装")
 	}
@@ -51,7 +50,6 @@ func GetAllVideoFiles(root string) ([]string, error) {
 		log.Fatalln("缺少必要的软件依赖：ffmpeg 或 mediainfo 未安装,跳过最终存档步骤")
 	}
 	var files []string
-
 	err := filepath.Walk(root, func(path string, info os.FileInfo, err error) error {
 		if err != nil {
 			return err
@@ -132,7 +130,6 @@ func ConvertH265(src string) {
 	tmp := strconv.Itoa(b)
 	tmp = strings.Join([]string{tmp, ".mp4"}, "")
 	dst := filepath.Join(purgePath, tmp)
-
 	args := []string{"-i", src}
 	args = append(args, "-c:v", "libx265")
 	args = append(args, "-tag:v", "hvc1")
@@ -153,17 +150,14 @@ func ConvertH265(src string) {
 	// 获取输出和错误管道
 	stdout, _ := cmd.StdoutPipe()
 	stderr, _ := cmd.StderrPipe()
-
 	// 启动命令
 	log.Printf("开始执行命令:%s\n", cmd.String())
 	if err := cmd.Start(); err != nil {
 		log.Fatalln("启动转换失败：", err)
 		return
 	}
-
 	// 创建一个通道来等待所有输出处理完成
 	done := make(chan bool)
-
 	// 在后台处理输出
 	go func() {
 		buf := make([]byte, 1024)
@@ -178,7 +172,6 @@ func ConvertH265(src string) {
 		}
 		done <- true
 	}()
-
 	// 在后台处理错误输出
 	go func() {
 		buf := make([]byte, 1024)
@@ -193,11 +186,9 @@ func ConvertH265(src string) {
 		}
 		done <- true
 	}()
-
 	// 等待输出处理完成
 	<-done
 	<-done
-
 	// 等待命令完成
 	if err := cmd.Wait(); err != nil {
 		log.Printf("转换失败：%v\n", err)
