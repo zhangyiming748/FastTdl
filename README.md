@@ -1,3 +1,120 @@
+# FastTdl
+
+一个基于tdl的高效Telegram文件下载工具，支持批量下载、自动重试、多线程下载等功能。
+
+## 功能特点
+
+- 支持Telegram频道和群组文件的批量下载
+- 支持多线程并发下载，显著提升下载速度
+- 自动重试机制，确保下载稳定性
+- Docker容器化部署，使用方便
+- 支持代理设置
+- 中文友好
+
+## 环境要求
+
+- Docker环境
+- 或Go 1.24+（本地编译运行）
+
+## 快速开始
+
+### Docker方式（推荐）
+
+1. 克隆项目
+```bash
+git clone https://github.com/yourusername/FastTdl.git
+cd FastTdl
+```
+
+2. 配置docker-compose.yml
+```yaml
+version: '3.3'
+services:
+  fastTDL:
+    image: yourimage/fasttdl:latest
+    container_name: fastTDL
+    volumes:
+      - /path/to/your/.tdl:/root/.tdl  # 替换为你的.tdl目录
+      - /path/to/download:/data        # 替换为你的下载目录
+    restart: always
+```
+
+3. 启动服务
+```bash
+docker-compose up -d
+```
+
+### 本地编译方式
+
+1. 克隆并编译
+```bash
+git clone https://github.com/yourusername/FastTdl.git
+cd FastTdl
+go build -o fastTDL main.go
+```
+
+2. 运行程序
+```bash
+./fastTDL
+```
+
+## 使用方法
+
+### 1. 导出消息
+
+```bash
+tdl chat export -c <频道ID或用户名> --reply <消息ID> [--proxy <代理地址>]
+```
+
+示例：
+```bash
+tdl chat export -c channelname --reply 12345 --proxy http://127.0.0.1:7890
+```
+
+### 2. 下载文件
+
+```bash
+tdl download --threads <线程数> --file tdl-export.json [--proxy <代理地址>]
+```
+
+示例：
+```bash
+tdl download --threads 8 --file tdl-export.json --proxy http://127.0.0.1:7890
+```
+
+## 消息ID获取方法
+
+1. 频道ID获取：
+   - 在Telegram设置中启用开发者模式（设置 -> 高级 -> 开发者选项）
+   - 点击频道信息查看频道ID
+
+2. 消息ID获取：
+   - 消息链接格式：https://t.me/c/channelid/messageid
+   - 或 https://t.me/channelname/messageid
+
+## 常见问题
+
+1. **下载速度慢？**
+   - 尝试增加线程数
+   - 检查网络连接和代理设置
+   - 确保服务器带宽充足
+
+2. **下载失败？**
+   - 检查TDL登录状态
+   - 确认消息ID正确
+   - 验证代理配置
+
+## 许可证
+
+本项目采用 MIT 许可证
+
+## 致谢
+
+- [tdl](https://github.com/iyear/tdl) - 核心下载引擎
+
+以上是Claude自动生成的内容
+----
+
 # [项目名称] README
 
 ## 一、项目概述
