@@ -168,20 +168,17 @@ func ConvertH265(src string) {
 	<-done
 	// 等待命令完成
 	if err := cmd.Wait(); err != nil {
-		log.Printf("转换失败：%v\n", err)
-		return
+		log.Fatalf("转换失败：%v\n", err)
 	} else {
 		// 先尝试删除源文件
 		if err := os.Remove(src); err != nil {
-			log.Printf("删除源文件失败：%v\n", err)
-			return
+			log.Fatalf("删除源文件失败：%v\n", err)
 		}
 		// 源文件删除成功后，等待短暂时间确保文件句柄完全释放
 		time.Sleep(100 * time.Millisecond)
 		// 尝试重命名
 		if err := os.Rename(dst, src); err != nil {
-			log.Printf("重命名文件失败：%v\n", err)
-			return
+			log.Fatalf("重命名文件失败：%v\n", err)
 		}
 	}
 }
