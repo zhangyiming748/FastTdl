@@ -15,8 +15,6 @@ import (
 	"github.com/zhangyiming748/FastTdl/constant"
 )
 
-
-
 func ArchiveImage() {
 	p := constant.GetParams()
 	files, _ := GetAllImageFiles(p.GetMainFolder())

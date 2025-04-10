@@ -2,18 +2,18 @@ package archive
 
 import (
 	"fmt"
+	"github.com/h2non/filetype"
+	"github.com/zhangyiming748/FastMediaInfo"
+	"github.com/zhangyiming748/FastTdl/constant"
 	"log"
 	"math/rand"
 	"os"
 	"os/exec"
 	"path/filepath"
+	"runtime"
 	"strconv"
 	"strings"
 	"time"
-
-	"github.com/h2non/filetype"
-	"github.com/zhangyiming748/FastMediaInfo"
-	"github.com/zhangyiming748/FastTdl/constant"
 )
 
 func ArchiveVideo() {
@@ -108,6 +108,9 @@ func ConvertH265(src string) {
 	tmp = strings.Join([]string{tmp, ".mp4"}, "")
 	dst := filepath.Join(purgePath, tmp)
 	args := []string{"-i", src}
+	if runtime.GOARCH == "arm64" && runtime.GOOS == "linux" {
+		args = []string{"-threads", "1", "-i", src}
+	}
 	args = append(args, "-c:v", "libx265")
 	args = append(args, "-tag:v", "hvc1")
 	if outOfFHD(src) {

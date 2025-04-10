@@ -22,15 +22,11 @@ const (
 	AudioBookType = "audiobook"
 	// RapMusicType 说唱音乐类型标识
 	RapMusicType = "rap"
-	Speed = "1.54" //等效audition的65%
+	Speed        = "1.54" //等效audition的65%
 	// Speed = "1.43" 音频播放速度，等效audition的70%
 	// Volume 音频音量增益值
 	Volume = "3.0"
 )
-
-
-
-
 
 // ArchiveAudio 处理指定类型的音频文件
 // mytype 参数指定音频类型，可以是AudioBookType或RapMusicType
@@ -176,18 +172,18 @@ func ConvertAudio(src, mytype string) {
 			log.Printf("转换后的文件不存在：%v\n", err)
 			return
 		}
-		
+
 		// 先尝试删除源文件
 		if err := os.Remove(src); err != nil {
-			log.Fatalf("删除源文件失败：%v\n保留转换后的文件：%s\n", err,dst)
+			log.Fatalf("删除源文件失败：%v\n保留转换后的文件：%s\n", err, dst)
 		}
-		
+
 		// 等待文件系统同步
 		time.Sleep(100 * time.Millisecond)
-		
+
 		// 尝试重命名
 		if err := os.Rename(dst, src); err != nil {
-			log.Fatalf("重命名文件失败：%v\n转换后的文件保留为：%s\n", err,dst)
+			log.Fatalf("重命名文件失败：%v\n转换后的文件保留为：%s\n", err, dst)
 		}
 		log.Printf("文件处理完成：%s\n", src)
 	}
