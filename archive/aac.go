@@ -22,10 +22,10 @@ const (
 	AudioBookType = "audiobook"
 	// RapMusicType 说唱音乐类型标识
 	RapMusicType = "rap"
-	Speed        = "1.54" //等效audition的65%
+	Speed = "1.54" //等效audition的65%
 	// Speed = "1.43" 音频播放速度，等效audition的70%
 	// Volume 音频音量增益值
-	Volume = "3.0"
+	Volume = "2.7"
 )
 
 // ArchiveAudio 处理指定类型的音频文件
@@ -95,21 +95,23 @@ func ConvertAudio(src, mytype string) {
 
 	// 构建ffmpeg命令参数
 	args := []string{"-i", src}
-	ff := audition2ffmpeg(Speed)
+	ff := audition2ffmpeg("65")
 	atempo := strings.Join([]string{"atempo", ff}, "=")
 	volume := strings.Join([]string{"volume", Volume}, "=")
 	filter := strings.Join([]string{atempo, volume}, ",")
-	// args = append(args, "-c:a", "aac")
+	//args = append(args, "-c:a", "aac")
 	args = append(args, "-ac", "1")
 	args = append(args, "-map_metadata", "-1")
+	args = append(args, "-ar", "44100")
+	args = append(args, "-ab", "128k")
 	// 根据音频类型设置不同的处理参数
 	switch mytype {
 	case AudioBookType:
 		// 有声书加速65% 电平增加
-		args = append(args, "-af", filter)
-		// 歌曲类只增加电平
+		args = append(args, "-filter:a", filter)
+	// 歌曲类只增加电平
 	case RapMusicType:
-		args = append(args, "-af", volume)
+		args = append(args, "-filter:a", volume)
 	}
 	args = append(args, dst)
 	cmd := exec.Command("ffmpeg", args...)
@@ -164,28 +166,18 @@ func ConvertAudio(src, mytype string) {
 
 	// 等待命令完成并处理结果
 	if err := cmd.Wait(); err != nil {
-		log.Printf("转换失败：%v\n", err)
-		return
+		log.Fatalf("转换失败：%v\n", err)
 	} else {
-		// 确保目标文件存在
-		if _, err := os.Stat(dst); err != nil {
-			log.Printf("转换后的文件不存在：%v\n", err)
-			return
-		}
-
 		// 先尝试删除源文件
 		if err := os.Remove(src); err != nil {
-			log.Fatalf("删除源文件失败：%v\n保留转换后的文件：%s\n", err, dst)
+			log.Fatalf("删除源文件失败：%v\n", err)
 		}
-
-		// 等待文件系统同步
+		// 源文件删除成功后，等待短暂时间确保文件句柄完全释放
 		time.Sleep(100 * time.Millisecond)
-
 		// 尝试重命名
 		if err := os.Rename(dst, src); err != nil {
-			log.Fatalf("重命名文件失败：%v\n转换后的文件保留为：%s\n", err, dst)
+			log.Fatalf("重命名文件失败：%v\n", err)
 		}
-		log.Printf("文件处理完成：%s\n", src)
 	}
 }
 
