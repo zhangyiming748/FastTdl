@@ -155,9 +155,9 @@
 |Mercy|天使;mercy|
 |Pharah|法鸡;法老之鹰|
 |Sombra|黑影;电妹|
-|Symmetra|对称之光;印度阿姨|
+|Symmetra|对称之光;印度阿姨;秩序之光|
 |Tracer|猎空;闪光|
-|Widowsmaker|黑百合;蜘蛛;狙击手|
+|Widowsmaker|黑百合;蜘蛛;狙击手;寡妇制造者|
 |Zarya|查莉娅;粒子炮|
 
 # 间谍过家家
