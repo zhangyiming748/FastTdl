@@ -27,34 +27,33 @@ func ArchiveVideo() {
 // GetAllVideoFiles 返回指定目录下所有文件的绝对路径
 func GetAllVideoFiles(root string) ([]string, error) {
 	var files []string
+	count := 0
+	maxFiles := 100 // 每批处理的最大文件数
+
 	err := filepath.Walk(root, func(path string, info os.FileInfo, err error) error {
+		if count >= maxFiles {
+			return filepath.SkipAll // 找到足够的文件后停止遍历
+		}
 		if err != nil {
 			return err
 		}
-		// 跳过目录，只收集文件
 		if !info.IsDir() {
 			absPath, err := filepath.Abs(path)
 			if err != nil {
 				return err
 			}
 			if isVideo(absPath) {
-				if !isH265(absPath) {
+				if !isH265(absPath) || filepath.Ext(absPath) == ".mkv" || isHev1(absPath) {
 					files = append(files, absPath)
-				}
-				if filepath.Ext(absPath) == ".mkv" {
-					files = append(files, absPath)
-				}
-				if isHev1(absPath) {
-					files = append(files, absPath)
+					count++
 				}
 			}
 		}
 		return nil
 	})
-	if err != nil {
-		return nil, err
-	}
-	return files, nil
+
+	log.Printf("本次找到 %d 个待处理文件\n", count)
+	return files, err
 }
 
 func isVideo(fp string) bool {
