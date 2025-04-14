@@ -45,6 +45,7 @@
 |Jessie Rasberry|Jessie;jessie;杰西|
 |Yuffie Kisaragi|尤菲|
 |Madam M|玛姆|
+|Gentiana|吉恩提亚娜|
 
 # 铁拳
 
