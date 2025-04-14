@@ -13,7 +13,7 @@ func init() {
 // go test -timeout 30h -v -run TestArchiveAllVideoFiles
 func TestArchiveAllVideoFiles(t *testing.T) {
 	l.SetLog("h265.log")
-	files, _ := GetAllVideoFiles("D:\\pikpak\\Russia Funny show 俄羅斯电视台整蛊節目精选集第一季")
+	files, _ := GetAllVideoFiles("/Volumes/Fanxiang/整理")
 	for _, v := range files {
 		ConvertH265(v)
 	}
