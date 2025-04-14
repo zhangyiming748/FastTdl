@@ -143,7 +143,22 @@
 |原名|中文可能的说法|
 |:---:|:---:|
 |Overwatch|守望先锋;overwatch|
+|Ashe|艾什;女枪手|
+|Brigitte|布丽吉塔;奶骑|
+|D.va|dva;小娜;机甲少女|
+|Echo|回声;复制机器人|
+|Illari|伊拉瑞;太阳妹|
+|Junker Queen|渣皇;垃圾女王|
+|Juno|朱诺|
+|Kiriko|雾子;狐狸|
+|Mei|小美;冰女|
 |Mercy|天使;mercy|
+|Pharah|法鸡;法老之鹰|
+|Sombra|黑影;电妹|
+|Symmetra|对称之光;印度阿姨|
+|Tracer|猎空;闪光|
+|Widowsmaker|黑百合;蜘蛛;狙击手|
+|Zarya|查莉娅;粒子炮|
 
 # 间谍过家家
 
