@@ -14,16 +14,40 @@
 |原名|中文可能的说法|
 |:---:|:---:|
 |Dead or Alive|死或生;DOA;doa|
-|Honoka|穗香|
-|Marie Rose|玛丽·萝丝;玛丽萝丝|
-|Ayane|绫音;凌音;铃音|
-|Tamaki|环|
-|Kasumi|霞|
-|Nyotengu|女天狗;女天狗妖|
-|Mai Shiranui|不知火舞;麻衣;Mai;mai|
+|原名|中文可能的说法|
+|:---:|:---:|
+|Dead or Alive|死或生;DOA;doa|
+|Yukino|千乃|
+|Shizuku|雫|
+|Reika|玲夏|
+|Meg|梅格|
+|Shandy|香蒂|
+|Amy|爱咪|
+|Tina Armstrong|蒂娜|
+|Koharu|小春|
+|Elise|伊莉丝|
+|Nanami|七海|
+|Lobelia|萝贝莉娅|
+|Tsukushi|筑紫|
+|Patty|派蒂|
+|Sayuri|小百合|
 |Monica|莫妮卡|
-|Helena|海莲娜;海莲那|
-|Momiji|红叶;momiji|
+|Kanna|神无|
+|Nagisa|凪咲|
+|Fiona|菲欧娜|
+|Tamaki|环|
+|Luna|露娜|
+|Leifang|丽凤|
+|Misaki|海咲|
+|Helena Douglas|海莲娜|
+|Momiji|红叶|
+|Hitomi|瞳|
+|Nyotengu|女天狗|
+|Kokoro|心|
+|Ayane|绫音|
+|Kasumi|霞|
+|Honoka|穗香|
+|Marie Rose|玛莉·萝丝;玛丽;玛莉;玛丽罗斯|
 
 # 最终幻想
 
@@ -46,6 +70,14 @@
 |Yuffie Kisaragi|尤菲|
 |Madam M|玛姆|
 |Gentiana|吉恩提亚娜|
+|Ifalna|伊法尔娜|
+|Iris Amicitia|伊莉斯·亚米西提亚|
+|Lunafreya Nox Fleuret|露娜;Luna;luna|
+|Jihl Nabaat|吉尔·娜巴特;吉尔娜巴特|
+|Jessie`s Mom|杰西妈妈;杰西的妈妈|
+|Monica Elshett|莫妮卡|
+|Lulu|露露|
+|Kyrie Canaan|凯莉耶·迦南|
 
 # 铁拳
 
@@ -150,3 +182,16 @@
 |:---:|:---:|
 |MetalGear|合金装备;MGS;mgs|
 |Quiet|静静;quiet|
+
+# 真三国无双
+|原名|中文可能的说法|
+|:---:|:---:|
+|Dynasty Warriors|真三国无双|
+|Xing Cai|星彩|
+|Guan Yinping|关银屏|
+
+# 零 濡鸦之巫女
+|原名|中文可能的说法|
+|:---:|:---:|
+|Fatal Frame: Maiden of Black Water|零·濡鸦之巫女|
+|Ying|樱|
