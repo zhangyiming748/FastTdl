@@ -110,7 +110,12 @@ func ConvertH265(src string) {
 	if runtime.GOARCH == "arm64" && runtime.GOOS == "linux" {
 		args = []string{"-threads", "1", "-i", src}
 	}
-	args = append(args, "-c:v", "libx265")
+	if isH265(src) && filepath.Ext(src) == ".mkv" {
+		args = append(args, "-c:v", "copy")
+	} else {
+		args = append(args, "-c:v", "libx265")
+	}
+
 	args = append(args, "-tag:v", "hvc1")
 	if outOfFHD(src) {
 		args = append(args, "-vf", "scale=if(gt(iw\\,ih)\\,1920\\,-2):if(gt(iw\\,ih)\\,-2\\,1080)")
