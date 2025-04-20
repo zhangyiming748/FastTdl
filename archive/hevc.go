@@ -184,6 +184,7 @@ func ConvertH265(src string) {
 		// 源文件删除成功后，等待短暂时间确保文件句柄完全释放
 		time.Sleep(100 * time.Millisecond)
 		// 尝试重命名
+		src= strings.Replace(src,filepath.Ext(src),".mp4",1)
 		if err := os.Rename(dst, src); err != nil {
 			log.Fatalf("重命名文件失败：%v\n", err)
 		}
