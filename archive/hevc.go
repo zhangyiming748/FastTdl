@@ -66,7 +66,7 @@ func isVideo(fp string) bool {
 
 func isH265(fp string) bool {
 	mi := FastMediaInfo.GetStandMediaInfo(fp)
-	if mi.Video.Format == "HEVC" && mi.Video.CodecID == "hvc1" {
+	if mi.Video.Format == "HEVC" && mi.Video.CodecID == "hvc1"&&filepath.Ext(fp) == ".mp4" {
 		log.Printf("视频:%s格式为 HEVC,跳过转换\n", fp)
 		return true
 	} else {
@@ -100,6 +100,9 @@ func ConvertH265(src string) {
 	if !isVideo(src) {
 		return
 	}
+	// if strings.Contains(src, "vp9") {
+	// 	return
+	// }
 	purgePath := filepath.Dir(src)
 	seed := rand.New(rand.NewSource(time.Now().Unix()))
 	b := seed.Intn(2000)
@@ -126,18 +129,14 @@ func ConvertH265(src string) {
 	cmd := exec.Command("ffmpeg", args...)
 	if isHev1(src) {
 		cmd = exec.Command("ffmpeg", "-i", src, "-c:v", "copy", "-tag:v", "hvc1", "-c:a", "aac", dst)
-	} else {
-		if isH265(src) {
-			return
-		}
-	}
+	} 
 	// 获取输出和错误管道
 	stdout, _ := cmd.StdoutPipe()
 	stderr, _ := cmd.StderrPipe()
 	// 启动命令
 	log.Printf("开始执行命令:%s\n", cmd.String())
 	if err := cmd.Start(); err != nil {
-		log.Fatalln("启动转换失败：", err)
+		log.Printf("启动转换失败:%v\n", err)
 		return
 	}
 	// 创建一个通道来等待所有输出处理完成

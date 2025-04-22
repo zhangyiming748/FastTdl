@@ -13,7 +13,7 @@ func init() {
 // go test -timeout 30h -v -run TestArchiveAllVideoFiles
 func TestArchiveAllVideoFiles(t *testing.T) {
 	l.SetLog("h265.log")
-	root := "/Volumes/ugreen/alist/卖课"
+	root := "/Volumes/ugreen/alist"
 	dirs, e := GetFinalSubDirs(root)
 	if e != nil {
 		t.Error(e)
@@ -30,7 +30,7 @@ func TestArchiveAllVideoFiles(t *testing.T) {
 
 // go test -timeout 30h -v -run TestArchiveAllImageFiles
 func TestArchiveAllImageFiles(t *testing.T) {
-	root := "/Volumes/Fanxiang/整理"
+	root := "/Volumes/ugreen/Volumes"
 	dirs, e := GetFinalSubDirs(root)
 	if e!= nil {
 		t.Error(e)
@@ -38,6 +38,7 @@ func TestArchiveAllImageFiles(t *testing.T) {
 	}
 	for _, dir := range dirs {
 		files, _ := GetAllImageFiles(dir)
+		t.Log(len(files))
 		for _, file := range files {
 			ConvertAVIF(file)
 		}
