@@ -13,32 +13,65 @@ func init() {
 // go test -timeout 30h -v -run TestArchiveAllVideoFiles
 func TestArchiveAllVideoFiles(t *testing.T) {
 	l.SetLog("h265.log")
-	files, _ := GetAllVideoFiles("/Volumes/Fanxiang/整理")
-	for _, v := range files {
-		ConvertH265(v)
+	root := "/Volumes/ugreen/alist/卖课"
+	dirs, e := GetFinalSubDirs(root)
+	if e != nil {
+		t.Error(e)
+		return
 	}
+	for _, dir := range dirs {
+		files, _ := GetAllVideoFiles(dir)
+		for _, file := range files {
+			ConvertH265(file)
+		}
+	}
+
 }
 
 // go test -timeout 30h -v -run TestArchiveAllImageFiles
 func TestArchiveAllImageFiles(t *testing.T) {
-	files, _ := GetAllImageFiles("/Users/zen/Downloads/media")
-	for _, v := range files {
-		ConvertAVIF(v)
+	root := "/Volumes/Fanxiang/整理"
+	dirs, e := GetFinalSubDirs(root)
+	if e!= nil {
+		t.Error(e)
+		return
+	}
+	for _, dir := range dirs {
+		files, _ := GetAllImageFiles(dir)
+		for _, file := range files {
+			ConvertAVIF(file)
+		}
 	}
 }
 
 // go test -timeout 30h -v -run TestArchiveAllAudioBookFiles
 func TestArchiveAllAudioBookFiles(t *testing.T) {
-	files, _ := GetAllAudioFiles("/Volumes/Fanxiang/有声读物3/自慰催眠")
-	for _, v := range files {
-		ConvertAudio(v,AudioBookType)
+	root := "/Volumes/Fanxiang/有声读物3"
+	dirs, e := GetFinalSubDirs(root)
+	if e!= nil {
+		t.Error(e)
+		return
+	}
+	for _, dir := range dirs {
+		files, _ := GetAllAudioFiles(dir)
+		for _, file := range files {
+			ConvertAudio(file, AudioBookType)
+		}
 	}
 }
 
 // go test -timeout 30h -v -run TestArchiveAllRapMusicFiles
 func TestArchiveAllRapMusicFiles(t *testing.T) {
-	files, _ := GetAllAudioFiles("/Volumes/Fanxiang/有声读物3/增大电平处理后")
-	for _, v := range files {
-		ConvertAudio(v,RapMusicType)
+	root := "/Volumes/Fanxiang/有声读物3"
+	dirs, e := GetFinalSubDirs(root)
+	if e!= nil {
+		t.Error(e)
+		return
+	}
+	for _, dir := range dirs {
+		files, _ := GetAllAudioFiles(dir)
+		for _, file := range files {
+			ConvertAudio(file, RapMusicType)
+		}
 	}
 }
