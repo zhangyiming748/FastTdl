@@ -121,7 +121,8 @@ func ConvertH265(src string) {
 
 	args = append(args, "-tag:v", "hvc1")
 	if outOfFHD(src) {
-		args = append(args, "-vf", "scale=if(gt(iw\\,ih)\\,1920\\,-2):if(gt(iw\\,ih)\\,-2\\,1080)")
+		// args = append(args, "-vf", "scale=if(gt(iw\\,ih)\\,1920\\,-2):if(gt(iw\\,ih)\\,-2\\,1080)")
+		args = append(args, "-vf", "scale='if(gte(iw,ih),trunc(min(1920,iw)),trunc(iw*1080/ih)):if(gte(iw,ih),trunc(ih*1080/iw),trunc(min(1080,ih)))'")
 	}
 	// args = append(args, "-c:a", "libmp3lame")
 	args = append(args, "-c:a", "aac")
