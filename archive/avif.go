@@ -54,6 +54,7 @@ func GetAllImageFiles(root string) ([]string, error) {
 
 func isImage(fp string) bool {
 	file, _ := os.Open(fp)
+	defer file.Close()
 	// We only have to pass the file header = first 261 bytes
 	head := make([]byte, 261)
 	file.Read(head)
@@ -77,59 +78,11 @@ func ConvertAVIF(src string) {
 	args = append(args, dst)
 	cmd := exec.Command("ffmpeg", args...)
 
-	// 获取输出和错误管道
-	stdout, _ := cmd.StdoutPipe()
-	stderr, _ := cmd.StderrPipe()
-
-	// 启动命令
-	log.Printf("开始执行命令:%s\n", cmd.String())
-	if err := cmd.Start(); err != nil {
-		log.Fatalln("启动转换失败：", err)
-		return
-	}
-
-	// 创建一个通道来等待所有输出处理完成
-	done := make(chan bool)
-
-	// 在后台处理输出
-	go func() {
-		buf := make([]byte, 1024)
-		for {
-			n, err := stdout.Read(buf)
-			if n > 0 {
-				fmt.Print(string(buf[:n]))
-			}
-			if err != nil {
-				break
-			}
-		}
-		done <- true
-	}()
-
-	// 在后台处理错误输出
-	go func() {
-		buf := make([]byte, 1024)
-		for {
-			n, err := stderr.Read(buf)
-			if n > 0 {
-				log.Print(string(buf[:n]))
-			}
-			if err != nil {
-				break
-			}
-		}
-		done <- true
-	}()
-
-	// 等待输出处理完成
-	<-done
-	<-done
-
-	// 等待命令完成
-	if err := cmd.Wait(); err != nil {
+	if out,err := cmd.CombinedOutput(); err != nil {
 		log.Printf("转换失败：%v\n", err)
 		return
 	} else {
+		fmt.Println(string(out))
 		os.Remove(src)
 		src = strings.Replace(src, filepath.Ext(src), ".avif", 1)
 		os.Rename(dst, src)
