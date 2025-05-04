@@ -22,7 +22,7 @@ const (
 	AudioBookType = "audiobook"
 	// RapMusicType 说唱音乐类型标识
 	RapMusicType = "rap"
-	Speed = "1.54" //等效audition的65%
+	Speed        = "1.54" //等效audition的65%
 	// Speed = "1.43" 音频播放速度，等效audition的70%
 	// Volume 音频音量增益值
 	Volume = "2.7"
