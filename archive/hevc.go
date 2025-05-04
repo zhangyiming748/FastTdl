@@ -57,6 +57,7 @@ func GetAllVideoFiles(root string) ([]string, error) {
 
 func isVideo(fp string) bool {
 	file, _ := os.Open(fp)
+	defer file.Close()
 	// We only have to pass the file header = first 261 bytes
 	head := make([]byte, 261)
 	file.Read(head)
