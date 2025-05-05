@@ -72,6 +72,7 @@ func GetAllAudioFiles(root string) ([]string, error) {
 // 返回布尔值表示是否为音频文件
 func isAudio(fp string) bool {
 	file, _ := os.Open(fp)
+	defer file.Close()
 	// We only have to pass the file header = first 261 bytes
 	head := make([]byte, 261)
 	file.Read(head)
@@ -117,57 +118,12 @@ func ConvertAudio(src, mytype string) {
 	cmd := exec.Command("ffmpeg", args...)
 
 	// 获取输出和错误管道
-	stdout, _ := cmd.StdoutPipe()
-	stderr, _ := cmd.StderrPipe()
-
-	// 启动命令
-	log.Printf("开始执行命令:%s\n", cmd.String())
-	if err := cmd.Start(); err != nil {
-		log.Fatalln("启动转换失败：", err)
-		return
-	}
-
-	// 创建一个通道来等待所有输出处理完成
-	done := make(chan bool)
-
-	// 在后台处理标准输出
-	go func() {
-		buf := make([]byte, 1024)
-		for {
-			n, err := stdout.Read(buf)
-			if n > 0 {
-				fmt.Print(string(buf[:n]))
-			}
-			if err != nil {
-				break
-			}
-		}
-		done <- true
-	}()
-
-	// 在后台处理错误输出
-	go func() {
-		buf := make([]byte, 1024)
-		for {
-			n, err := stderr.Read(buf)
-			if n > 0 {
-				log.Print(string(buf[:n]))
-			}
-			if err != nil {
-				break
-			}
-		}
-		done <- true
-	}()
-
-	// 等待输出处理完成
-	<-done
-	<-done
-
+	
 	// 等待命令完成并处理结果
-	if err := cmd.Wait(); err != nil {
+	if out,err := cmd.CombinedOutput(); err != nil {
 		log.Fatalf("转换失败：%v\n", err)
 	} else {
+		fmt.Printf("转换成功：%s\n", string(out))
 		// 先尝试删除源文件
 		if err := os.Remove(src); err != nil {
 			log.Fatalf("删除源文件失败：%v\n", err)

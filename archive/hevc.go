@@ -1,7 +1,6 @@
 package archive
 
 import (
-	"fmt"
 	"github.com/h2non/filetype"
 	"github.com/zhangyiming748/FastMediaInfo"
 	"github.com/zhangyiming748/FastTdl/constant"
@@ -58,6 +57,7 @@ func GetAllVideoFiles(root string) ([]string, error) {
 
 func isVideo(fp string) bool {
 	file, _ := os.Open(fp)
+	defer file.Close()
 	// We only have to pass the file header = first 261 bytes
 	head := make([]byte, 261)
 	file.Read(head)
@@ -66,7 +66,7 @@ func isVideo(fp string) bool {
 
 func isH265(fp string) bool {
 	mi := FastMediaInfo.GetStandMediaInfo(fp)
-	if mi.Video.Format == "HEVC" && mi.Video.CodecID == "hvc1" {
+	if mi.Video.Format == "HEVC" && mi.Video.CodecID == "hvc1" && filepath.Ext(fp) == ".mp4" {
 		log.Printf("视频:%s格式为 HEVC,跳过转换\n", fp)
 		return true
 	} else {
@@ -84,28 +84,25 @@ func isHev1(fp string) bool {
 	}
 }
 
-func outOfFHD(fp string) (yes bool, args []string) {
+func outOfFHD(fp string) bool {
 	mi := FastMediaInfo.GetStandMediaInfo(fp)
 	height, _ := strconv.Atoi(mi.Video.Height)
 	width, _ := strconv.Atoi(mi.Video.Width)
-
-	if width > height { // 横屏视频
-		if height > 1080 {
-			return true, []string{"-vf", "scale=-2:1080"}
-		}
-	} else { // 竖屏视频
-		if width > 1080 {
-			return true, []string{"-vf", "scale=1080:-2"}
-		}
+	if height > 1920 || width > 1920 {
+		log.Printf("视频:%s大于1080p,转换\n", fp)
+		return true
+	} else {
+		return false
 	}
-	return false, []string{}
 }
 
 func ConvertH265(src string) {
 	if !isVideo(src) {
 		return
 	}
-
+	// if strings.Contains(src, "vp9") {
+	// 	return
+	// }
 	purgePath := filepath.Dir(src)
 	seed := rand.New(rand.NewSource(time.Now().Unix()))
 	b := seed.Intn(2000)
@@ -123,9 +120,9 @@ func ConvertH265(src string) {
 	}
 
 	args = append(args, "-tag:v", "hvc1")
-
-	if yes, vf := outOfFHD(src); yes {
-		args = append(args, vf...)
+	if outOfFHD(src) {
+		// args = append(args, "-vf", "scale=if(gt(iw\\,ih)\\,1920\\,-2):if(gt(iw\\,ih)\\,-2\\,1080)")
+		args = append(args, "-vf", "scale='if(gte(iw,ih),trunc(min(1920,iw)),trunc(iw*1080/ih)):if(gte(iw,ih),trunc(ih*1080/iw),trunc(min(1080,ih)))'")
 	}
 	// args = append(args, "-c:a", "libmp3lame")
 	args = append(args, "-c:a", "aac")
@@ -133,57 +130,14 @@ func ConvertH265(src string) {
 	cmd := exec.Command("ffmpeg", args...)
 	if isHev1(src) {
 		cmd = exec.Command("ffmpeg", "-i", src, "-c:v", "copy", "-tag:v", "hvc1", "-c:a", "aac", dst)
-	} else {
-		if isH265(src) {
-			return
-		}
 	}
-	// 获取输出和错误管道
-	stdout, _ := cmd.StdoutPipe()
-	stderr, _ := cmd.StderrPipe()
 	// 启动命令
 	log.Printf("开始执行命令:%s\n", cmd.String())
-	if err := cmd.Start(); err != nil {
-		log.Fatalln("启动转换失败：", err)
-		return
-	}
-	// 创建一个通道来等待所有输出处理完成
-	done := make(chan bool)
-	// 在后台处理输出
-	go func() {
-		buf := make([]byte, 1024)
-		for {
-			n, err := stdout.Read(buf)
-			if n > 0 {
-				fmt.Print(string(buf[:n]))
-			}
-			if err != nil {
-				break
-			}
-		}
-		done <- true
-	}()
-	// 在后台处理错误输出
-	go func() {
-		buf := make([]byte, 1024)
-		for {
-			n, err := stderr.Read(buf)
-			if n > 0 {
-				fmt.Print(string(buf[:n]))
-			}
-			if err != nil {
-				break
-			}
-		}
-		done <- true
-	}()
-	// 等待输出处理完成
-	<-done
-	<-done
-	// 等待命令完成
-	if err := cmd.Wait(); err != nil {
+
+	if out, err := cmd.CombinedOutput(); err != nil {
 		log.Fatalf("转换失败：%v\n", err)
 	} else {
+		log.Printf("转换成功：%s\n", string(out))
 		// 先尝试删除源文件
 		if err := os.Remove(src); err != nil {
 			log.Fatalf("删除源文件失败：%v\n", err)
