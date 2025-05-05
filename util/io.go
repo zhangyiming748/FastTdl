@@ -13,50 +13,53 @@ import (
 )
 
 func ReadByLine(fp string) []string {
-	lines := []string{}
-	fi, err := os.Open(fp)
-	if err != nil {
-		fmt.Printf("Error: %s\n", err)
-		log.Println("按行读文件出错")
-		return []string{}
-	}
-	defer fi.Close()
+    lines := []string{}
+    fi, err := os.Open(fp)
+    if err != nil {
+        fmt.Printf("Error: %s\n", err)
+        log.Println("按行读文件出错")
+        return []string{}
+    }
+    defer fi.Close()
 
-	br := bufio.NewReader(fi)
-	for {
-		a, _, c := br.ReadLine()
-		if c == io.EOF {
-			break
-		}
-		if string(a) == "" {
-			continue
-		}
-		if strings.HasPrefix(string(a), "#") {
-			continue
-		}
-		if strings.Contains(string(a), "single") {
-			uri := strings.Replace(string(a), "?single", "", 1)
-			lines = append(lines, uri)
-		} else {
-			lines = append(lines, string(a))
-		}
-	}
-	return lines
+    br := bufio.NewReader(fi)
+    for {
+        a, _, c := br.ReadLine()
+        if c == io.EOF {
+            break
+        }
+        if len(a) == 0 {
+            continue
+        }
+        line := string(a)
+        if strings.HasPrefix(line, "#") {
+            continue
+        }
+        if strings.Contains(line, "single") {
+            uri := strings.Replace(line, "?single", "", 1)
+            lines = append(lines, uri)
+        } else {
+            lines = append(lines, line)
+        }
+    }
+    return lines
 }
 
 // 按行写文件
-func WriteByLine(fp string, s []string) {
-	file, err := os.OpenFile(fp, os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0777)
-	if err != nil {
-		return
-	}
-	defer file.Close()
-	writer := bufio.NewWriter(file)
-	for _, v := range s {
-		writer.WriteString(v)
-		writer.WriteString("\n")
-	}
-	writer.Flush()
+func WriteByLine(fp string, s []string) error {
+    file, err := os.OpenFile(fp, os.O_RDWR|os.O_CREATE|os.O_TRUNC, 0666)
+    if err != nil {
+        return fmt.Errorf("无法打开文件: %v", err)
+    }
+    defer file.Close()
+    
+    writer := bufio.NewWriter(file)
+    for _, v := range s {
+        if _, err := writer.WriteString(v + "\n"); err != nil {
+            return fmt.Errorf("写入文件失败: %v", err)
+        }
+    }
+    return writer.Flush()
 }
 
 // IsExistPath 判断文件夹是否存在

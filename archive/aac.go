@@ -71,12 +71,16 @@ func GetAllAudioFiles(root string) ([]string, error) {
 // fp 为文件路径
 // 返回布尔值表示是否为音频文件
 func isAudio(fp string) bool {
-	file, _ := os.Open(fp)
-	defer file.Close()
-	// We only have to pass the file header = first 261 bytes
-	head := make([]byte, 261)
-	file.Read(head)
-	return filetype.IsAudio(head)
+    file, err := os.Open(fp)
+    if err != nil {
+        return false
+    }
+    defer file.Close()
+    head := make([]byte, 261)
+    if _, err := file.Read(head); err != nil {
+        return false
+    }
+    return filetype.IsAudio(head)
 }
 
 // ConvertAudio 转换音频文件

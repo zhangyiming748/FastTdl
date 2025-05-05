@@ -56,12 +56,16 @@ func GetAllVideoFiles(root string) ([]string, error) {
 }
 
 func isVideo(fp string) bool {
-	file, _ := os.Open(fp)
-	defer file.Close()
-	// We only have to pass the file header = first 261 bytes
-	head := make([]byte, 261)
-	file.Read(head)
-	return filetype.IsVideo(head)
+    file, err := os.Open(fp)
+    if err != nil {
+        return false
+    }
+    defer file.Close()
+    head := make([]byte, 261)
+    if _, err := file.Read(head); err != nil {
+        return false
+    }
+    return filetype.IsVideo(head)
 }
 
 func isH265(fp string) bool {

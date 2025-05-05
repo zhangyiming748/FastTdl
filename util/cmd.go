@@ -29,11 +29,11 @@ func ExecCommand(c *exec.Cmd) (e error) {
 	}
 	for {
 		tmp := make([]byte, 1024)
-		_, err := stdout.Read(tmp)
+		_, e := stdout.Read(tmp)
 		t := string(tmp)
 		t = strings.Replace(t, "\u0000", "", -1)
 		fmt.Printf("\r%v", t)
-		if err != nil {
+		if e != nil {
 			break
 		}
 	}
@@ -113,11 +113,11 @@ func ExecTdlCommand(proxy, uri, target string) (e error) {
 	}
 	for {
 		tmp := make([]byte, 1024)
-		_, err := stdout.Read(tmp)
+		_, e := stdout.Read(tmp)
 		t := string(tmp)
 		t = strings.Replace(t, "\u0000", "", -1)
 		fmt.Printf("\r%v", t)
-		if err != nil {
+		if e != nil {
 			break
 		}
 	}
