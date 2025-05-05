@@ -25,26 +25,27 @@ var params Params
 func GetParams() Params {
 	return params
 }
+
 func init() {
-	//initProxy()
+	initProxy()
 	initDir()
 	initMysql()
 }
 
-// func initProxy() {
-// 	proxy := os.Getenv("PROXY")
-// 	if proxy == "" {
-// 		if runtime.GOOS == "linux" {
-// 			log.Fatalln("容器中未指定外部可用代理")
-// 		}
-// 		proxy = "http://127.0.0.1:8889"
-// 	}
-// 	params.SetProxy(proxy)
+func initProxy() {
+	proxy := os.Getenv("PROXY")
+	if proxy == "" {
+		if runtime.GOOS == "linux" {
+			log.Fatalln("容器中未指定外部可用代理")
+		}
+		proxy = "http://127.0.0.1:8889"
+	}
+	params.SetProxy(proxy)
 
-// 	if err := ping(proxy); err != nil {
-// 		log.Fatalf("指定的代理IP地址不可用,错误信息:%v\n", err)
-// 	}
-// }
+	if err := ping(proxy); err != nil {
+		log.Fatalf("指定的代理IP地址不可用,错误信息:%v\n", err)
+	}
+}
 
 func initDir() {
 	home, err := os.UserHomeDir()
@@ -65,7 +66,7 @@ func initDir() {
 const (
 	DEFAULT_MYSQL_USER     = "root"
 	DEFAULT_MYSQL_PASSWORD = "163453"
-	DEFAULT_MYSQL_HOST     = "192.168.2.5"
+	DEFAULT_MYSQL_HOST     = "192.168.2.10"
 	DEFAULT_MYSQL_PORT     = "3306"
 )
 
