@@ -32,7 +32,7 @@ func TestArchiveAllVideoFiles(t *testing.T) {
 func TestArchiveAllImageFiles(t *testing.T) {
 	root := "/Volumes/Fanxiang/整理"
 	dirs, e := GetFinalSubDirs(root)
-	if e!= nil {
+	if e != nil {
 		t.Error(e)
 		return
 	}
@@ -48,7 +48,7 @@ func TestArchiveAllImageFiles(t *testing.T) {
 func TestArchiveAllAudioBookFiles(t *testing.T) {
 	root := "/Volumes/Fanxiang/有声读物3"
 	dirs, e := GetFinalSubDirs(root)
-	if e!= nil {
+	if e != nil {
 		t.Error(e)
 		return
 	}
@@ -64,7 +64,7 @@ func TestArchiveAllAudioBookFiles(t *testing.T) {
 func TestArchiveAllRapMusicFiles(t *testing.T) {
 	root := "/Volumes/Fanxiang/有声读物3"
 	dirs, e := GetFinalSubDirs(root)
-	if e!= nil {
+	if e != nil {
 		t.Error(e)
 		return
 	}

@@ -1,10 +1,12 @@
 package archive
+
 import (
 	"fmt"
 	"log"
 	"os"
 	"path/filepath"
 )
+
 // GetFinalSubDirs 获取给定目录下所有最终子目录（不包含子文件夹的目录）
 func GetFinalSubDirs(root string) ([]string, error) {
 	var finalDirs []string

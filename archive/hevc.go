@@ -84,22 +84,28 @@ func isHev1(fp string) bool {
 	}
 }
 
-func outOfFHD(fp string) bool {
+func outOfFHD(fp string) (yes bool, args []string) {
 	mi := FastMediaInfo.GetStandMediaInfo(fp)
 	height, _ := strconv.Atoi(mi.Video.Height)
 	width, _ := strconv.Atoi(mi.Video.Width)
-	if height > 1920 || width > 1920 {
-		log.Printf("视频:%s大于1080p,转换\n", fp)
-		return true
-	} else {
-		return false
+
+	if width > height { // 横屏视频
+		if height > 1080 {
+			return true, []string{"-vf", "scale=-2:1080"}
+		}
+	} else { // 竖屏视频
+		if width > 1080 {
+			return true, []string{"-vf", "scale=1080:-2"}
+		}
 	}
+	return false, []string{}
 }
 
 func ConvertH265(src string) {
 	if !isVideo(src) {
 		return
 	}
+
 	purgePath := filepath.Dir(src)
 	seed := rand.New(rand.NewSource(time.Now().Unix()))
 	b := seed.Intn(2000)
@@ -117,8 +123,9 @@ func ConvertH265(src string) {
 	}
 
 	args = append(args, "-tag:v", "hvc1")
-	if outOfFHD(src) {
-		args = append(args, "-vf", "scale=if(gt(iw\\,ih)\\,1920\\,-2):if(gt(iw\\,ih)\\,-2\\,1080)")
+
+	if yes, vf := outOfFHD(src); yes {
+		args = append(args, vf...)
 	}
 	// args = append(args, "-c:a", "libmp3lame")
 	args = append(args, "-c:a", "aac")
@@ -184,7 +191,7 @@ func ConvertH265(src string) {
 		// 源文件删除成功后，等待短暂时间确保文件句柄完全释放
 		time.Sleep(100 * time.Millisecond)
 		// 尝试重命名
-		src= strings.Replace(src,filepath.Ext(src),".mp4",1)
+		src = strings.Replace(src, filepath.Ext(src), ".mp4", 1)
 		if err := os.Rename(dst, src); err != nil {
 			log.Fatalf("重命名文件失败：%v\n", err)
 		}
