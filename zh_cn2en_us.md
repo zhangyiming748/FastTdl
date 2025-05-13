@@ -210,3 +210,9 @@
 |:---:|:---:|
 |Fatal Frame: Maiden of Black Water|零·濡鸦之巫女|
 |Ying|樱|
+
+# 原子之心
+|原名|中文可能的说法|
+|:---:|:---:|
+|Atomic Heart|原子之心|
+|The Twins|双生舞伶|

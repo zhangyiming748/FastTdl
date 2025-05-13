@@ -236,6 +236,9 @@ func parseOneLine(line string) (*constant.OneFile, error) {
 func getChannelAndFileID(url string) (channel string, file int, err error) {
 	//https://t.me/guoman_08/2148#&@+%
 	static := "https://t.me/"
+	if strings.Contains(url, "/c/") {
+		static = "https://t.me/c/"
+	}
 	url = strings.Replace(url, static, "", 1)
 	if strings.Contains(url, "#") {
 		prefix := strings.Split(url, "#")[0]
