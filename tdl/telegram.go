@@ -4,7 +4,6 @@ import (
 	"errors"
 	"fmt"
 	"github.com/syndtr/goleveldb/leveldb"
-	"github.com/zhangyiming748/FastTdl/archive"
 	"github.com/zhangyiming748/FastTdl/constant"
 	"github.com/zhangyiming748/FastTdl/model"
 	"github.com/zhangyiming748/FastTdl/mysql"
@@ -130,11 +129,6 @@ func DownloadWithFolder(of constant.OneFile, proxy string, f *os.File) constant.
 		// 执行下载命令
 		if err := util.ExecTdlCommand(proxy, uri, target); err == nil {
 			log.Printf("下载成功")
-			if p.RealTime {
-				// 实时处理下载的文件（转码等）
-				archive.ArchiveVideo()
-				archive.ArchiveImage()
-			}
 			downloadErr = nil
 			break
 		} else {

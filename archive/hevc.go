@@ -3,7 +3,6 @@ package archive
 import (
 	"github.com/h2non/filetype"
 	"github.com/zhangyiming748/FastMediaInfo"
-	"github.com/zhangyiming748/FastTdl/constant"
 	"log"
 	"math/rand"
 	"os"
@@ -15,9 +14,8 @@ import (
 	"time"
 )
 
-func ArchiveVideo() {
-	p := constant.GetParams()
-	files, _ := GetAllVideoFiles(p.GetMainFolder())
+func ArchiveVideo(dir string) {
+	files, _ := GetAllVideoFiles(dir)
 	for _, file := range files {
 		ConvertH265(file)
 	}

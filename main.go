@@ -2,6 +2,14 @@ package main
 
 import (
 	"fmt"
+	"log"
+	"os"
+	"path/filepath"
+	"strconv"
+	"strings"
+	"time"
+
+	"github.com/zhangyiming748/FastTdl/archive"
 	"github.com/zhangyiming748/FastTdl/constant"
 	"github.com/zhangyiming748/FastTdl/discussions"
 	"github.com/zhangyiming748/FastTdl/model"
@@ -9,11 +17,6 @@ import (
 	"github.com/zhangyiming748/FastTdl/tdl"
 	"github.com/zhangyiming748/FastTdl/util"
 	"github.com/zhangyiming748/sendEmailAlert"
-	"log"
-	"os"
-	"strconv"
-	"strings"
-	"time"
 )
 
 func init() {
@@ -31,6 +34,14 @@ type Info struct {
 }
 
 func main() {
+	defer func() {
+		home, _ := os.UserHomeDir()
+		media := filepath.Join(home, "media")
+		archive.ArchiveVideo(media)
+		archive.ArchiveImage(media)
+		// archive.ArchiveAudio(media)
+	}()
+
 	smtp := os.Getenv("EmailPASSWD")
 	if smtp == "" {
 		log.Println("请设置EmailPASSWD环境变量")
@@ -53,7 +64,7 @@ func main() {
 			info.SetHost(sendEmailAlert.QQ.SMTP)
 			info.SetPort(sendEmailAlert.QQ.SMTPProt)
 			info.SetUsername("2352103020@qq.com") //${{ secrets.FROM }}
-			info.SetPassword(smtp)                   //${{ secrets.PASSWORD }}
+			info.SetPassword(smtp)                //${{ secrets.PASSWORD }}
 			info.AppendText(time.Now().String())
 			status := info.Send()
 			log.Println(status)

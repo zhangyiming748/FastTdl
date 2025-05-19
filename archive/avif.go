@@ -2,6 +2,7 @@ package archive
 
 import (
 	"fmt"
+	"github.com/h2non/filetype"
 	"log"
 	"math/rand"
 	"os"
@@ -10,14 +11,10 @@ import (
 	"strconv"
 	"strings"
 	"time"
-
-	"github.com/h2non/filetype"
-	"github.com/zhangyiming748/FastTdl/constant"
 )
 
-func ArchiveImage() {
-	p := constant.GetParams()
-	files, _ := GetAllImageFiles(p.GetMainFolder())
+func ArchiveImage(dir string) {
+	files, _ := GetAllImageFiles(dir)
 	for _, file := range files {
 		ConvertH265(file)
 	}
