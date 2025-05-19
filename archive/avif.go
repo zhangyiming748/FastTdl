@@ -78,7 +78,7 @@ func ConvertAVIF(src string) {
 	args = append(args, dst)
 	cmd := exec.Command("ffmpeg", args...)
 
-	if out,err := cmd.CombinedOutput(); err != nil {
+	if out, err := cmd.CombinedOutput(); err != nil {
 		log.Printf("转换失败：%v\n", err)
 		return
 	} else {

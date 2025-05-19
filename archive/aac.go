@@ -71,16 +71,16 @@ func GetAllAudioFiles(root string) ([]string, error) {
 // fp 为文件路径
 // 返回布尔值表示是否为音频文件
 func isAudio(fp string) bool {
-    file, err := os.Open(fp)
-    if err != nil {
-        return false
-    }
-    defer file.Close()
-    head := make([]byte, 261)
-    if _, err := file.Read(head); err != nil {
-        return false
-    }
-    return filetype.IsAudio(head)
+	file, err := os.Open(fp)
+	if err != nil {
+		return false
+	}
+	defer file.Close()
+	head := make([]byte, 261)
+	if _, err := file.Read(head); err != nil {
+		return false
+	}
+	return filetype.IsAudio(head)
 }
 
 // ConvertAudio 转换音频文件
@@ -122,9 +122,9 @@ func ConvertAudio(src, mytype string) {
 	cmd := exec.Command("ffmpeg", args...)
 
 	// 获取输出和错误管道
-	
+
 	// 等待命令完成并处理结果
-	if out,err := cmd.CombinedOutput(); err != nil {
+	if out, err := cmd.CombinedOutput(); err != nil {
 		log.Fatalf("转换失败：%v\n", err)
 	} else {
 		fmt.Printf("转换成功：%s\n", string(out))
