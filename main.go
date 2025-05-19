@@ -16,7 +16,7 @@ import (
 
 func init() {
 	util.SetLog("tdl.log")
-	util.SetLevelDB()
+	//util.SetLevelDB()
 	mysql.SetMysql()
 	if mysql.UseMysql() {
 		mysql.GetMysql().Sync(model.File{})
