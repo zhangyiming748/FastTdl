@@ -19,3 +19,7 @@ func TestFind(t *testing.T) {
 		return
 	}
 }
+
+func TestSendEmail(t *testing.T) {
+	Alarm("正文第一行", "正文第二行", "正文第三行", "正文第四行")
+}

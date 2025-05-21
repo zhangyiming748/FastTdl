@@ -7,7 +7,6 @@ import (
 	"path/filepath"
 	"strconv"
 	"strings"
-	"time"
 
 	"github.com/zhangyiming748/FastTdl/archive"
 	"github.com/zhangyiming748/FastTdl/constant"
@@ -16,7 +15,6 @@ import (
 	"github.com/zhangyiming748/FastTdl/mysql"
 	"github.com/zhangyiming748/FastTdl/tdl"
 	"github.com/zhangyiming748/FastTdl/util"
-	"github.com/zhangyiming748/sendEmailAlert"
 )
 
 func init() {
@@ -34,6 +32,7 @@ type Info struct {
 }
 
 func main() {
+	defer util.Alarm()
 	defer func() {
 		home, _ := os.UserHomeDir()
 		media := filepath.Join(home, "media")
@@ -48,26 +47,7 @@ func main() {
 	} else {
 		log.Printf("EmailPASSWD环境变量已设置:%s\n", smtp)
 		defer func() {
-			info := new(sendEmailAlert.Info)
-			info.SetFrom("2352103020@qq.com") //${{ secrets.FROM }}
-			tos := []string{
-				"578779391@qq.com",
-				"zhangyiming748@gmail.com",
-				"zhangyiming748@outlook.com",
-				"18904892728@163.com",
-				"18904892728@189.cn",
-				"zhangyiming748@linux.do",
-			}
-			info.SetTo(tos)
-			info.SetSubject("程序运行结束通知")
-			info.SetText("FastTdl主程序运行结束")
-			info.SetHost(sendEmailAlert.QQ.SMTP)
-			info.SetPort(sendEmailAlert.QQ.SMTPProt)
-			info.SetUsername("2352103020@qq.com") //${{ secrets.FROM }}
-			info.SetPassword(smtp)                //${{ secrets.PASSWORD }}
-			info.AppendText(time.Now().String())
-			status := info.Send()
-			log.Println(status)
+
 		}()
 	}
 	summaries := []constant.OneFile{}
