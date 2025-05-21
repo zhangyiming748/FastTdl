@@ -1,9 +1,9 @@
 package archive
 
 import (
-	l "github.com/zhangyiming748/FastTdl/util"
 	"log"
 	"testing"
+	l "github.com/zhangyiming748/FastTdl/util"
 )
 
 func init() {
@@ -12,6 +12,7 @@ func init() {
 
 // go test -timeout 30h -v -run TestArchiveAllVideoFiles
 func TestArchiveAllVideoFiles(t *testing.T) {
+	defer l.Alarm("单独的hevc归档完成")
 	l.SetLog("h265.log")
 	root := "/Users/zen/Downloads/media"
 	dirs, e := GetFinalSubDirs(root)
