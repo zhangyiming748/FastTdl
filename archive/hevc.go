@@ -137,7 +137,8 @@ func ConvertH265(src string) {
 	log.Printf("开始执行命令:%s\n", cmd.String())
 
 	if out, err := cmd.CombinedOutput(); err != nil {
-		log.Fatalf("转换失败：%v\n", err)
+		log.Printf("转换失败：%v\n", err)
+		return
 	} else {
 		log.Printf("转换成功：%s\n", string(out))
 		// 先尝试删除源文件

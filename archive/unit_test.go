@@ -13,7 +13,7 @@ func init() {
 // go test -timeout 30h -v -run TestArchiveAllVideoFiles
 func TestArchiveAllVideoFiles(t *testing.T) {
 	l.SetLog("h265.log")
-	root := "/Volumes/Huge/joi"
+	root := "/Users/zen/Downloads/media"
 	dirs, e := GetFinalSubDirs(root)
 	if e != nil {
 		t.Error(e)
