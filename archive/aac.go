@@ -104,7 +104,7 @@ func ConvertAudio(src, mytype string) {
 	atempo := strings.Join([]string{"atempo", ff}, "=")
 	volume := strings.Join([]string{"volume", Volume}, "=")
 	filter := strings.Join([]string{atempo, volume}, ",")
-	//args = append(args, "-c:a", "aac")
+
 	args = append(args, "-ac", "1")
 	args = append(args, "-map_metadata", "-1")
 	args = append(args, "-ar", "44100")
@@ -117,6 +117,9 @@ func ConvertAudio(src, mytype string) {
 	// 歌曲类只增加电平
 	case RapMusicType:
 		args = append(args, "-filter:a", volume)
+	default:
+		// 其他类型
+		args = append(args, "-c:a", "aac")
 	}
 	args = append(args, dst)
 	cmd := exec.Command("ffmpeg", args...)
