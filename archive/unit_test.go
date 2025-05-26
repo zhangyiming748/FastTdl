@@ -1,9 +1,9 @@
 package archive
 
 import (
+	l "github.com/zhangyiming748/FastTdl/util"
 	"log"
 	"testing"
-	l "github.com/zhangyiming748/FastTdl/util"
 )
 
 func init() {

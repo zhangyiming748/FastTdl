@@ -9,6 +9,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"strconv"
 	"strings"
 )
 
@@ -165,4 +166,25 @@ func CountFiles(dirPath string) (int, error) {
 		return nil
 	})
 	return count, err
+}
+
+/*
+获取字符串数组理论上需要下载的条目数
+*/
+func GetExpectedFilesToAdd(urls []string) int {
+	var count int
+	for _, uri := range urls {
+		if strings.Contains(uri, "%") {
+			num, err := strconv.Atoi(strings.Split(uri, "%")[1])
+			if err != nil {
+				count++
+			} else {
+				count += num
+			}
+		} else {
+			count++
+		}
+
+	}
+	return count
 }

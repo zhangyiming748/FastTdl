@@ -17,6 +17,8 @@ import (
 	"github.com/zhangyiming748/FastTdl/util"
 )
 
+var Home string
+
 func init() {
 	util.SetLog("tdl.log")
 	//util.SetLevelDB()
@@ -24,6 +26,7 @@ func init() {
 	if mysql.UseMysql() {
 		mysql.GetMysql().Sync(model.File{})
 	}
+	Home, _ = os.UserHomeDir()
 }
 
 type Info struct {
@@ -32,10 +35,17 @@ type Info struct {
 }
 
 func main() {
-	defer util.Alarm()
+	var (
+		before int
+		after  int
+		fileNum int // 理论上应该增加的文件数
+		realAdd   int // 实际上增加的文件数
+		report []string
+	)
+	before, _ = util.CountFiles(filepath.Join(Home, "Downloads"))
+	defer util.Alarm(report...)
 	defer func() {
-		home, _ := os.UserHomeDir()
-		media := filepath.Join(home, "media")
+		media := filepath.Join(Home, "Downloads", "media")
 		archive.ArchiveVideo(media)
 		archive.ArchiveImage(media)
 		// archive.ArchiveAudio(media)
@@ -44,11 +54,9 @@ func main() {
 	smtp := os.Getenv("EmailPASSWD")
 	if smtp == "" {
 		log.Println("请设置EmailPASSWD环境变量")
+		smtp = "ocuplrlgwgelebej"
 	} else {
 		log.Printf("EmailPASSWD环境变量已设置:%s\n", smtp)
-		defer func() {
-
-		}()
 	}
 	summaries := []constant.OneFile{}
 	failed, err := os.OpenFile("failed.txt", os.O_RDWR|os.O_TRUNC|os.O_CREATE, 0666)
@@ -66,7 +74,7 @@ func main() {
 	} else {
 		log.Println("没有在任何位置找到post.link文件")
 	}
-
+	fileNum=util.GetExpectedFilesToAdd(urls)
 	links := tdl.ParseLines(urls, failed)
 	failed.Sync()
 	//var current Info
@@ -102,4 +110,8 @@ func main() {
 			failed.Sync()
 		}
 	}
+	after, _ = util.CountFiles(filepath.Join(Home, "Downloads"))
+	realAdd = after - before
+	add := realAdd - fileNum
+	report = []string{fmt.Sprintf("程序运行前文件数:%d", before), fmt.Sprintf("程序运行后文件数:%d", after), fmt.Sprintf("新增文件数:%d", realAdd), fmt.Sprintf("理论新增文件数:%d", fileNum), fmt.Sprintf("新增文件数与理论新增文件数的差值:%d", add)}
 }

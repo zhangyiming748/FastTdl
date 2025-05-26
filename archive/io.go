@@ -53,24 +53,24 @@ import (
 
 // GetFinalSubDirs 获取给定目录下所有文件（包括子目录中的文件）
 func GetFinalSubDirs(root string) ([]string, error) {
-    var files []string
+	var files []string
 
-    err := filepath.Walk(root, func(path string, info os.FileInfo, err error) error {
-        if err != nil {
-            return err
-        }
+	err := filepath.Walk(root, func(path string, info os.FileInfo, err error) error {
+		if err != nil {
+			return err
+		}
 
-        // 只处理文件，跳过目录
-        if !info.IsDir() {
-            files = append(files, path)
-        }
+		// 只处理文件，跳过目录
+		if !info.IsDir() {
+			files = append(files, path)
+		}
 
-        return nil
-    })
+		return nil
+	})
 
-    if err != nil {
-        return nil, fmt.Errorf("遍历目录失败: %v", err)
-    }
+	if err != nil {
+		return nil, fmt.Errorf("遍历目录失败: %v", err)
+	}
 
-    return files, nil
+	return files, nil
 }
