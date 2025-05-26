@@ -104,6 +104,7 @@ func IsExistCmd(cmds ...string) bool {
 	}
 	return true
 }
+
 func GetAllFileInfoFast(dir, pattern string) ([]string, error) {
 	var files []string
 	err := filepath.Walk(dir, func(path string, info os.FileInfo, err error) error {
@@ -147,4 +148,21 @@ func ReadInSlice(fp string) []string {
 	//	fmt.Printf("第%d行: %s\n", i+1, line)
 	//}
 	return lines
+}
+
+/*
+统计指定目录下的文件数 相当于find . -type f | wc -l
+*/
+func CountFiles(dirPath string) (int, error) {
+	var count int
+	err := filepath.Walk(dirPath, func(path string, info os.FileInfo, err error) error {
+		if err != nil {
+			return err
+		}
+		if !info.IsDir() {
+			count++
+		}
+		return nil
+	})
+	return count, err
 }
