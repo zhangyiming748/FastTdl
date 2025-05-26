@@ -14,7 +14,7 @@ func init() {
 func TestArchiveAllVideoFiles(t *testing.T) {
 	defer l.Alarm("单独的hevc归档完成")
 	l.SetLog("h265.log")
-	root := "/Volumes/素材/原始视频/未整理/media"
+	root := "/Users/zen/Downloads/media"
 	dirs, e := GetFinalSubDirs(root)
 	if e != nil {
 		t.Error(e)
