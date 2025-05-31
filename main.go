@@ -43,9 +43,9 @@ func main() {
 		report []string
 	)
 	before, _ = util.CountFiles(filepath.Join(Home, "Downloads"))
-	defer func ()  {
-		util.Alarm(report...)
-	}()
+	defer func (r []string)  {
+	    util.Alarm(r...)
+	}(report)
 	defer func() {
 		media := filepath.Join(Home, "Downloads", "media")
 		archive.ArchiveVideo(media)
