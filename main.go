@@ -36,15 +36,15 @@ type Info struct {
 
 func main() {
 	var (
-		before int
-		after  int
+		before  int
+		after   int
 		fileNum int // 理论上应该增加的文件数
-		realAdd   int // 实际上增加的文件数
-		report []string
+		realAdd int // 实际上增加的文件数
+		report  []string
 	)
 	before, _ = util.CountFiles(filepath.Join(Home, "Downloads"))
-	defer func (r []string)  {
-	    util.Alarm(r...)
+	defer func(r []string) {
+		util.Alarm(r...)
 	}(report)
 	defer func() {
 		media := filepath.Join(Home, "Downloads", "media")
@@ -76,7 +76,7 @@ func main() {
 	} else {
 		log.Println("没有在任何位置找到post.link文件")
 	}
-	fileNum=util.GetExpectedFilesToAdd(urls)
+	fileNum = util.GetExpectedFilesToAdd(urls)
 	links := tdl.ParseLines(urls, failed)
 	failed.Sync()
 	//var current Info

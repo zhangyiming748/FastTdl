@@ -107,7 +107,7 @@ func ConvertH265(src string) {
 	// }
 	purgePath := filepath.Dir(src)
 	seed := rand.New(rand.NewSource(time.Now().Unix()))
-	b := seed.Intn(2000)+1000
+	b := seed.Intn(2000) + 1000
 	tmp := strconv.Itoa(b)
 	tmp = strings.Join([]string{tmp, ".mp4"}, "")
 	dst := filepath.Join(purgePath, tmp)

@@ -1,9 +1,7 @@
 package tdl
 
 import (
-	"errors"
 	"fmt"
-	"github.com/syndtr/goleveldb/leveldb"
 	"github.com/zhangyiming748/FastTdl/constant"
 	"github.com/zhangyiming748/FastTdl/model"
 	"github.com/zhangyiming748/FastTdl/mysql"
@@ -64,33 +62,23 @@ func DownloadWithFolder(of constant.OneFile, proxy string, f *os.File) constant.
 	fmt.Printf("要下载的链接: %s\t%+v\n", uri, of)
 
 	// 检查是否已下载过（MySQL模式）
-	if mysql.UseMysql() {
-		oneline := new(model.File)
-		oneline.Channel = of.Channel
-		oneline.FileId = of.FileId
-		oneline.Filename = of.FileName
-		if oneline.Filename != "" {
-			if found, _ := oneline.FindByFilename(); found {
-				log.Println("相同文件名的文件下载过,跳过")
-				return of
-			}
-		}
-		if found, _ := oneline.FindByOriginURL(); found {
-			log.Println("相同url的文件下载过,跳过")
-			return of
-		}
-		log.Println("数据库中没有查到相同文件,继续下载")
-	} else {
-		_, err := util.GetLevelDB().Get([]byte(uri), nil)
-		if errors.Is(err, leveldb.ErrNotFound) {
-			log.Println("文件未下载过")
-			util.GetLevelDB().Put([]byte(uri), []byte("downloaded"), nil)
-		} else {
-			log.Println("文件下载过,跳过")
-			of.SetStatus()
+
+	oneline := new(model.File)
+	oneline.Channel = of.Channel
+	oneline.FileId = of.FileId
+	oneline.Filename = of.FileName
+	if oneline.Filename != "" {
+		if found, _ := oneline.FindByFilename(); found {
+			log.Println("相同文件名的文件下载过,跳过")
 			return of
 		}
 	}
+	if found, _ := oneline.FindByOriginURL(); found {
+		log.Println("相同url的文件下载过,跳过")
+		return of
+	}
+	log.Println("数据库中没有查到相同文件,继续下载")
+
 	// 构建目标文件夹路径
 	target := p.GetMainFolder()
 	if tag := of.Tag; tag != "" {
