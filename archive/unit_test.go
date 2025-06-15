@@ -8,13 +8,13 @@ import (
 
 func init() {
 	log.SetFlags(log.Ltime | log.Lshortfile)
+	defer l.Alarm("单独的hevc归档完成")
+	l.SetLog("h265.log")
 }
 
 // go test -timeout 30h -v -run TestArchiveAllVideoFiles
 func TestArchiveAllVideoFiles(t *testing.T) {
-	defer l.Alarm("单独的hevc归档完成")
-	l.SetLog("h265.log")
-	root := "/Volumes/Huge/AV3"
+	root := "/Users/zen/Downloads/media"
 	dirs, e := GetFinalSubDirs(root)
 	if e != nil {
 		t.Error(e)
@@ -31,7 +31,7 @@ func TestArchiveAllVideoFiles(t *testing.T) {
 
 // go test -timeout 30h -v -run TestArchiveAllImageFiles
 func TestArchiveAllImageFiles(t *testing.T) {
-	root := "/Volumes/Fanxiang/整理"
+	root := "/Users/zen/Downloads/10350524"
 	dirs, e := GetFinalSubDirs(root)
 	if e != nil {
 		t.Error(e)
