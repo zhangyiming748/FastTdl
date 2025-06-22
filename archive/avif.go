@@ -64,7 +64,7 @@ func ConvertAVIF(src string) {
 	}
 	purgePath := filepath.Dir(src)
 	seed := rand.New(rand.NewSource(time.Now().Unix()))
-	b := seed.Intn(2000)
+	b := seed.Intn(1000000) + 1000000
 	tmp := strconv.Itoa(b)
 	tmp = strings.Join([]string{tmp, ".avif"}, "")
 	dst := filepath.Join(purgePath, tmp)
@@ -74,9 +74,9 @@ func ConvertAVIF(src string) {
 	args = append(args, "-still-picture", "1")
 	args = append(args, dst)
 	cmd := exec.Command("ffmpeg", args...)
-
+	log.Printf("开始运行转换命令:%v\n", cmd.String())
 	if out, err := cmd.CombinedOutput(); err != nil {
-		log.Printf("转换失败：%v\n", err)
+		log.Printf("转换失败：%v\n源文件%v\n", err, src)
 		return
 	} else {
 		fmt.Println(string(out))
