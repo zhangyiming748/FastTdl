@@ -2,7 +2,7 @@
 
 # 指定要查找的扩展名
 extension="mp4"
-root="/Volumes/素材/整理/dance"
+root="/Users/zen/Downloads/media/dance"
 
 process_files() {
     local dir=$1
@@ -20,7 +20,7 @@ process_files() {
             echo "处理文件：$filename"
 
             # 执行ffmpeg命令，输出到临时文件
-            ffmpeg -i "$file" -vf "transpose=$transpose_value" -c:v libx265 -c:a aac -map_chapters -1 "$temp_output"
+            ffmpeg -i "$file" -vf "transpose=$transpose_value" -c:v libx265 -tag:v hvc1 -c:a aac -map_chapters -1 "$temp_output"
             
             if [ $? -eq 0 ]; then
                 echo "转换成功"
