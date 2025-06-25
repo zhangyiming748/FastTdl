@@ -27,6 +27,7 @@ func init() {
 		mysql.GetMysql().Sync(model.File{})
 	}
 	Home, _ = os.UserHomeDir()
+	Home = "/Volumes/整理"
 }
 
 type Info struct {
