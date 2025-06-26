@@ -39,5 +39,5 @@ process_files() {
 }
 
 # 处理右侧和左侧的文件
-process_files "$root/toRight" 1
+#process_files "$root/toRight" 1
 process_files "$root/toLeft" 2
