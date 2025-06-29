@@ -27,7 +27,7 @@ func Generate(base string, n int) (links []string) {
 		log.Fatalf("base:%s 转换失败", base)
 	}
 	for i := 0; i < n; i++ {
-		baseindex += i
+		baseindex += 1
 		link := fmt.Sprintf("%s%d", prefix, baseindex)
 		log.Printf("生成链接:%s", link)
 		links = append(links, link)

@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/zsh
 
 # 定义包含 URL 的文件名
 link_file="post.link"
