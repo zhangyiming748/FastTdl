@@ -1,9 +1,10 @@
 package archive
 
 import (
-	l "github.com/zhangyiming748/FastTdl/util"
 	"log"
 	"testing"
+
+	l "github.com/zhangyiming748/FastTdl/util"
 )
 
 func init() {
@@ -14,7 +15,7 @@ func init() {
 
 // go test -timeout 30h -v -run TestArchiveAllVideoFiles
 func TestArchiveAllVideoFiles(t *testing.T) {
-	root := "/Users/zen/Downloads/media"
+	root := "/Volumes/ugreen/alist/music/video/周杰伦"
 	dirs, e := GetFinalSubDirs(root)
 	if e != nil {
 		t.Error(e)

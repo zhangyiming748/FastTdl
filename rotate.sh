@@ -2,7 +2,7 @@
 
 # 指定要查找的扩展名
 extension="mp4"
-root="/Users/zen/Downloads/media/dance"
+root="/Volumes/ugreen/alist/dance"
 
 process_files() {
     local dir=$1
@@ -39,5 +39,5 @@ process_files() {
 }
 
 # 处理右侧和左侧的文件
-#process_files "$root/toRight" 1
+process_files "$root/toRight" 1
 process_files "$root/toLeft" 2
