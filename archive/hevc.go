@@ -122,10 +122,10 @@ func ConvertH265(src string) {
 	}
 
 	args = append(args, "-tag:v", "hvc1")
-	// if outOfFHD(src) {
-	// 	args = append(args, "-vf", "scale=if(gt(iw\\,ih)\\,iw*1080/ih\\,1920):if(gt(iw\\,ih)\\,1080\\,ih*1920/iw)")
-	// 	//args = append(args, "-vf", "scale=w=1920:h=1080:force_original_aspect_ratio=decrease")
-	// }
+	if outOfFHD(src) {
+		args = append(args, "-vf", "scale=if(gt(iw\\,ih)\\,iw*1080/ih\\,1920):if(gt(iw\\,ih)\\,1080\\,ih*1920/iw)")
+		// args = append(args, "-vf", "scale=w=1920:h=1080:force_original_aspect_ratio=decrease")
+	}
 	// args = append(args, "-c:a", "libmp3lame")
 	args = append(args, "-c:a", "aac")
 	args = append(args, dst)

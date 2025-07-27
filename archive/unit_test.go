@@ -1,6 +1,7 @@
 package archive
 
 import (
+	"fmt"
 	"log"
 	"testing"
 
@@ -9,13 +10,18 @@ import (
 
 func init() {
 	log.SetFlags(log.Ltime | log.Lshortfile)
-	defer l.Alarm("单独的hevc归档完成")
+
 	l.SetLog("h265.log")
 }
 
 // go test -timeout 30h -v -run TestArchiveAllVideoFiles
 func TestArchiveAllVideoFiles(t *testing.T) {
-	root := "/Volumes/ugreen/alist/music/video/周杰伦"
+	var count int
+	defer func() {
+		info := fmt.Sprintf("convert %d video files to h265", count)
+		l.Alarm(info)
+	}()
+	root := "/Volumes/Fanxiang/dance/done"
 	dirs, e := GetFinalSubDirs(root)
 	if e != nil {
 		t.Error(e)
@@ -25,6 +31,7 @@ func TestArchiveAllVideoFiles(t *testing.T) {
 		files, _ := GetAllVideoFiles(dir)
 		for _, file := range files {
 			ConvertH265(file)
+			count++
 		}
 	}
 
