@@ -66,7 +66,7 @@ func initDir() {
 const (
 	DEFAULT_MYSQL_USER     = "root"
 	DEFAULT_MYSQL_PASSWORD = "163453"
-	DEFAULT_MYSQL_HOST     = "192.168.2.10"
+	DEFAULT_MYSQL_HOST     = "192.168.5.2"
 	DEFAULT_MYSQL_PORT     = "3306"
 )
 

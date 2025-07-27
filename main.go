@@ -44,9 +44,6 @@ func main() {
 		report  []string
 	)
 	before, _ = util.CountFiles(filepath.Join(Home, "Downloads"))
-	defer func(r []string) {
-		util.Alarm(r...)
-	}(report)
 	defer func() {
 		media := filepath.Join(Home, "Downloads", "media")
 		archive.ArchiveVideo(media)
@@ -116,5 +113,5 @@ func main() {
 	after, _ = util.CountFiles(filepath.Join(Home, "Downloads"))
 	realAdd = after - before
 	add := realAdd - fileNum
-	report = []string{fmt.Sprintf("程序运行前文件数:%d", before), fmt.Sprintf("程序运行后文件数:%d", after), fmt.Sprintf("新增文件数:%d", realAdd), fmt.Sprintf("理论新增文件数:%d", fileNum), fmt.Sprintf("新增文件数与理论新增文件数的差值:%d", add)}
+	util.Alarm(fmt.Sprintf("程序运行前文件数:%d", before),fmt.Sprintf("程序运行后文件数:%d", after),fmt.Sprintf("新增文件数:%d", realAdd),fmt.Sprintf("理论新增文件数:%d", fileNum),fmt.Sprintf("新增文件数与理论新增文件数的差值:%d", add))
 }

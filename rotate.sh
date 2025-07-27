@@ -2,7 +2,7 @@
 
 # 指定要查找的扩展名
 extension="mp4"
-root="/Volumes/ugreen/alist/dance"
+root="/Volumes/Fanxiang/dance"
 
 process_files() {
     local dir=$1
