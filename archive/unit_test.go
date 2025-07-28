@@ -14,14 +14,14 @@ func init() {
 	l.SetLog("h265.log")
 }
 
-// go test -timeout 30h -v -run TestArchiveAllVideoFiles
+// go test -timeout 300h -v -run TestArchiveAllVideoFiles
 func TestArchiveAllVideoFiles(t *testing.T) {
 	var count int
 	defer func() {
 		info := fmt.Sprintf("convert %d video files to h265", count)
 		l.Alarm(info)
 	}()
-	root := "/Volumes/Fanxiang/dance/done"
+	root := "/Users/zen/Downloads/media"
 	dirs, e := GetFinalSubDirs(root)
 	if e != nil {
 		t.Error(e)

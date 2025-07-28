@@ -41,7 +41,7 @@ func main() {
 		after   int
 		fileNum int // 理论上应该增加的文件数
 		realAdd int // 实际上增加的文件数
-		report  []string
+		//report  []string
 	)
 	before, _ = util.CountFiles(filepath.Join(Home, "Downloads"))
 	defer func() {
