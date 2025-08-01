@@ -216,3 +216,16 @@
 |:---:|:---:|
 |Atomic Heart|原子之心|
 |The Twins|双生舞伶|
+
+# 剑星
+|原名|中文可能的说法|
+|:---:|:---:|
+|Stellar blade|剑星|
+|Eve|伊芙;衣服;依芙|
+|Lily|百合|
+|Enya|恩雅|
+|Kaya|卡雅|
+|Roxane|洛克萨尼;情报贩子|
+|Raven|渡鸦|
+|Tachy|迅驰|
+|Mother sphere|母主领域|
