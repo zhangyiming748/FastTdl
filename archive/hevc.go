@@ -92,6 +92,7 @@ func outOfFHD(fp string) bool {
 	width, _ := strconv.Atoi(mi.Video.Width)
 	if height > 1920 || width > 1920 {
 		log.Printf("视频:%s大于1080p,转换\n", fp)
+		log.Printf("视频:%s高度为%s,宽度为%s\n", fp, mi.Video.Height, mi.Video.Width)
 		return true
 	} else {
 		return false

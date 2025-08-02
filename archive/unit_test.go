@@ -21,7 +21,7 @@ func TestArchiveAllVideoFiles(t *testing.T) {
 		info := fmt.Sprintf("convert %d video files to h265", count)
 		l.Alarm(info)
 	}()
-	root := "/Users/zen/Downloads/media"
+	root := "/Volumes/Fanxiang/整理"
 	dirs, e := GetFinalSubDirs(root)
 	if e != nil {
 		t.Error(e)
