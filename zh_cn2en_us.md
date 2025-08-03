@@ -13,10 +13,8 @@
 
 |原名|中文可能的说法|
 |:---:|:---:|
-|Dead or Alive|死或生;DOA;doa|
-|原名|中文可能的说法|
-|:---:|:---:|
-|Dead or Alive|死或生;DOA;doa|
+|Dead or Alive|死或生|
+|Mai Shiranui|不知火舞|
 |Yukino|千乃|
 |Shizuku|雫|
 |Reika|玲夏|
@@ -54,9 +52,9 @@
 |原名|中文可能的说法|
 |:---:|:---:|
 |Final Fantasy|最终幻想|
-|Gentiana|根蒂亚娜|
+|Gentiana|根蒂亚娜;吉恩提亚娜|
 |Scarlet|思嘉莱特;斯卡蕾特|
-|Oerba Dia Vanille|香草;瓦尼尔;Vanille;vanille|
+|Oerba Dia Vanille|香草;瓦尼尔|
 |Iris Amicitia|伊莉丝|
 |Lunafreya Nox Fleuret|露娜;Luna;luna|
 |Vanille|香草|
@@ -69,15 +67,12 @@
 |Jessie Rasberry|Jessie;jessie;杰西|
 |Yuffie Kisaragi|尤菲|
 |Madam M|玛姆|
-|Gentiana|吉恩提亚娜|
 |Ifalna|伊法尔娜|
 |Iris Amicitia|伊莉斯·亚米西提亚|
-|Lunafreya Nox Fleuret|露娜;Luna;luna|
-|Jihl Nabaat|吉尔·娜巴特;吉尔娜巴特|
-|Jessie`s Mom|杰西妈妈;杰西的妈妈|
 |Monica Elshett|莫妮卡|
 |Lulu|露露|
 |Kyrie Canaan|凯莉耶·迦南|
+|Anabella Rosfield|安娜贝拉·罗兹菲尔德|
 
 # 铁拳
 

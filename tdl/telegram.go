@@ -291,7 +291,10 @@ func getParam(input string) (tag, subtag, filename string, offset, capacity int,
 // returns: 替换后的字符串
 func replace(src string) string {
 	for k, v := range zh2enMap {
-		src = strings.Replace(src, k, v, -1)
+		// 使用strings.EqualFold进行不区分大小写的比较和替换
+		if strings.EqualFold(src, k) {
+			src = v
+		}
 	}
 	return src
 }
