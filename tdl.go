@@ -108,7 +108,7 @@ func Tdl(mainFolder, postLink string) {
 			log.Printf("下载完成第个文件%d/%d\n", index, len(links))
 			if index == len(links)-1 {
 				log.Println("所有文件下载完成")
-				os.Exit(0)
+				return
 			}
 		}
 	}
