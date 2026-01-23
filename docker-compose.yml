@@ -1,0 +1,18 @@
+name: fast_tdl
+services:
+    tdl:
+        container_name: tdl
+        ports:
+            - 8022:22
+        volumes:
+            - /Users/zen/.tdl:/root/.tdl # 登录状态文件位置
+            - /Users/zen/github/FastTdl:/data # 网址列表和下载目录
+        environment:
+            - TDL=/data
+            - PROXY=http://192.168.2.8:8889 # 代理
+            - MYSQL_HOST=192.168.2.5 # mysql地址
+            - MYSQL_PORT=3306 # mysql端口
+            - MYSQL_USER=root # mysql用户名
+            - MYSQL_PASS=163453 # mysql密码
+            - REALTIME=true # 实时使用ffmpeg转换为hevc
+        image: zhangyiming748/tdl:latest

@@ -1,0 +1,21 @@
+name: ffmpeg
+services:
+    golang:
+        volumes:
+            - C:/Users/zen/Videos :/videos
+            - C:/Users/zen/Gitea/FastTdl:/app
+        environment:
+            - PROXY=http://192.168.5.2:8889
+        container_name: ffmpeg
+        working_dir: /app
+        stdin_open: true
+        tty: true
+        image: golang:1.25.5-alpine3.23
+        command: ash
+        deploy:
+            resources:
+                limits:
+                    cpus: '5'
+                    memory: 4G
+# docker update --cpus="0.5" ffmpeg
+# docker update --cpus="0" ffmpeg
