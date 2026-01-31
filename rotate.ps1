@@ -1,6 +1,6 @@
 # Define parameters
 $extension = "mp4"
-$root = "C:\Users\zen\Videos\done\好看的"
+$root ="C:\\Users\\zen\\Gitea\\FastTdl\\media\\dance"
 
 function Invoke-FileRotation {
     param (
