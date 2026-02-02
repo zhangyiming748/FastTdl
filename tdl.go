@@ -46,7 +46,8 @@ func Tdl(mainFolder, postLink string) {
 			log.Printf("检测到链接中包含comment,可能是评论链接，整体下载\n")
 			discussions.Discussion(url, p)
 			// 这里下载之后 从url列表里删除这个元素
-			urls = append(urls[:i], urls[i+1:]...)
+			// urls = append(urls[:i], urls[i+1:]...)
+			continue
 		}
 		if strings.Contains(url, "@") {
 			parts := strings.Split(url, "@")
