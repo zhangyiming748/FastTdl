@@ -2,7 +2,7 @@
 
 # 指定要查找的扩展名
 extension="mp4"
-root="/Users/zen/Downloads/media/dance"
+root="/Users/zen/gitea/FastTdl/discussions"
 
 process_files() {
     local dir=$1

@@ -24,8 +24,8 @@ github.com/remyoudompheng/bigfft v0.0.0-20230129092748-24d4a6f8daec h1:W09IVJc94
 github.com/remyoudompheng/bigfft v0.0.0-20230129092748-24d4a6f8daec/go.mod h1:qqbHyh8v60DhA7CoWK5oRCqLrMHRGoxYCSS9EjAz6Eo=
 github.com/zhangyiming748/FastMediaInfo v0.0.7 h1:ltIZphycCxY+Wyb6tWJODLEr9gQWm/o4/HeOYBbhtAE=
 github.com/zhangyiming748/FastMediaInfo v0.0.7/go.mod h1:vO7MyXVTh/P4DRIuBdFXP14kV5J54Jqemem+xtsC3HI=
-github.com/zhangyiming748/archive v0.0.13 h1:wUyYwCuqu9GpY8EXdCRFqdHZSEEkme9di+zeoOk72cw=
-github.com/zhangyiming748/archive v0.0.13/go.mod h1:K26Jl9AZSR6tCcFC1/MDFSVlZVVg4nhLDVUMqstDDgM=
+github.com/zhangyiming748/archive v0.0.14 h1:G+5FczXg/b6cQRiY/BSj1H1mgJxEMidy7QLcZVPTPyE=
+github.com/zhangyiming748/archive v0.0.14/go.mod h1:t19pz7yuZrf/cwf5kpmwC7y9B+LuYbziYSF0FwW+B58=
 github.com/zhangyiming748/finder v0.0.6 h1:aMAGi6zoPpZah3PT7LOEvcpXDzJvQ5SVsDZQZ/sJLOE=
 github.com/zhangyiming748/finder v0.0.6/go.mod h1:rEtR2ZwJMIoqy3YqCMMnopMamzrMT2EnNclOtIsjOA8=
 github.com/zhangyiming748/lumberjack v0.0.1 h1:/r1XMBfGVZ/ZrRU56vl0aKeVddidi3388ETLLCWxoW4=

@@ -1,11 +1,11 @@
 module github.com/zhangyiming748/FastTdl
 
-go 1.25.1
+go 1.25.6
 
 require (
 	github.com/glebarez/sqlite v1.11.0
 	github.com/h2non/filetype v1.1.3
-	github.com/zhangyiming748/archive v0.0.13
+	github.com/zhangyiming748/archive v0.0.14
 	github.com/zhangyiming748/finder v0.0.6
 	github.com/zhangyiming748/lumberjack v0.0.1
 	github.com/zhangyiming748/sendEmailAlert v0.0.18
