@@ -1,6 +1,6 @@
 # 第一阶段：使用 Golang 1.23.4 编译tdl主程序
 
-FROM golang:1.24.0-alpine3.21 AS builderTDL
+FROM golang:1.25.6-alpine3.21 AS builderTDL
 
 LABEL authors="zen"
 
@@ -12,7 +12,7 @@ RUN go build -o /usr/local/bin/tdl main.go
 
 # 第二阶段：使用 Golang 1.23.4 编译fastTDL主程序
 
-FROM golang:1.24.0-alpine3.21 AS builderFastTDL
+FROM golang:1.25.6-alpine3.21 AS builderFastTDL
 
 LABEL authors="zen"
 
