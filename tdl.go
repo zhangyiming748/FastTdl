@@ -8,6 +8,7 @@ import (
 	"path/filepath"
 	"runtime"
 	"strings"
+	"sync"
 	"time"
 
 	"github.com/zhangyiming748/FastTdl/archive"
@@ -161,8 +162,33 @@ func ArchiveAllFiles(roots ...string) {
 			log.Fatalf("panic: %v", err)
 		}
 	}()
+
+	var (
+		videoSem = make(chan struct{}, 1) // 视频处理信号量，限制并发数为1
+		imageSem = make(chan struct{}, 1) // 图片处理信号量，限制并发数为1
+	)
+	
+	var wg sync.WaitGroup
+
 	for _, root := range roots {
-		archive.Videos(root)
-		archive.Images(root)
+		wg.Add(1)
+		go func(r string) {
+			defer wg.Done()
+			videoSem <- struct{}{} // 获取信号量
+			archive.Videos(r)
+			<-videoSem // 释放信号量
+		}(root)
 	}
+
+	for _, root := range roots {
+		wg.Add(1)
+		go func(r string) {
+			defer wg.Done()
+			imageSem <- struct{}{} // 获取信号量
+			archive.Images(r)
+			<-imageSem // 释放信号量
+		}(root)
+	}
+
+	wg.Wait() // 等待所有goroutine完成
 }
