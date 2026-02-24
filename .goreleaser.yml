@@ -1,0 +1,18 @@
+version: 2
+
+builds:
+  - main: .
+    binary: fasttdl
+    env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+      - darwin
+      - windows
+    goarch:
+      - amd64
+      - arm64
+
+archives:
+  - formats: [ 'binary' ]
+    name_template: "{{ .Binary }}_{{ .Os }}_{{ .Arch }}{{ if eq .Os \"windows\" }}.exe{{ end }}"

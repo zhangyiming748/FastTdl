@@ -1,0 +1,15 @@
+.DS_Store
+.idea
+*.log
+downloads
+failed.txt
+log.txt
+h265.log
+*.db
+*.jpg
+*.mp4
+*.tmp
+tdl-export.json
+discuss.link
+vendor
+/.tdl/
