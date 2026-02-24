@@ -11,7 +11,7 @@ builds:
     # binary: bin/my-cli-tool
 
     env:
-      - CGO_ENABLED=0
+      - CGO_ENABLED=1
     goos:
       - linux
       - darwin
