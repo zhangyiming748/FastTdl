@@ -23,10 +23,3 @@ builds:
 archives:
     - format: binary
       name_template: "{{ .Os }}_{{ .Arch }}{{ if eq .Os "windows" }}.exe{{ end }}"
-      replacements:
-        amd64: x86_64
-        386: i386
-        arm64: arm64
-        darwin: macOS
-        linux: Linux
-        windows: Windows
