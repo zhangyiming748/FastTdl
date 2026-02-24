@@ -20,3 +20,5 @@ builds:
       - amd64
       - arm64
     # ldflags: ... （可选，嵌入版本等信息）
+archives:
+    - format: binary
