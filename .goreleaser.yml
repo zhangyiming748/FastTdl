@@ -14,5 +14,5 @@ builds:
       - arm64
 
 archives:
-  - format: binary
+  - formats: [ 'binary' ]
     name_template: "{{ .Os }}_{{ .Arch }}{{ if eq .Os \"windows\" }}.exe{{ end }}"
