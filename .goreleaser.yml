@@ -1,15 +1,6 @@
-# .goreleaser.yaml
 builds:
-  - # 项目主入口文件（可以是 . 或 ./cmd/myapp/main.go 等）
-    main: .   # 或 ./cmd/cli
-
-    # 关键：生成的二进制文件名（不带 .exe，windows 会自动加）
-    # 默认值：项目目录名 或 go.mod module 名的最后一段
-    binary: fasttdl          # ← 这里指定你想要的名字
-
-    # 可选：想让二进制放在子目录里（解压后路径是 bin/my-cli-tool）
-    # binary: bin/my-cli-tool
-
+  - main: .
+    binary: fasttdl
     env:
       - CGO_ENABLED=0
     goos:
@@ -19,7 +10,7 @@ builds:
     goarch:
       - amd64
       - arm64
-    # ldflags: ... （可选，嵌入版本等信息）
+      
 archives:
-    - format: binary
-      name_template: "{{ .Os }}_{{ .Arch }}{{ if eq .Os "windows" }}.exe{{ end }}"
+  - format: binary
+    name_template: "{{ .Os }}_{{ .Arch }}{{ if eq .Os \"windows\" }}.exe{{ end }}"
