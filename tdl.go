@@ -26,16 +26,21 @@ func init() {
 	util.SetLog("tdl.log")
 }
 
-func Tdl(mainFolder, postLink string) {
+func Tdl(mainFolder, postLink, proxy string) {
+	if proxy == "" {
+		proxy = constant.DEFAULT_PROXY
+	}
 	p := constant.Parameter{
-		Proxy:      constant.DEFAULT_PROXY,
+		Proxy:      proxy,
 		MainFolder: mainFolder,
 		SMTP:       constant.DEFAULT_SMTP,
 	}
 	if err := isValidParent(p.MainFolder); err != nil {
 		log.Fatalf("目前设置的主目录是一个不存在的目录:%s需要再检查一遍:%v\n", p.MainFolder, err)
 	}
-	constant.Ping(p.Proxy)
+	if e := constant.Ping(p.Proxy); e != nil {
+		log.Fatalf("代理设置错误:%s", e.Error())
+	}
 	// 添加这一行来初始化MySQL连接
 	sqlite.SetSqlite()
 	sqlite.GetSqlite().AutoMigrate(&model.Channel{})
@@ -167,7 +172,7 @@ func ArchiveAllFiles(roots ...string) {
 		videoSem = make(chan struct{}, 1) // 视频处理信号量，限制并发数为1
 		imageSem = make(chan struct{}, 1) // 图片处理信号量，限制并发数为1
 	)
-	
+
 	var wg sync.WaitGroup
 
 	for _, root := range roots {
