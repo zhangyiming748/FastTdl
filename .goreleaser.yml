@@ -1,3 +1,5 @@
+version: 2
+
 builds:
   - main: .
     binary: fasttdl
@@ -10,7 +12,7 @@ builds:
     goarch:
       - amd64
       - arm64
-      
+
 archives:
   - format: binary
     name_template: "{{ .Os }}_{{ .Arch }}{{ if eq .Os \"windows\" }}.exe{{ end }}"
