@@ -15,4 +15,4 @@ builds:
 
 archives:
   - formats: [ 'binary' ]
-    name_template: "{{ .Os }}_{{ .Arch }}{{ if eq .Os \"windows\" }}.exe{{ end }}"
+    name_template: "{{ .Binary }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}{{ if eq .Os \"windows\" }}.exe{{ end }}"
