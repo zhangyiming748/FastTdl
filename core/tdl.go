@@ -30,6 +30,8 @@ func Tdl(mainFolder, postLink, proxy string) {
 	if proxy == "" {
 		proxy = constant.DEFAULT_PROXY
 	}
+	//在这之前mainFolder实际上是下载链接文件的路径
+	mainFolder = filepath.Base(mainFolder)
 	p := constant.Parameter{
 		Proxy:      proxy,
 		MainFolder: mainFolder,
