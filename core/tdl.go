@@ -6,7 +6,6 @@ import (
 	"log"
 	"os"
 	"path/filepath"
-	"runtime"
 	"strings"
 	"sync"
 	"time"
@@ -31,7 +30,7 @@ func Tdl(mainFolder, postLink, proxy string) {
 		proxy = constant.DEFAULT_PROXY
 	}
 	//在这之前mainFolder实际上是下载链接文件的路径
-	mainFolder = filepath.Base(mainFolder)
+	//mainFolder = filepath.Base(mainFolder)
 	p := constant.Parameter{
 		Proxy:      proxy,
 		MainFolder: mainFolder,
@@ -127,35 +126,13 @@ func Tdl(mainFolder, postLink, proxy string) {
 // 参数 folderPath: 需要验证的文件夹路径
 // 返回值: 如果路径有效返回nil，否则返回相应的错误信息
 func isValidParent(folderPath string) error {
-	// 根据不同操作系统检查路径分隔符是否正确
-	switch runtime.GOOS {
-	case "windows":
-		if strings.Contains(folderPath, "/") {
-			return fmt.Errorf("Windows系统不应该包含正斜杠作为路径分隔符")
-		}
-	case "linux":
-		// Linux系统不应该包含反斜杠作为路径分隔符
-		if strings.Contains(folderPath, "\\") {
-			return fmt.Errorf("Linux系统不应该包含反斜杠作为路径分隔符")
-		}
-	case "darwin":
-		// macOS系统不应该包含反斜杠作为路径分隔符
-		if strings.Contains(folderPath, "\\") {
-			return fmt.Errorf("macOS系统不应该包含反斜杠作为路径分隔符")
-		}
-	default:
-		// 不支持的操作系统
-		return fmt.Errorf("不支持的操作系统")
-	}
 	// 通过最后一个路径分隔符获取父文件夹路径
 	lastIndex := strings.LastIndex(folderPath, string(os.PathSeparator))
 	if lastIndex == -1 {
 		return fmt.Errorf("如果没有找到路径分隔符，则认为是相对路径或者无效路径")
 	}
-
 	// 获取父目录路径
 	parentPath := folderPath[:lastIndex]
-
 	// 检查父目录是否存在
 	_, err := os.Stat(parentPath)
 	if err != nil {
