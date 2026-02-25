@@ -40,7 +40,7 @@ func main() {
 				return
 			}
 			fmt.Printf("开始执行下载任务...\n根目录: %s\n链接文件: %s\n", root, postlink)
-			core.Tdl(root, postlink,proxy)
+			core.Tdl(root, postlink, proxy)
 		},
 	}
 	var archiveCmd = &cobra.Command{
