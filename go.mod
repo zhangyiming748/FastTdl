@@ -6,8 +6,8 @@ require (
 	github.com/glebarez/sqlite v1.11.0
 	github.com/h2non/filetype v1.1.3
 	github.com/spf13/cobra v1.10.2
-	github.com/zhangyiming748/archive v0.0.14
-	github.com/zhangyiming748/finder v0.0.6
+	github.com/zhangyiming748/archive v0.0.18
+	github.com/zhangyiming748/finder v0.0.7
 	github.com/zhangyiming748/lumberjack v0.0.1
 	github.com/zhangyiming748/sendEmailAlert v0.0.18
 	github.com/zhangyiming748/timing v0.0.4
@@ -26,13 +26,13 @@ require (
 	github.com/remyoudompheng/bigfft v0.0.0-20230129092748-24d4a6f8daec // indirect
 	github.com/spf13/pflag v1.0.9 // indirect
 	github.com/zhangyiming748/FastMediaInfo v0.0.7 // indirect
-	golang.org/x/exp v0.0.0-20260112195511-716be5621a96 // indirect
-	golang.org/x/sys v0.40.0 // indirect
-	golang.org/x/text v0.33.0 // indirect
+	golang.org/x/sys v0.41.0 // indirect
+	golang.org/x/text v0.34.0 // indirect
+	golang.org/x/tools v0.42.0 // indirect
 	gopkg.in/alexcesaro/quotedprintable.v3 v3.0.0-20150716171945-2caba252f4dc // indirect
 	gopkg.in/gomail.v2 v2.0.0-20160411212932-81ebce5c23df // indirect
-	modernc.org/libc v1.67.7 // indirect
+	modernc.org/libc v1.69.0 // indirect
 	modernc.org/mathutil v1.7.1 // indirect
 	modernc.org/memory v1.11.0 // indirect
-	modernc.org/sqlite v1.44.3 // indirect
+	modernc.org/sqlite v1.46.1 // indirect
 )
