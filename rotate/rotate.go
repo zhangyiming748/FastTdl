@@ -6,16 +6,16 @@ import (
 	"log"
 )
 
-func RotateVideos(root,direction string) {
+func RotateVideos(root, direction string) {
 	switch direction {
 	case "90":
 		direction = archive.ToRight
-	case  "270":
+	case "270":
 		direction = archive.ToLeft
 	}
 	files := finder.FindAllVideos(root)
 	for i, file := range files {
 		log.Printf("正在处理第%d/%d个文件: %s\n", i+1, len(files), file)
-		archive.RotateVideo(file,direction)
+		archive.RotateVideo(file, direction)
 	}
 }

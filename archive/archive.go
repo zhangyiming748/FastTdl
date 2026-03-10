@@ -6,9 +6,12 @@ import (
 	"path/filepath"
 	"strings"
 
+	"github.com/zhangyiming748/GracefullyExit"
 	"github.com/zhangyiming748/archive"
 	"github.com/zhangyiming748/finder"
 )
+
+var ge = GracefullyExit.New()
 
 // calculateDirSize calculates the total size of a directory in bytes
 func calculateDirSize(dir string) (int64, error) {
@@ -44,6 +47,10 @@ func Videos(dir string) {
 		for j, file := range files {
 			log.Printf("正在处理第%d/%d个文件夹下的第%d/%d个文件: %s\n", i+1, len(folders), j+1, len(files), file)
 			archive.Convert2H265(file)
+			if ge.ShouldExit("q") {
+				log.Println("Exit signal received. Quitting after current operation.")
+				break
+			}
 		}
 	}
 	//在这里再次实现计算dir文件夹的大小，并打印出来
@@ -75,6 +82,10 @@ func Images(dir string) {
 			}
 			log.Printf("正在处理第%d个文件夹下的第%d个文件: %s\n", i+1, j+1, file)
 			archive.Convert2AVIF(file)
+			if ge.ShouldExit("q") {
+				log.Println("Exit signal received. Quitting after current operation.")
+				break
+			}
 		}
 	}
 	//在这里再次实现计算dir文件夹的大小，并打印出来

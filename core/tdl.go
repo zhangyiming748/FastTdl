@@ -7,7 +7,6 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
-	"sync"
 	"time"
 
 	"FastTdl/archive"
@@ -141,38 +140,8 @@ func isValidParent(folderPath string) error {
 	return nil
 }
 func ArchiveAllFiles(roots ...string) {
-	defer func() {
-		if err := recover(); err != nil {
-			log.Fatalf("panic: %v", err)
-		}
-	}()
-
-	var (
-		videoSem = make(chan struct{}, 1) // 视频处理信号量，限制并发数为1
-		imageSem = make(chan struct{}, 1) // 图片处理信号量，限制并发数为1
-	)
-
-	var wg sync.WaitGroup
-
 	for _, root := range roots {
-		wg.Add(1)
-		go func(r string) {
-			defer wg.Done()
-			videoSem <- struct{}{} // 获取信号量
-			archive.Videos(r)
-			<-videoSem // 释放信号量
-		}(root)
+		archive.Videos(root)
+		archive.Images(root)
 	}
-
-	for _, root := range roots {
-		wg.Add(1)
-		go func(r string) {
-			defer wg.Done()
-			imageSem <- struct{}{} // 获取信号量
-			archive.Images(r)
-			<-imageSem // 释放信号量
-		}(root)
-	}
-
-	wg.Wait() // 等待所有goroutine完成
 }
