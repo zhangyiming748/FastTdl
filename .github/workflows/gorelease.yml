@@ -17,10 +17,6 @@ jobs:
         uses: actions/setup-go@v6
         with:
           go-version: 'stable'
-      - name: Update dependencies
-        run: |
-          go version
-          go mod tidy
       - name: Run GoReleaser
         uses: goreleaser/goreleaser-action@v6
         with:
