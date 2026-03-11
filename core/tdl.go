@@ -1,14 +1,6 @@
 package core
 
 import (
-	"context"
-	"fmt"
-	"log"
-	"os"
-	"path/filepath"
-	"strings"
-	"time"
-
 	"FastTdl/archive"
 	"FastTdl/constant"
 	"FastTdl/discussions"
@@ -16,6 +8,14 @@ import (
 	"FastTdl/sqlite"
 	"FastTdl/tdl"
 	"FastTdl/util"
+	"context"
+	"fmt"
+	"github.com/zhangyiming748/GracefullyExit"
+	"log"
+	"os"
+	"path/filepath"
+	"strings"
+	"time"
 )
 
 var Home string
@@ -48,6 +48,10 @@ func Tdl(mainFolder, postLink, proxy string) {
 	var urls []string
 	urls = util.ReadByLine(postLink)
 	for i, url := range urls {
+		if GracefullyExit.ShouldExit() {
+			log.Println("用户已取消下载")
+			break
+		}
 		if strings.Contains(url, "comment") {
 			log.Printf("检测到链接中包含comment,可能是评论链接，整体下载\n")
 			discussions.Discussion(url, p)

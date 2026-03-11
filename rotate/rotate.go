@@ -1,6 +1,7 @@
 package rotate
 
 import (
+	"github.com/zhangyiming748/GracefullyExit"
 	"github.com/zhangyiming748/archive"
 	"github.com/zhangyiming748/finder"
 	"log"
@@ -29,5 +30,9 @@ func RotateVideos(root, direction string) {
 	for i, file := range files {
 		log.Printf("正在处理第%d/%d个文件: %s\n", i+1, len(files), file)
 		archive.RotateVideo(file, archiveDirection)
+		if GracefullyExit.ShouldExit() {
+			log.Println("Exit signal received. Quitting after current operation.")
+			break
+		}
 	}
 }

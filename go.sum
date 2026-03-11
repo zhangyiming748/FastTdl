@@ -35,6 +35,8 @@ github.com/zhangyiming748/FastMediaInfo v0.0.7 h1:ltIZphycCxY+Wyb6tWJODLEr9gQWm/
 github.com/zhangyiming748/FastMediaInfo v0.0.7/go.mod h1:vO7MyXVTh/P4DRIuBdFXP14kV5J54Jqemem+xtsC3HI=
 github.com/zhangyiming748/GracefullyExit v0.1.1 h1:iHc+v9y6+VLAGJl1433qYohs6Z2VSkdedXGuf0YzO84=
 github.com/zhangyiming748/GracefullyExit v0.1.1/go.mod h1:ktsDYmQ6K+lnFctelSZvQe7sdDj+3APF3c5hESiljjY=
+github.com/zhangyiming748/GracefullyExit v0.2.0 h1:4Ivgq2ZfMezW6scBNf2jw3HWj7GRTcw5lFGmqQjPFuo=
+github.com/zhangyiming748/GracefullyExit v0.2.0/go.mod h1:ktsDYmQ6K+lnFctelSZvQe7sdDj+3APF3c5hESiljjY=
 github.com/zhangyiming748/archive v0.0.20 h1:S5i0XX9fsU6xC/nCtJYgb/4vEAp/nU5BAnBWkBKZk90=
 github.com/zhangyiming748/archive v0.0.20/go.mod h1:WIL8HTrYIvI8/a9YAS/7syfb/1Fb91RYn1eKAvwqvhM=
 github.com/zhangyiming748/finder v0.0.7 h1:bL9UrQbp6CTdZ7Z6zcQ9slqbM0Ty6tlB2iIL6BzmFjY=
