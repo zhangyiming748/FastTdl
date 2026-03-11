@@ -47,7 +47,7 @@ func Videos(dir string) {
 			archive.Convert2H265(file)
 			if GracefullyExit.ShouldExit() {
 				log.Println("Exit signal received. Quitting after current operation.")
-				return
+				os.Exit(0)
 			}
 		}
 	}
@@ -82,7 +82,7 @@ func Images(dir string) {
 			archive.Convert2AVIF(file)
 			if GracefullyExit.ShouldExit() {
 				log.Println("Exit signal received. Quitting after current operation.")
-				return
+				os.Exit(0)
 			}
 		}
 	}
@@ -115,7 +115,7 @@ func Movies(dir string) {
 			}
 			if GracefullyExit.ShouldExit() {
 				log.Println("Exit signal received. Quitting after current operation.")
-				return
+				os.Exit(0)
 			}
 		}
 	}

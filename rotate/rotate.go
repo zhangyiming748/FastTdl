@@ -5,6 +5,7 @@ import (
 	"github.com/zhangyiming748/archive"
 	"github.com/zhangyiming748/finder"
 	"log"
+	"os"
 )
 
 func RotateVideos(root, direction string) {
@@ -32,7 +33,7 @@ func RotateVideos(root, direction string) {
 		archive.RotateVideo(file, archiveDirection)
 		if GracefullyExit.ShouldExit() {
 			log.Println("Exit signal received. Quitting after current operation.")
-			return
+			os.Exit(0)
 		}
 	}
 }
