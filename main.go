@@ -33,17 +33,17 @@ func main() {
 		Short: "下载文件",
 		Long:  "根据指定的根目录和链接文件下载文件",
 		Run: func(cmd *cobra.Command, args []string) {
-			root, _ := cmd.Flags().GetString("root")
-			postlink, _ := cmd.Flags().GetString("postlink")
+			root, _ := cmd.Flags().GetString("dir")
+			postlink, _ := cmd.Flags().GetString("input")
 			proxy, _ := cmd.Flags().GetString("proxy")
 
 			// 参数验证
 			if root == "" {
-				fmt.Println("错误: 必须指定 --root 参数")
+				fmt.Println("错误：必须指定 -d 或 --dir 参数")
 				return
 			}
 			if postlink == "" {
-				fmt.Println("错误: 必须指定 --postlink 参数")
+				fmt.Println("错误：必须指定 -i 或 --input 参数")
 				return
 			}
 
@@ -52,10 +52,14 @@ func main() {
 		},
 	}
 
-	// 为tdl命令添加标志
-	tdlCmd.Flags().String("root", "./", "根目录路径 (必需)")
-	tdlCmd.Flags().String("postlink", "./post.link", "链接文件路径 (必需)")
-	tdlCmd.Flags().String("proxy", "http://127.0.0.1:8889", "代理地址 (必需)")
+	// 为 tdl 命令添加标志
+	tdlCmd.Flags().StringP("dir", "d", "./", "根目录路径 (必需)")
+	tdlCmd.Flags().StringP("input", "i", "./post.link", "链接文件路径 (必需)")
+	tdlCmd.Flags().String("proxy", "http://127.0.0.1:8889", "代理地址")
+
+	// 绑定标志到命令
+	tdlCmd.MarkFlagRequired("dir")
+	tdlCmd.MarkFlagRequired("input")
 
 	// 创建归档命令
 	var archiveCmd = &cobra.Command{
@@ -63,21 +67,24 @@ func main() {
 		Short: "归档文件",
 		Long:  "归档指定目录下的所有文件",
 		Run: func(cmd *cobra.Command, args []string) {
-			root, _ := cmd.Flags().GetString("root")
+			dir, _ := cmd.Flags().GetString("dir")
 
 			// 参数验证
-			if root == "" {
-				fmt.Println("错误: 必须指定 --root 参数")
+			if dir == "" {
+				fmt.Println("错误：必须指定 -d 或 --dir 参数")
 				return
 			}
 
-			fmt.Printf("开始执行归档任务...\n目录: %s\n", root)
-			core.ArchiveAllFiles(root)
+			fmt.Printf("开始执行归档任务...\n目录: %s\n", dir)
+			core.ArchiveAllFiles(dir)
 		},
 	}
 
-	// 为archive命令添加标志
-	archiveCmd.Flags().String("root", "./", "要归档的目录路径 (必需)")
+	// 为 archive 命令添加标志
+	archiveCmd.Flags().StringP("dir", "d", "./", "要归档的目录路径 (必需)")
+	
+	// 设置必填标志
+	archiveCmd.MarkFlagRequired("dir")
 
 	// 创建旋转命令
 	var rotateCmd = &cobra.Command{
@@ -85,27 +92,30 @@ func main() {
 		Short: "旋转视频文件",
 		Long:  "旋转指定目录下的所有视频文件",
 		Run: func(cmd *cobra.Command, args []string) {
-			root, _ := cmd.Flags().GetString("root")
+			dir, _ := cmd.Flags().GetString("dir")
 			direction, _ := cmd.Flags().GetString("direction")
 
 			// 参数验证
-			if root == "" {
-				fmt.Println("错误: 必须指定 --root 参数")
+			if dir == "" {
+				fmt.Println("错误：必须指定 -d 或 --dir 参数")
 				return
 			}
 			if direction == "" {
-				fmt.Println("错误: 必须指定 --direction 参数 (90, 180, 270)")
+				fmt.Println("错误：必须指定 --direction 参数 (90, 180, 270)")
 				return
 			}
 
-			fmt.Printf("开始执行视频旋转任务...\n目录: %s\n方向: %s度\n", root, direction)
-			rotate.RotateVideos(root, direction)
+			fmt.Printf("开始执行视频旋转任务...\n目录：%s\n方向：%s度\n", dir, direction)
+			rotate.RotateVideos(dir, direction)
 		},
 	}
 
-	// 为rotate命令添加标志
-	rotateCmd.Flags().String("root", "./", "要旋转视频的目录路径 (必需)")
-	rotateCmd.Flags().String("direction", "", "旋转方向: 90, 180, 270 (必需)")
+	// 为 rotate 命令添加标志
+	rotateCmd.Flags().StringP("dir", "d", "./", "要旋转视频的目录路径 (必需)")
+	rotateCmd.Flags().StringP("direction", "direct", "90", "旋转方向:90, 180, 270")
+	
+	// 设置必填标志
+	rotateCmd.MarkFlagRequired("dir")
 
 	// 将子命令添加到根命令
 	rootCmd.AddCommand(tdlCmd)
