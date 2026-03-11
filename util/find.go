@@ -27,11 +27,22 @@ func FindLatestFileGo(dir string) string {
 			return nil
 		}
 		// 跳过非视频文件
-		file, _ := os.Open(path)
-		defer file.Close()
+		file, err := os.Open(path)
+		if err != nil {
+			log.Printf("无法打开文件 %s: %v\n", path, err)
+			return nil
+		}
+
 		// We only have to pass the file header = first 261 bytes
 		head := make([]byte, 261)
-		file.Read(head)
+		_, err = file.Read(head)
+		file.Close() // 立即关闭文件而不是延迟
+
+		if err != nil {
+			log.Printf("无法读取文件头 %s: %v\n", path, err)
+			return nil
+		}
+
 		if !filetype.IsVideo(head) {
 			return nil
 		}

@@ -125,17 +125,16 @@ func Tdl(mainFolder, postLink, proxy string) {
 // 参数 folderPath: 需要验证的文件夹路径
 // 返回值: 如果路径有效返回nil，否则返回相应的错误信息
 func isValidParent(folderPath string) error {
-	// 通过最后一个路径分隔符获取父文件夹路径
-	lastIndex := strings.LastIndex(folderPath, string(os.PathSeparator))
-	if lastIndex == -1 {
-		return fmt.Errorf("如果没有找到路径分隔符，则认为是相对路径或者无效路径")
-	}
-	// 获取父目录路径
-	parentPath := folderPath[:lastIndex]
-	// 检查父目录是否存在
-	_, err := os.Stat(parentPath)
+	// 获取文件所在目录路径
+	dirPath := filepath.Dir(folderPath)
+
+	// 检查目录是否存在
+	_, err := os.Stat(dirPath)
 	if err != nil {
-		return fmt.Errorf("父目录不存在")
+		if os.IsNotExist(err) {
+			return fmt.Errorf("目录不存在: %s", dirPath)
+		}
+		return fmt.Errorf("检查目录时发生错误: %v", err)
 	}
 	return nil
 }

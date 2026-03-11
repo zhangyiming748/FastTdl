@@ -157,7 +157,7 @@ go build -o fasttdl .
 
 ### 完整示例
 
-```
+```bash
 # 基础下载
 https://t.me/channel_name/12345
 
@@ -234,7 +234,7 @@ https://t.me/channel_name/12345?comment=67890
 
 ## 📁 项目结构
 
-``shell
+```shell
 tdl-cli/
 ├── archive/          # 归档处理模块
 ├── constant/         # 常量和配置

@@ -82,7 +82,7 @@ func main() {
 
 	// 为 archive 命令添加标志
 	archiveCmd.Flags().StringP("dir", "d", "./", "要归档的目录路径 (必需)")
-	
+
 	// 设置必填标志
 	archiveCmd.MarkFlagRequired("dir")
 
@@ -100,10 +100,6 @@ func main() {
 				fmt.Println("错误：必须指定 -d 或 --dir 参数")
 				return
 			}
-			if direction == "" {
-				fmt.Println("错误：必须指定 --direction 参数 (90, 180, 270)")
-				return
-			}
 
 			fmt.Printf("开始执行视频旋转任务...\n目录：%s\n方向：%s度\n", dir, direction)
 			rotate.RotateVideos(dir, direction)
@@ -112,8 +108,8 @@ func main() {
 
 	// 为 rotate 命令添加标志
 	rotateCmd.Flags().StringP("dir", "d", "./", "要旋转视频的目录路径 (必需)")
-	rotateCmd.Flags().StringP("direction", "direct", "90", "旋转方向:90, 180, 270")
-	
+	rotateCmd.Flags().StringP("direction", "", "90", "旋转方向:90,270")
+
 	// 设置必填标志
 	rotateCmd.MarkFlagRequired("dir")
 
