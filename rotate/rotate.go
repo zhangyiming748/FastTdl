@@ -32,7 +32,7 @@ func RotateVideos(root, direction string) {
 		archive.RotateVideo(file, archiveDirection)
 		if GracefullyExit.ShouldExit() {
 			log.Println("Exit signal received. Quitting after current operation.")
-			break
+			return
 		}
 	}
 }

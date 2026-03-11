@@ -6,7 +6,7 @@ require (
 	github.com/glebarez/sqlite v1.11.0
 	github.com/h2non/filetype v1.1.3
 	github.com/spf13/cobra v1.10.2
-	github.com/zhangyiming748/GracefullyExit v0.2.0
+	github.com/zhangyiming748/GracefullyExit v0.2.1
 	github.com/zhangyiming748/archive v0.0.20
 	github.com/zhangyiming748/finder v0.0.7
 	github.com/zhangyiming748/lumberjack v0.0.1

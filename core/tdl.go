@@ -50,7 +50,7 @@ func Tdl(mainFolder, postLink, proxy string) {
 	for i, url := range urls {
 		if GracefullyExit.ShouldExit() {
 			log.Println("用户已取消下载")
-			break
+			return
 		}
 		if strings.Contains(url, "comment") {
 			log.Printf("检测到链接中包含comment,可能是评论链接，整体下载\n")
