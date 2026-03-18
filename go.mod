@@ -8,7 +8,7 @@ require (
 	github.com/spf13/cobra v1.10.2
 	github.com/zhangyiming748/GracefullyExit v0.2.1
 	github.com/zhangyiming748/archive v0.0.20
-	github.com/zhangyiming748/finder v0.0.7
+	github.com/zhangyiming748/finder v0.0.8
 	github.com/zhangyiming748/lumberjack v0.0.1
 	github.com/zhangyiming748/sendEmailAlert v0.0.18
 	github.com/zhangyiming748/timing v0.0.4
@@ -28,11 +28,11 @@ require (
 	github.com/spf13/pflag v1.0.10 // indirect
 	github.com/zhangyiming748/FastMediaInfo v0.0.7 // indirect
 	golang.org/x/sys v0.42.0 // indirect
-	golang.org/x/text v0.34.0 // indirect
+	golang.org/x/text v0.35.0 // indirect
 	gopkg.in/alexcesaro/quotedprintable.v3 v3.0.0-20150716171945-2caba252f4dc // indirect
 	gopkg.in/gomail.v2 v2.0.0-20160411212932-81ebce5c23df // indirect
 	modernc.org/libc v1.70.0 // indirect
 	modernc.org/mathutil v1.7.1 // indirect
 	modernc.org/memory v1.11.0 // indirect
-	modernc.org/sqlite v1.46.1 // indirect
+	modernc.org/sqlite v1.47.0 // indirect
 )
