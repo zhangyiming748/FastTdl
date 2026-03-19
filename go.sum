@@ -35,8 +35,8 @@ github.com/zhangyiming748/FastMediaInfo v0.0.7 h1:ltIZphycCxY+Wyb6tWJODLEr9gQWm/
 github.com/zhangyiming748/FastMediaInfo v0.0.7/go.mod h1:vO7MyXVTh/P4DRIuBdFXP14kV5J54Jqemem+xtsC3HI=
 github.com/zhangyiming748/GracefullyExit v0.2.1 h1:EtcmAoUJnvAtFu4I26XAg4cIyuSyu9DY0oAJBP09MD0=
 github.com/zhangyiming748/GracefullyExit v0.2.1/go.mod h1:ktsDYmQ6K+lnFctelSZvQe7sdDj+3APF3c5hESiljjY=
-github.com/zhangyiming748/archive v0.0.20 h1:S5i0XX9fsU6xC/nCtJYgb/4vEAp/nU5BAnBWkBKZk90=
-github.com/zhangyiming748/archive v0.0.20/go.mod h1:WIL8HTrYIvI8/a9YAS/7syfb/1Fb91RYn1eKAvwqvhM=
+github.com/zhangyiming748/archive v0.0.21 h1:y8pPU2wOPcJ3XBLjVbiBPLr9ZvOy2wkKkY41PdkUy9Q=
+github.com/zhangyiming748/archive v0.0.21/go.mod h1:WIL8HTrYIvI8/a9YAS/7syfb/1Fb91RYn1eKAvwqvhM=
 github.com/zhangyiming748/finder v0.0.8 h1:VwYNrig2MCC3X/CCA0u8YrcNlSqVs/3kvoyNWkGjZbM=
 github.com/zhangyiming748/finder v0.0.8/go.mod h1:92Nl48xt4VYxeyQIlYuxvhX+sCVba9SlKEWKMHzzDdA=
 github.com/zhangyiming748/lumberjack v0.0.1 h1:/r1XMBfGVZ/ZrRU56vl0aKeVddidi3388ETLLCWxoW4=
