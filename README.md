@@ -122,13 +122,13 @@ go build -o fasttdl .
 ### 视频旋转命令 (`rotate`)
 
 ```bash
-./fasttdl rotate -d <目录> [--direction <角度>]
+./fasttdl rotate -d <目录> [--rotate <角度>]
 ```
 
 参数说明：
 
 - `-d`, `--dir`: 要旋转视频的目录路径（必需，默认值：`./`）
-- `--direction`: 旋转方向，支持 90、180、270 度（可选，默认值：`90`）
+- `-r`, `--rotate`: 旋转方向，支持 90、180、270 度（可选，默认值：`90`）
 
 使用示例：
 
@@ -136,11 +136,11 @@ go build -o fasttdl .
 # 使用默认方向（90 度）
 ./fasttdl rotate -d "./videos"
 
-# 指定旋转方向
-./fasttdl rotate -d "./videos" --direction 180
+# 指定旋转方向（使用短选项）
+./fasttdl rotate -d "./videos" -r 180
 
 # 使用长选项
-./fasttdl rotate --dir "./videos" --direction 270
+./fasttdl rotate --dir "./videos" --rotate 270
 ```
 
 ## 🔗 URL 格式详解
@@ -217,12 +217,15 @@ https://t.me/channel_name/12345?comment=67890
 
 ```bash
 # 旋转视频文件
-./fasttdl rotate --root "./videos" --direction "90"
+./fasttdl rotate --dir "./videos" --rotate "90"
+
+# 使用短选项
+./fasttdl rotate -d "./videos" -r "90"
 
 # 支持的角度：
-# 90  - 顺时针旋转90度
-# 180 - 旋转180度
-# 270 - 逆时针旋转90度（或顺时针270度）
+# 90  - 顺时针旋转 90 度
+# 180 - 旋转 180 度
+# 270 - 逆时针旋转 90 度（或顺时针 270 度）
 ```
 
 该功能特点：
