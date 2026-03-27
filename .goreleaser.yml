@@ -2,7 +2,7 @@ version: 2
 
 builds:
   - main: .
-    binary: fasttdl
+    binary: my-tdl
     env:
       - CGO_ENABLED=0
     goos:
