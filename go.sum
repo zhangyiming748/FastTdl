@@ -35,10 +35,6 @@ github.com/zhangyiming748/FastMediaInfo v0.0.7 h1:ltIZphycCxY+Wyb6tWJODLEr9gQWm/
 github.com/zhangyiming748/FastMediaInfo v0.0.7/go.mod h1:vO7MyXVTh/P4DRIuBdFXP14kV5J54Jqemem+xtsC3HI=
 github.com/zhangyiming748/GracefullyExit v0.2.1 h1:EtcmAoUJnvAtFu4I26XAg4cIyuSyu9DY0oAJBP09MD0=
 github.com/zhangyiming748/GracefullyExit v0.2.1/go.mod h1:ktsDYmQ6K+lnFctelSZvQe7sdDj+3APF3c5hESiljjY=
-github.com/zhangyiming748/archive v0.0.22 h1:i7+b/andtbnw+zycW1neXv9SPI7F+PqvtFA6NRMOMVE=
-github.com/zhangyiming748/archive v0.0.22/go.mod h1:WIL8HTrYIvI8/a9YAS/7syfb/1Fb91RYn1eKAvwqvhM=
-github.com/zhangyiming748/archive v0.0.23 h1:lChlXUIZWeI5eI385qp70LsWa/umJwwngDwYQPAF5e8=
-github.com/zhangyiming748/archive v0.0.23/go.mod h1:WIL8HTrYIvI8/a9YAS/7syfb/1Fb91RYn1eKAvwqvhM=
 github.com/zhangyiming748/archive v0.0.24 h1:RFb97dy8fNR+/VEgbeLEe9z+ovcGThd1mxxYa/50BnA=
 github.com/zhangyiming748/archive v0.0.24/go.mod h1:WIL8HTrYIvI8/a9YAS/7syfb/1Fb91RYn1eKAvwqvhM=
 github.com/zhangyiming748/finder v0.0.8 h1:VwYNrig2MCC3X/CCA0u8YrcNlSqVs/3kvoyNWkGjZbM=
