@@ -22,7 +22,7 @@ func main() {
 
 	// 创建根命令
 	var rootCmd = &cobra.Command{
-		Use:   "fasttdl",
+		Use:   "my-tdl",
 		Short: "FastTdl CLI工具",
 		Long:  "一个用于文件下载和归档的命令行工具",
 	}
@@ -36,7 +36,7 @@ func main() {
 			root, _ := cmd.Flags().GetString("dir")
 			postlink, _ := cmd.Flags().GetString("input")
 			proxy, _ := cmd.Flags().GetString("proxy")
-			fmt.Printf("开始执行下载任务...\n根目录: %s\n链接文件: %s\n", root, postlink)
+			fmt.Printf("开始执行下载任务...\n根目录:%s\n链接文件: %s\n", root, postlink)
 			core.Tdl(root, postlink, proxy)
 		},
 	}
@@ -58,13 +58,16 @@ func main() {
 		Long:  "归档指定目录下的所有文件",
 		Run: func(cmd *cobra.Command, args []string) {
 			dir, _ := cmd.Flags().GetString("dir")
-			fmt.Printf("开始执行归档任务...\n目录: %s\n", dir)
-			core.ArchiveAllFiles(dir)
+			fhd, _ := cmd.Flags().GetBool("fhd")
+
+			fmt.Printf("开始执行归档任务...\n目录:%s\nFHD 模式：%v\n", dir, fhd)
+			core.ArchiveAllFiles(dir, fhd)
 		},
 	}
 
 	// 为 archive 命令添加标志
 	archiveCmd.Flags().StringP("dir", "d", "./", "要归档的目录路径 (必需)")
+	archiveCmd.Flags().BoolP("fhd", "f", false, "是否裁剪到1080p")
 
 	// 设置必填标志
 	archiveCmd.MarkFlagRequired("dir")
@@ -77,7 +80,7 @@ func main() {
 		Run: func(cmd *cobra.Command, args []string) {
 			dir, _ := cmd.Flags().GetString("dir")
 			rotateDirection, _ := cmd.Flags().GetString("rotate")
-			fmt.Printf("开始执行视频旋转任务...\n目录：%s\n方向：%s 度\n", dir, rotateDirection)
+			fmt.Printf("开始执行视频旋转任务...\n目录:%s\n方向:%s度\n", dir, rotateDirection)
 			rotate.RotateVideos(dir, rotateDirection)
 		},
 	}

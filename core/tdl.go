@@ -142,9 +142,7 @@ func isValidParent(folderPath string) error {
 	}
 	return nil
 }
-func ArchiveAllFiles(roots ...string) {
-	for _, root := range roots {
-		archive.Videos(root)
-		archive.Images(root)
-	}
+func ArchiveAllFiles(root string, fhd bool) {
+	archive.Videos(root, fhd)
+	archive.Images(root)
 }

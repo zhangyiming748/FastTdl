@@ -31,7 +31,7 @@ func formatBytes(bytes int64) float64 {
 	return float64(bytes) / (1024 * 1024)
 }
 
-func Videos(dir string) {
+func Videos(dir string, fhd bool) {
 	//在这里实现计算dir文件夹的大小，并打印出来
 	initialSize, err := calculateDirSize(dir)
 	if err != nil {
@@ -44,7 +44,7 @@ func Videos(dir string) {
 		files := finder.FindAllVideosInRoot(folder)
 		for j, file := range files {
 			log.Printf("正在处理第%d/%d个文件夹下的第%d/%d个文件: %s\n", i+1, len(folders), j+1, len(files), file)
-			archive.Convert2H265(file)
+			archive.Convert2H265(file, fhd)
 			if GracefullyExit.ShouldExit() {
 				log.Println("Exit signal received. Quitting after current operation.")
 				os.Exit(0)

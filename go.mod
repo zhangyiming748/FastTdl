@@ -7,7 +7,7 @@ require (
 	github.com/h2non/filetype v1.1.3
 	github.com/spf13/cobra v1.10.2
 	github.com/zhangyiming748/GracefullyExit v0.2.1
-	github.com/zhangyiming748/archive v0.0.24
+	github.com/zhangyiming748/archive v0.1.1
 	github.com/zhangyiming748/finder v0.0.8
 	github.com/zhangyiming748/lumberjack v0.0.1
 	github.com/zhangyiming748/sendEmailAlert v0.0.18
@@ -34,5 +34,5 @@ require (
 	modernc.org/libc v1.70.0 // indirect
 	modernc.org/mathutil v1.7.1 // indirect
 	modernc.org/memory v1.11.0 // indirect
-	modernc.org/sqlite v1.47.0 // indirect
+	modernc.org/sqlite v1.48.0 // indirect
 )
