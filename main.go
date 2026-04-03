@@ -7,26 +7,15 @@ import (
 	"github.com/spf13/cobra"
 	"github.com/zhangyiming748/GracefullyExit"
 	"log"
+	a "github.com/zhangyiming748/archive"
 )
-
 func main() {
-	/*
-		这里也使用cobra改成cli命令行工具
-		go build -o main main.go编译二进制文件之后‘
-		main   tdl --root "/Users/zen/gitea/FastTdl" --postlink "/Users/zen/gitea/FastTdl/des.link"
-		实际上要运行的函数是FastTdl.Tdl(root, postlink)
-		main archive --root "/Users/zen/gitea/FastTdl"
-		实际上要运行的函数是
-		FastTdl.ArchiveAllFiles(mainFolder)
-	*/
-
 	// 创建根命令
 	var rootCmd = &cobra.Command{
 		Use:   "my-tdl",
 		Short: "FastTdl CLI工具",
 		Long:  "一个用于文件下载和归档的命令行工具",
 	}
-
 	// 创建下载命令
 	var tdlCmd = &cobra.Command{
 		Use:   "tdl",
@@ -59,8 +48,8 @@ func main() {
 		Run: func(cmd *cobra.Command, args []string) {
 			dir, _ := cmd.Flags().GetString("dir")
 			fhd, _ := cmd.Flags().GetBool("fhd")
-
 			fmt.Printf("开始执行归档任务...\n目录:%s\nFHD 模式：%v\n", dir, fhd)
+			a.InitSqlte()
 			core.ArchiveAllFiles(dir, fhd)
 		},
 	}

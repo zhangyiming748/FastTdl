@@ -32,6 +32,7 @@ func formatBytes(bytes int64) float64 {
 }
 
 func Videos(dir string, fhd bool) {
+	archive.CheckVideoDependencies()
 	//在这里实现计算dir文件夹的大小，并打印出来
 	initialSize, err := calculateDirSize(dir)
 	if err != nil {
@@ -64,6 +65,7 @@ func Videos(dir string, fhd bool) {
 }
 
 func Images(dir string) {
+	archive.CheckImageDependencies()
 	//在这里实现计算dir文件夹的大小，并打印出来
 	initialSize, err := calculateDirSize(dir)
 	if err != nil {
