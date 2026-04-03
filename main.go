@@ -6,9 +6,10 @@ import (
 	"fmt"
 	"github.com/spf13/cobra"
 	"github.com/zhangyiming748/GracefullyExit"
-	"log"
 	a "github.com/zhangyiming748/archive"
+	"log"
 )
+
 func main() {
 	// 创建根命令
 	var rootCmd = &cobra.Command{
