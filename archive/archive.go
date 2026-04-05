@@ -111,7 +111,7 @@ func Movies(dir string) {
 		for j, file := range files {
 			if strings.ToUpper(filepath.Ext(file)) == ".MKV" {
 				log.Printf("正在处理第%d/%d个文件夹下的第%d/%d个mkv文件: %s\n", i+1, len(folders), j+1, len(files), file)
-				archive.ConvertMKV2H265(file,false)
+				archive.ConvertMKV2H265(file, false)
 			}
 			if GracefullyExit.ShouldExit() {
 				log.Println("Exit signal received. Quitting after current operation.")
