@@ -39,6 +39,8 @@ github.com/zhangyiming748/archive v0.1.3 h1:2vWNQDi3NUqlev4HrKk0JUYKAPhJw47HGiHG
 github.com/zhangyiming748/archive v0.1.3/go.mod h1:2Mu36zWdCcmL6GdBBA/PL73XC2dMBjJrvaMFBNR0jOY=
 github.com/zhangyiming748/finder v0.0.9 h1:RsZp6A4Qxe+OpZ+qW30v0cBE6Q+fG+ETEz/NUyDviJ0=
 github.com/zhangyiming748/finder v0.0.9/go.mod h1:92Nl48xt4VYxeyQIlYuxvhX+sCVba9SlKEWKMHzzDdA=
+github.com/zhangyiming748/finder v0.0.10 h1:RnuXUFlbnlr5wUz3aXHHHOrQLhO2BearXfy591IgnHk=
+github.com/zhangyiming748/finder v0.0.10/go.mod h1:92Nl48xt4VYxeyQIlYuxvhX+sCVba9SlKEWKMHzzDdA=
 github.com/zhangyiming748/lumberjack v0.0.1 h1:/r1XMBfGVZ/ZrRU56vl0aKeVddidi3388ETLLCWxoW4=
 github.com/zhangyiming748/lumberjack v0.0.1/go.mod h1:11eemyl+ecJVHsV0uA62hHy+geuwthU0Y2owuM9TXdI=
 github.com/zhangyiming748/sendEmailAlert v0.0.18 h1:dpo26uiPqJts8q/0pDaiFwUWEetwAV9pc9hAq6q4fM0=
