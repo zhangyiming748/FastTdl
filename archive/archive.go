@@ -14,14 +14,16 @@ import (
 // calculateDirSize calculates the total size of a directory in bytes
 func calculateDirSize(dir string) (int64, error) {
 	var size int64
-	err := filepath.Walk(dir, func(_ string, info os.FileInfo, err error) error {
+	err := filepath.Walk(dir, func(path string, info os.FileInfo, err error) error {
 		if err != nil {
-			return err
+			// 记录警告但继续处理其他文件
+			log.Printf("警告: 无法访问 %s: %v\n", path, err)
+			return nil // 返回 nil 而不是 err，这样 Walk 会继续处理其他文件
 		}
 		if !info.IsDir() {
 			size += info.Size()
 		}
-		return err
+		return nil
 	})
 	return size, err
 }
