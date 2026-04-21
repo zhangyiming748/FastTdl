@@ -2,12 +2,12 @@ package archive
 
 import (
 	"FastTdl/util"
+	"github.com/zhangyiming748/archive"
+	"github.com/zhangyiming748/finder"
 	"log"
 	"os"
 	"path/filepath"
 	"strings"
-	"github.com/zhangyiming748/archive"
-	"github.com/zhangyiming748/finder"
 )
 
 // calculateDirSize calculates the total size of a directory in bytes
@@ -118,7 +118,7 @@ func Movies(dir string) {
 				if util.GetExit() {
 					log.Printf("接收到退出信号,程序在保证原子操作的情况下正常退出")
 					os.Exit(0)
-			}
+				}
 			}
 		}
 	}
