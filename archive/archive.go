@@ -1,12 +1,11 @@
 package archive
 
 import (
+	"FastTdl/util"
 	"log"
 	"os"
 	"path/filepath"
 	"strings"
-
-	"github.com/zhangyiming748/GracefullyExit"
 	"github.com/zhangyiming748/archive"
 	"github.com/zhangyiming748/finder"
 )
@@ -46,12 +45,12 @@ func Videos(dir string, fhd bool) {
 	for i, folder := range folders {
 		files := finder.FindAllVideosInRoot(folder)
 		for j, file := range files {
-			log.Printf("正在处理第%d/%d个文件夹下的第%d/%d个文件: %s\n", i+1, len(folders), j+1, len(files), file)
-			archive.Convert2H265(file, fhd)
-			if GracefullyExit.ShouldExit() {
-				log.Println("Exit signal received. Quitting after current operation.")
+			if util.GetExit() {
+				log.Printf("接收到退出信号,程序在保证原子操作的情况下正常退出")
 				os.Exit(0)
 			}
+			log.Printf("正在处理第%d/%d个文件夹下的第%d/%d个文件: %s\n", i+1, len(folders), j+1, len(files), file)
+			archive.Convert2H265(file, fhd)
 		}
 	}
 	//在这里再次实现计算dir文件夹的大小，并打印出来
@@ -84,8 +83,8 @@ func Images(dir string) {
 			}
 			log.Printf("正在处理第%d个文件夹下的第%d个文件: %s\n", i+1, j+1, file)
 			archive.Convert2AVIF(file)
-			if GracefullyExit.ShouldExit() {
-				log.Println("Exit signal received. Quitting after current operation.")
+			if util.GetExit() {
+				log.Printf("接收到退出信号,程序在保证原子操作的情况下正常退出")
 				os.Exit(0)
 			}
 		}
@@ -116,10 +115,10 @@ func Movies(dir string) {
 			if strings.ToUpper(filepath.Ext(file)) == ".MKV" {
 				log.Printf("正在处理第%d/%d个文件夹下的第%d/%d个mkv文件: %s\n", i+1, len(folders), j+1, len(files), file)
 				archive.ConvertMKV2H265(file, false)
+				if util.GetExit() {
+					log.Printf("接收到退出信号,程序在保证原子操作的情况下正常退出")
+					os.Exit(0)
 			}
-			if GracefullyExit.ShouldExit() {
-				log.Println("Exit signal received. Quitting after current operation.")
-				os.Exit(0)
 			}
 		}
 	}

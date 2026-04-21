@@ -1,14 +1,16 @@
 package rotate
 
 import (
-	"github.com/zhangyiming748/GracefullyExit"
-	"github.com/zhangyiming748/archive"
-	"github.com/zhangyiming748/finder"
+	"FastTdl/util"
 	"log"
 	"os"
+
+	"github.com/zhangyiming748/archive"
+	"github.com/zhangyiming748/finder"
 )
 
 func RotateVideos(root, direction string) {
+	util.SetExit()
 	var archiveDirection string
 
 	switch direction {
@@ -31,8 +33,8 @@ func RotateVideos(root, direction string) {
 	for i, file := range files {
 		log.Printf("正在处理第%d/%d个文件: %s\n", i+1, len(files), file)
 		archive.RotateVideo(file, archiveDirection)
-		if GracefullyExit.ShouldExit() {
-			log.Println("Exit signal received. Quitting after current operation.")
+		if util.GetExit() {
+			log.Printf("接收到退出信号,程序在保证原子操作的情况下正常退出")
 			os.Exit(0)
 		}
 	}

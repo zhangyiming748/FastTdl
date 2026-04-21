@@ -7,7 +7,6 @@ import (
 	"log"
 
 	"github.com/spf13/cobra"
-	"github.com/zhangyiming748/GracefullyExit"
 	a "github.com/zhangyiming748/archive"
 )
 
@@ -90,7 +89,6 @@ func main() {
 	rootCmd.AddCommand(tdlCmd)
 	rootCmd.AddCommand(archiveCmd)
 	rootCmd.AddCommand(rotateCmd)
-	go GracefullyExit.StartReceivedExit()
 	// 执行命令
 	if err := rootCmd.Execute(); err != nil {
 		log.Fatalf("执行命令出现致命错误:%v\n", err)
