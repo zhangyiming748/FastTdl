@@ -4,13 +4,17 @@ import (
 	"FastTdl/core"
 	"FastTdl/rotate"
 	"fmt"
+	"log"
+
 	"github.com/spf13/cobra"
 	"github.com/zhangyiming748/GracefullyExit"
 	a "github.com/zhangyiming748/archive"
-	"log"
 )
 
 func main() {
+	// 统一初始化
+	Initialize()
+
 	// 创建根命令
 	var rootCmd = &cobra.Command{
 		Use:   "my-tdl",

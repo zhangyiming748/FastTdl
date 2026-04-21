@@ -10,19 +10,16 @@ import (
 	"FastTdl/util"
 	"context"
 	"fmt"
-	"github.com/zhangyiming748/GracefullyExit"
 	"log"
 	"os"
 	"path/filepath"
 	"strings"
 	"time"
+
+	"github.com/zhangyiming748/GracefullyExit"
 )
 
 var Home string
-
-func init() {
-	util.SetLog("tdl.log")
-}
 
 func Tdl(mainFolder, postLink, proxy string) {
 	if proxy == "" {
