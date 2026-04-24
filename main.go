@@ -4,13 +4,19 @@ import (
 	"FastTdl/core"
 	"FastTdl/rotate"
 	"fmt"
-	"github.com/spf13/cobra"
-	"github.com/zhangyiming748/GracefullyExit"
-	a "github.com/zhangyiming748/archive"
 	"log"
+
+	"FastTdl/tdl"
+	"FastTdl/util"
+
+	"github.com/spf13/cobra"
+	a "github.com/zhangyiming748/archive"
 )
 
 func main() {
+	// 统一初始化
+	Initialize()
+
 	// 创建根命令
 	var rootCmd = &cobra.Command{
 		Use:   "my-tdl",
@@ -86,9 +92,27 @@ func main() {
 	rootCmd.AddCommand(tdlCmd)
 	rootCmd.AddCommand(archiveCmd)
 	rootCmd.AddCommand(rotateCmd)
-	go GracefullyExit.StartReceivedExit()
 	// 执行命令
 	if err := rootCmd.Execute(); err != nil {
 		log.Fatalf("执行命令出现致命错误:%v\n", err)
 	}
+}
+
+// Initialize 统一初始化函数，在 main 函数开始时调用
+func Initialize() {
+	log.Println("开始初始化 FastTdl...")
+
+	// 1. 初始化时区
+	util.InitTimeZone()
+	log.Println("时区初始化完成")
+
+	// 2. 初始化日志系统
+	util.SetLog("tdl.log")
+	log.Println("日志系统初始化完成")
+
+	// 3. 加载中英文映射表
+	tdl.LoadTranslationMap()
+	log.Println("中英文映射表加载完成")
+
+	log.Println("FastTdl 初始化完成")
 }

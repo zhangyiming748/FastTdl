@@ -10,7 +10,6 @@ import (
 	"FastTdl/util"
 	"context"
 	"fmt"
-	"github.com/zhangyiming748/GracefullyExit"
 	"log"
 	"os"
 	"path/filepath"
@@ -19,10 +18,6 @@ import (
 )
 
 var Home string
-
-func init() {
-	util.SetLog("tdl.log")
-}
 
 func Tdl(mainFolder, postLink, proxy string) {
 	if proxy == "" {
@@ -48,10 +43,6 @@ func Tdl(mainFolder, postLink, proxy string) {
 	var urls []string
 	urls = util.ReadByLine(postLink)
 	for i, url := range urls {
-		if GracefullyExit.ShouldExit() {
-			log.Println("用户已取消下载")
-			os.Exit(0)
-		}
 		if strings.Contains(url, "comment") {
 			log.Printf("检测到链接中包含comment,可能是评论链接，整体下载\n")
 			discussions.Discussion(url, p)
@@ -143,6 +134,7 @@ func isValidParent(folderPath string) error {
 	return nil
 }
 func ArchiveAllFiles(root string, fhd bool) {
+	util.SetExit()
 	archive.Videos(root, fhd)
 	archive.Images(root)
 }

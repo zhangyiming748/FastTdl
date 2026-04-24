@@ -1,27 +1,28 @@
 package archive
 
 import (
+	"FastTdl/util"
+	"github.com/zhangyiming748/archive"
+	"github.com/zhangyiming748/finder"
 	"log"
 	"os"
 	"path/filepath"
 	"strings"
-
-	"github.com/zhangyiming748/GracefullyExit"
-	"github.com/zhangyiming748/archive"
-	"github.com/zhangyiming748/finder"
 )
 
 // calculateDirSize calculates the total size of a directory in bytes
 func calculateDirSize(dir string) (int64, error) {
 	var size int64
-	err := filepath.Walk(dir, func(_ string, info os.FileInfo, err error) error {
+	err := filepath.Walk(dir, func(path string, info os.FileInfo, err error) error {
 		if err != nil {
-			return err
+			// 记录警告但继续处理其他文件
+			log.Printf("警告: 无法访问 %s: %v\n", path, err)
+			return nil // 返回 nil 而不是 err，这样 Walk 会继续处理其他文件
 		}
 		if !info.IsDir() {
 			size += info.Size()
 		}
-		return err
+		return nil
 	})
 	return size, err
 }
@@ -44,12 +45,12 @@ func Videos(dir string, fhd bool) {
 	for i, folder := range folders {
 		files := finder.FindAllVideosInRoot(folder)
 		for j, file := range files {
-			log.Printf("正在处理第%d/%d个文件夹下的第%d/%d个文件: %s\n", i+1, len(folders), j+1, len(files), file)
-			archive.Convert2H265(file, fhd)
-			if GracefullyExit.ShouldExit() {
-				log.Println("Exit signal received. Quitting after current operation.")
+			if util.GetExit() {
+				log.Printf("接收到退出信号,程序在保证原子操作的情况下正常退出")
 				os.Exit(0)
 			}
+			log.Printf("正在处理第%d/%d个文件夹下的第%d/%d个文件: %s\n", i+1, len(folders), j+1, len(files), file)
+			archive.Convert2H265(file, fhd)
 		}
 	}
 	//在这里再次实现计算dir文件夹的大小，并打印出来
@@ -82,8 +83,8 @@ func Images(dir string) {
 			}
 			log.Printf("正在处理第%d个文件夹下的第%d个文件: %s\n", i+1, j+1, file)
 			archive.Convert2AVIF(file)
-			if GracefullyExit.ShouldExit() {
-				log.Println("Exit signal received. Quitting after current operation.")
+			if util.GetExit() {
+				log.Printf("接收到退出信号,程序在保证原子操作的情况下正常退出")
 				os.Exit(0)
 			}
 		}
@@ -114,10 +115,10 @@ func Movies(dir string) {
 			if strings.ToUpper(filepath.Ext(file)) == ".MKV" {
 				log.Printf("正在处理第%d/%d个文件夹下的第%d/%d个mkv文件: %s\n", i+1, len(folders), j+1, len(files), file)
 				archive.ConvertMKV2H265(file, false)
-			}
-			if GracefullyExit.ShouldExit() {
-				log.Println("Exit signal received. Quitting after current operation.")
-				os.Exit(0)
+				if util.GetExit() {
+					log.Printf("接收到退出信号,程序在保证原子操作的情况下正常退出")
+					os.Exit(0)
+				}
 			}
 		}
 	}
@@ -130,5 +131,36 @@ func Movies(dir string) {
 		//在这里实现计算两次大小的差值并打印以M为单位，保留两位小数的输出
 		diff := formatBytes(initialSize - finalSize)
 		log.Printf("电影处理后文件夹大小变化: %.2f MB\n", diff)
+	}
+}
+func Audios(dir string) {
+	//在这里实现计算dir文件夹的大小，并打印出来
+	initialSize, err := calculateDirSize(dir)
+	if err != nil {
+		log.Printf("无法计算初始文件夹大小: %v\n", err)
+	} else {
+		log.Printf("处理前文件夹大小: %.2f MB\n", formatBytes(initialSize))
+	}
+	folders := finder.FindAllFolders(dir)
+	for i, folder := range folders {
+		files := finder.FindAllAudiosInRoot(folder)
+		for j, file := range files {
+			log.Printf("正在处理第%d个文件夹下的第%d个文件: %s\n", i+1, j+1, file)
+			archive.Convert2Mp3(file)
+			if util.GetExit() {
+				log.Printf("接收到退出信号,程序在保证原子操作的情况下正常退出")
+				os.Exit(0)
+			}
+		}
+	}
+	//在这里再次实现计算dir文件夹的大小，并打印出来
+	finalSize, err := calculateDirSize(dir)
+	if err != nil {
+		log.Printf("无法计算最终文件夹大小: %v\n", err)
+	} else {
+		log.Printf("处理后文件夹大小: %.2f MB\n", formatBytes(finalSize))
+		//在这里实现计算两次大小的差值并打印以M为单位，保留两位小数的输出
+		diff := formatBytes(initialSize - finalSize)
+		log.Printf("音频处理后文件夹大小变化: %.2f MB\n", diff)
 	}
 }

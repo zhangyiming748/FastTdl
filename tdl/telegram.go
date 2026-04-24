@@ -16,8 +16,8 @@ import (
 // zh2enMap 存储中文到英文的映射关系
 var zh2enMap map[string]string
 
-// init 初始化函数，程序启动时加载中英文映射表
-func init() {
+// LoadTranslationMap 加载中英文映射表（供外部调用）
+func LoadTranslationMap() {
 	zh2enMap = zh2en("zh_cn2en_us.md")
 }
 

@@ -7,7 +7,8 @@ import (
 
 var loc *time.Location
 
-func init() {
+// InitTimeZone 初始化时区（供外部调用）
+func InitTimeZone() {
 	loc, _ = time.LoadLocation("Asia/Shanghai")
 }
 
