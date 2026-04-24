@@ -133,3 +133,34 @@ func Movies(dir string) {
 		log.Printf("电影处理后文件夹大小变化: %.2f MB\n", diff)
 	}
 }
+func Audios(dir string) {
+	//在这里实现计算dir文件夹的大小，并打印出来
+	initialSize, err := calculateDirSize(dir)
+	if err != nil {
+		log.Printf("无法计算初始文件夹大小: %v\n", err)
+	} else {
+		log.Printf("处理前文件夹大小: %.2f MB\n", formatBytes(initialSize))
+	}
+	folders := finder.FindAllFolders(dir)
+	for i, folder := range folders {
+		files := finder.FindAllAudiosInRoot(folder)
+		for j, file := range files {
+			log.Printf("正在处理第%d个文件夹下的第%d个文件: %s\n", i+1, j+1, file)
+			archive.Convert2Mp3(file)
+			if util.GetExit() {
+				log.Printf("接收到退出信号,程序在保证原子操作的情况下正常退出")
+				os.Exit(0)
+			}
+		}
+	}
+	//在这里再次实现计算dir文件夹的大小，并打印出来
+	finalSize, err := calculateDirSize(dir)
+	if err != nil {
+		log.Printf("无法计算最终文件夹大小: %v\n", err)
+	} else {
+		log.Printf("处理后文件夹大小: %.2f MB\n", formatBytes(finalSize))
+		//在这里实现计算两次大小的差值并打印以M为单位，保留两位小数的输出
+		diff := formatBytes(initialSize - finalSize)
+		log.Printf("音频处理后文件夹大小变化: %.2f MB\n", diff)
+	}
+}
