@@ -137,4 +137,5 @@ func ArchiveAllFiles(root string, fhd bool) {
 	util.SetExit()
 	archive.Videos(root, fhd)
 	archive.Images(root)
+	archive.Audios(root)
 }
