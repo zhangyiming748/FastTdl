@@ -12,6 +12,7 @@ var exit bool
 // SetExit 从控制台读取输入，当输入 "q" 时设置 exit 为 true
 // 此函数应该在独立的 goroutine 中调用
 func SetExit() {
+	fmt.Println("请输入 'q' 退出程序...")
 	scanner := bufio.NewScanner(os.Stdin)
 	for scanner.Scan() {
 		input := strings.TrimSpace(scanner.Text())
