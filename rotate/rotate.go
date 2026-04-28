@@ -10,7 +10,7 @@ import (
 )
 
 func RotateVideos(root, direction string) {
-	util.SetExit()
+	go util.SetExit()
 	var archiveDirection string
 
 	switch direction {
