@@ -134,8 +134,13 @@ func isValidParent(folderPath string) error {
 	return nil
 }
 func ArchiveAllFiles(root string, fhd bool) {
-	util.SetExit()
+	log.Printf("设置退出信号处理...\n")
+	go util.SetExit() // 在独立的 goroutine 中运行，避免阻塞
+	log.Printf("开始处理视频文件...\n")
 	archive.Videos(root, fhd)
+	log.Printf("视频处理完成，开始处理图片文件...\n")
 	archive.Images(root)
+	log.Printf("图片处理完成，开始处理音频文件...\n")
 	archive.Audios(root)
+	log.Printf("所有文件处理完成！\n")
 }
