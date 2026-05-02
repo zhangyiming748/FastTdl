@@ -182,3 +182,15 @@ func Audios(dir string) {
 		log.Printf("音频处理后文件夹大小变化: %.2f MB\n", diff)
 	}
 }
+
+func Dji(src ,dst string){
+	log.Printf("开始处理Dji文件...\n")
+	if src==dst{
+		log.Fatalf("源目录和目标目录不能相同\n")
+	}
+	for _, video := range finder.FindAllVideos(src) {
+		base := filepath.Base(src)
+		target := filepath.Join(dst, base)
+		archive.DjiVideoConvert(video, target)
+	}
+}

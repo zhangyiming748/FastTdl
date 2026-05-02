@@ -1,6 +1,7 @@
 package main
 
 import (
+	"FastTdl/archive"
 	"FastTdl/core"
 	"FastTdl/rotate"
 	"fmt"
@@ -88,10 +89,32 @@ func main() {
 	// 设置必填标志
 	rotateCmd.MarkFlagRequired("dir")
 
+	// 创建 DJI 处理命令
+	var djiCmd = &cobra.Command{
+		Use:   "dji",
+		Short: "处理DJI视频文件",
+		Long:  "将DJI无人机视频转换为H265格式",
+		Run: func(cmd *cobra.Command, args []string) {
+			src, _ := cmd.Flags().GetString("src")
+			dst, _ := cmd.Flags().GetString("dst")
+			fmt.Printf("开始执行DJI视频处理任务...\n源目录:%s\n目标目录:%s\n", src, dst)
+			archive.Dji(src, dst)
+		},
+	}
+
+	// 为 dji 命令添加标志
+	djiCmd.Flags().StringP("src", "i", "./", "源目录路径 (必需)")
+	djiCmd.Flags().StringP("dst", "o", "./output", "目标目录路径 (必需)")
+
+	// 设置必填标志
+	djiCmd.MarkFlagRequired("src")
+	djiCmd.MarkFlagRequired("dst")
+
 	// 将子命令添加到根命令
 	rootCmd.AddCommand(tdlCmd)
 	rootCmd.AddCommand(archiveCmd)
 	rootCmd.AddCommand(rotateCmd)
+	rootCmd.AddCommand(djiCmd)
 	// 执行命令
 	if err := rootCmd.Execute(); err != nil {
 		log.Fatalf("执行命令出现致命错误:%v\n", err)
