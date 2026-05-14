@@ -39,14 +39,12 @@ func main() {
 	}
 
 	// 为 tdl 命令添加标志
-	tdlCmd.Flags().StringP("dir", "d", "./", "根目录路径 (必需)")
-	tdlCmd.Flags().StringP("input", "i", "./post.link", "链接文件路径 (必需)")
+	tdlCmd.Flags().StringP("dir", "d", "./", "根目录路径 (默认为当前目录)")
+	tdlCmd.Flags().StringP("input", "i", "./post.link", "链接文件路径 (默认为当前目录下的 post.link)")
 	tdlCmd.Flags().StringP("proxy", "p", "http://127.0.0.1:8889", "代理地址")
 
 	// 设置必选标志
-	tdlCmd.MarkFlagRequired("dir")
-	tdlCmd.MarkFlagRequired("input")
-	tdlCmd.MarkFlagRequired("proxy")
+	// tdlCmd.MarkFlagRequired("input")
 
 	// 创建归档命令
 	var archiveCmd = &cobra.Command{

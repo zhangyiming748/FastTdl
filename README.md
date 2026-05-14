@@ -60,16 +60,19 @@ https://t.me/channel_name/12345+5
 
 ```bash
 # 编译项目
-go build -o fasttdl .
+go build -o my-tdl .
 
 # 查看帮助
-./fasttdl --help
+./my-tdl --help
 
 # 下载文件
-./fasttdl tdl -d "./downloads" -i "./post.link" --proxy "http://127.0.0.1:8889"
+./my-tdl tdl -i "./post.link"
+
+# 指定自定义目录和代理
+./my-tdl tdl -d "./downloads" -i "./post.link" --proxy "http://127.0.0.1:8889"
 
 # 归档文件
-./fasttdl archive -d "./downloads"
+./my-tdl archive -d "./downloads"
 ```
 
 ## 📖 命令行参数
@@ -77,32 +80,38 @@ go build -o fasttdl .
 ### 下载命令 (`tdl`)
 
 ```bash
-./fasttdl tdl -d <目录> -i <链接文件> [--proxy <代理地址>]
+./my-tdl tdl [-d <目录>] -i <链接文件> [--proxy <代理地址>]
 ```
 
 参数说明：
 
-- `-d`, `--dir`: 主下载目录（必需，默认值：`./`）
-- `-i`, `--input`: 包含下载链接的文件路径（必需，默认值：`./post.link`）
-- `--proxy`: 代理地址（可选，默认 `http://127.0.0.1:8889`）
+- `-d`, `--dir`: 主下载目录（可选，默认值：`./` 当前目录）
+- `-i`, `--input`: 包含下载链接的文件路径（可选，默认值：`./post.link`）
+- `--proxy`: 代理地址（可选，默认值：`http://127.0.0.1:8889`）
 
 使用示例：
 
 ```bash
-# 使用短选项
-./fasttdl tdl -d "./downloads" -i "./post.link"
+# 使用默认值（最简用法）
+./my-tdl tdl
+
+# 只指定链接文件
+./my-tdl tdl -i "./post.link"
+
+# 使用短选项指定目录
+./my-tdl tdl -d "./downloads" -i "./post.link"
 
 # 使用长选项
-./fasttdl tdl --dir "./downloads" --input "./post.link"
+./my-tdl tdl --dir "./downloads" --input "./post.link"
 
-# 带代理
-./fasttdl tdl -d "./downloads" -i "./post.link" --proxy "http://127.0.0.1:8889"
+# 带自定义代理
+./my-tdl tdl -d "./downloads" -i "./post.link" --proxy "http://127.0.0.1:7890"
 ```
 
 ### 归档命令 (`archive`)
 
 ```bash
-./fasttdl archive -d <目录>
+./my-tdl archive -d <目录>
 ```
 
 参数说明：
@@ -113,16 +122,16 @@ go build -o fasttdl .
 
 ```bash
 # 使用短选项
-./fasttdl archive -d "./downloads"
+./my-tdl archive -d "./downloads"
 
 # 使用长选项
-./fasttdl archive --dir "./downloads"
+./my-tdl archive --dir "./downloads"
 ```
 
 ### 视频旋转命令 (`rotate`)
 
 ```bash
-./fasttdl rotate -d <目录> [--rotate <角度>]
+./my-tdl rotate -d <目录> [--rotate <角度>]
 ```
 
 参数说明：
@@ -134,13 +143,13 @@ go build -o fasttdl .
 
 ```bash
 # 使用默认方向（90 度）
-./fasttdl rotate -d "./videos"
+./my-tdl rotate -d "./videos"
 
 # 指定旋转方向（使用短选项）
-./fasttdl rotate -d "./videos" -r 180
+./my-tdl rotate -d "./videos" -r 180
 
 # 使用长选项
-./fasttdl rotate --dir "./videos" --rotate 270
+./my-tdl rotate --dir "./videos" --rotate 270
 ```
 
 ## 🔗 URL 格式详解
@@ -205,10 +214,10 @@ https://t.me/channel_name/12345?comment=67890
 
 ```bash
 # 视频转 H.265 编码优化存储
-./fasttdl archive --root "./videos"
+./my-tdl archive --root "./videos"
 
 # 图片转 AVIF 格式优化存储
-./fasttdl archive --root "./images"
+./my-tdl archive --root "./images"
 ```
 
 ### 视频旋转功能
@@ -217,10 +226,10 @@ https://t.me/channel_name/12345?comment=67890
 
 ```bash
 # 旋转视频文件
-./fasttdl rotate --dir "./videos" --rotate "90"
+./my-tdl rotate --dir "./videos" --rotate "90"
 
 # 使用短选项
-./fasttdl rotate -d "./videos" -r "90"
+./my-tdl rotate -d "./videos" -r "90"
 
 # 支持的角度：
 # 90  - 顺时针旋转 90 度
@@ -285,7 +294,7 @@ go mod tidy
 go test ./...
 
 # 构建
-go build -o fasttdl .
+go build -o my-tdl .
 ```
 
 ### 代码结构
