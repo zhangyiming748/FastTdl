@@ -28,8 +28,8 @@ func main() {
 	// 创建根命令
 	var rootCmd = &cobra.Command{
 		Use:   "my-tdl",
-		Short: "FastTdl CLI工具",
-		Long:  "一个用于文件下载和归档的命令行工具",
+		Short: "FastTdl CLI Tool",
+		Long:  "A command-line tool for file download and archiving",
 	}
 
 	// 添加版本标志
@@ -38,21 +38,21 @@ func main() {
 	// 创建下载命令
 	var tdlCmd = &cobra.Command{
 		Use:   "tdl",
-		Short: "下载文件",
-		Long:  "根据指定的根目录和链接文件下载文件",
+		Short: "Download files",
+		Long:  "Download files based on specified root directory and link file",
 		Run: func(cmd *cobra.Command, args []string) {
 			root, _ := cmd.Flags().GetString("dir")
 			postlink, _ := cmd.Flags().GetString("input")
 			proxy, _ := cmd.Flags().GetString("proxy")
-			fmt.Printf("开始执行下载任务...\n根目录:%s\n链接文件: %s\n", root, postlink)
+			fmt.Printf("Starting download task...\nRoot directory: %s\nLink file: %s\n", root, postlink)
 			core.Tdl(root, postlink, proxy)
 		},
 	}
 
 	// 为 tdl 命令添加标志
-	tdlCmd.Flags().StringP("dir", "d", "./", "根目录路径 (默认为当前目录)")
-	tdlCmd.Flags().StringP("input", "i", "./post.link", "链接文件路径 (默认为当前目录下的 post.link)")
-	tdlCmd.Flags().StringP("proxy", "p", "http://127.0.0.1:8889", "代理地址")
+	tdlCmd.Flags().StringP("dir", "d", "./", "Root directory path (default: current directory)")
+	tdlCmd.Flags().StringP("input", "i", "./post.link", "Link file path (default: post.link in current directory)")
+	tdlCmd.Flags().StringP("proxy", "p", "http://127.0.0.1:8889", "Proxy address")
 
 	// 设置必选标志
 	// tdlCmd.MarkFlagRequired("input")
@@ -60,20 +60,20 @@ func main() {
 	// 创建归档命令
 	var archiveCmd = &cobra.Command{
 		Use:   "archive",
-		Short: "归档文件",
-		Long:  "归档指定目录下的所有文件",
+		Short: "Archive files",
+		Long:  "Archive all files in specified directory",
 		Run: func(cmd *cobra.Command, args []string) {
 			dir, _ := cmd.Flags().GetString("dir")
 			fhd, _ := cmd.Flags().GetBool("fhd")
-			fmt.Printf("开始执行归档任务...\n目录:%s\nFHD 模式：%v\n", dir, fhd)
+			fmt.Printf("Starting archive task...\nDirectory: %s\nFHD mode: %v\n", dir, fhd)
 			a.InitSqlte()
 			core.ArchiveAllFiles(dir, fhd)
 		},
 	}
 
 	// 为 archive 命令添加标志
-	archiveCmd.Flags().StringP("dir", "d", "./", "要归档的目录路径 (必需)")
-	archiveCmd.Flags().BoolP("fhd", "f", false, "是否裁剪到1080p")
+	archiveCmd.Flags().StringP("dir", "d", "./", "Directory path to archive (required)")
+	archiveCmd.Flags().BoolP("fhd", "f", false, "Crop to 1080p")
 
 	// 设置必填标志
 	archiveCmd.MarkFlagRequired("dir")
@@ -81,19 +81,19 @@ func main() {
 	// 创建旋转命令
 	var rotateCmd = &cobra.Command{
 		Use:   "rotate",
-		Short: "旋转视频文件",
-		Long:  "旋转指定目录下的所有视频文件",
+		Short: "Rotate video files",
+		Long:  "Rotate all video files in specified directory",
 		Run: func(cmd *cobra.Command, args []string) {
 			dir, _ := cmd.Flags().GetString("dir")
 			rotateDirection, _ := cmd.Flags().GetString("rotate")
-			fmt.Printf("开始执行视频旋转任务...\n目录:%s\n方向:%s度\n", dir, rotateDirection)
+			fmt.Printf("Starting video rotation task...\nDirectory: %s\nDirection: %s degrees\n", dir, rotateDirection)
 			rotate.RotateVideos(dir, rotateDirection)
 		},
 	}
 
 	// 为 rotate 命令添加标志
-	rotateCmd.Flags().StringP("dir", "d", "./", "要旋转视频的目录路径 (必需)")
-	rotateCmd.Flags().StringP("rotate", "r", "90", "旋转方向:90,270")
+	rotateCmd.Flags().StringP("dir", "d", "./", "Directory path for video rotation (required)")
+	rotateCmd.Flags().StringP("rotate", "r", "90", "Rotation direction: 90, 270")
 
 	// 设置必填标志
 	rotateCmd.MarkFlagRequired("dir")
@@ -101,19 +101,19 @@ func main() {
 	// 创建 DJI 处理命令
 	var djiCmd = &cobra.Command{
 		Use:   "dji",
-		Short: "处理DJI视频文件",
-		Long:  "将DJI无人机视频转换为H265格式",
+		Short: "Process DJI video files",
+		Long:  "Convert DJI drone videos to H265 format",
 		Run: func(cmd *cobra.Command, args []string) {
 			src, _ := cmd.Flags().GetString("src")
 			dst, _ := cmd.Flags().GetString("dst")
-			fmt.Printf("开始执行DJI视频处理任务...\n源目录:%s\n目标目录:%s\n", src, dst)
+			fmt.Printf("Starting DJI video processing task...\nSource directory: %s\nTarget directory: %s\n", src, dst)
 			archive.Dji(src, dst)
 		},
 	}
 
 	// 为 dji 命令添加标志
-	djiCmd.Flags().StringP("src", "i", "./", "源目录路径 (必需)")
-	djiCmd.Flags().StringP("dst", "o", "./output", "目标目录路径 (必需)")
+	djiCmd.Flags().StringP("src", "i", "./", "Source directory path (required)")
+	djiCmd.Flags().StringP("dst", "o", "./output", "Target directory path (required)")
 
 	// 设置必填标志
 	djiCmd.MarkFlagRequired("src")
