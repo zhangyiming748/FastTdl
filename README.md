@@ -2,6 +2,29 @@
 
 FastTdl 是一个高效的 Telegram 文件下载和归档工具，基于 Go 语言开发，集成了批量下载、智能归档、重复下载防护、评论区下载等核心功能。
 
+## 📥 快速下载
+
+| 平台 | 架构 | 下载链接 |
+|------|------|----------|
+| Linux | amd64 | [my-tdl_linux_amd64](https://github.com/zen/FastTdl/releases/latest/download/my-tdl_linux_amd64) |
+| Linux | arm64 | [my-tdl_linux_arm64](https://github.com/zen/FastTdl/releases/latest/download/my-tdl_linux_arm64) |
+| macOS | amd64 | [my-tdl_darwin_amd64](https://github.com/zen/FastTdl/releases/latest/download/my-tdl_darwin_amd64) |
+| macOS | arm64 | [my-tdl_darwin_arm64](https://github.com/zen/FastTdl/releases/latest/download/my-tdl_darwin_arm64) |
+| Windows | amd64 | [my-tdl_windows_amd64.exe](https://github.com/zen/FastTdl/releases/latest/download/my-tdl_windows_amd64.exe) |
+| Windows | arm64 | [my-tdl_windows_arm64.exe](https://github.com/zen/FastTdl/releases/latest/download/my-tdl_windows_arm64.exe) |
+
+**一键下载命令：**
+
+```bash
+# Linux/macOS
+wget https://github.com/zen/FastTdl/releases/latest/download/my-tdl_$(uname -s | tr '[:upper:]' '[:lower:]')_$(uname -m | sed 's/x86_64/amd64/; s/aarch64/arm64/') -O my-tdl && chmod +x my-tdl
+
+# Windows PowerShell
+Invoke-WebRequest -Uri "https://github.com/zen/FastTdl/releases/latest/download/my-tdl_windows_amd64.exe" -OutFile "my-tdl.exe"
+```
+
+> **提示**: 以上链接会自动指向最新的 release 版本。
+
 ## 🌟 核心功能
 
 - **批量下载**: 支持 Telegram 频道文件批量下载
@@ -22,15 +45,60 @@ FastTdl 是一个高效的 Telegram 文件下载和归档工具，基于 Go 语�
 
 ## ⚡ 快速开始
 
-### 1. 安装依赖
+### 方式一：直接下载预编译版本（推荐）
+
+#### Linux/macOS
+
+```bash
+# 使用 wget 下载最新版本
+wget https://github.com/zen/FastTdl/releases/latest/download/my-tdl_linux_amd64 -O my-tdl
+chmod +x my-tdl
+
+# 或使用 curl
+curl -L https://github.com/zen/FastTdl/releases/latest/download/my-tdl_linux_amd64 -o my-tdl
+chmod +x my-tdl
+```
+
+#### Windows
+
+```powershell
+# 使用 PowerShell 下载
+Invoke-WebRequest -Uri "https://github.com/zen/FastTdl/releases/latest/download/my-tdl_windows_amd64.exe" -OutFile "my-tdl.exe"
+```
+
+**注意**: 如果系统中没有 `wget`，请先安装：
+
+```bash
+# Ubuntu/Debian
+sudo apt-get install wget
+
+# CentOS/RHEL
+sudo yum install wget
+
+# macOS (通常已预装)
+brew install wget
+
+# Arch Linux
+sudo pacman -S wget
+```
+
+### 方式二：从源码编译
+
+### 1. 环境准备
+
+确保系统已安装以下工具：
+
+- Go 1.26+
+- [tdl](https://github.com/iyear/tdl) 工具
+- Git
 
 ```bash
 # 安装 tdl 工具（FastTdl 的核心依赖）
 go install github.com/iyear/tdl@latest
 
 # 克隆项目
-git clone https://github.com/zen/Github/tdl-cli.git
-cd tdl-cli
+git clone https://github.com/zen/FastTdl.git
+cd FastTdl
 
 # 安装 Go 依赖
 go mod download
@@ -56,7 +124,7 @@ https://t.me/channel_name/12345%10
 https://t.me/channel_name/12345+5
 ```
 
-### 4. 编译和使用
+### 4. 编译和使用（仅当从源码编译时需要）
 
 ```bash
 # 编译项目
@@ -247,7 +315,7 @@ https://t.me/channel_name/12345?comment=67890
 ## 📁 项目结构
 
 ```shell
-tdl-cli/
+FastTdl/
 ├── archive/          # 归档处理模块
 ├── constant/         # 常量和配置
 ├── core/            # 核心业务逻辑
