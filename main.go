@@ -14,6 +14,13 @@ import (
 	a "github.com/zhangyiming748/archive"
 )
 
+// 版本信息，通过 ldflags 在构建时注入
+var (
+	version   = "dev"     // 默认版本号
+	buildTime = "unknown" // 构建时间
+	gitCommit = "unknown" // Git 提交哈希
+)
+
 func main() {
 	// 统一初始化
 	Initialize()
@@ -24,6 +31,10 @@ func main() {
 		Short: "FastTdl CLI工具",
 		Long:  "一个用于文件下载和归档的命令行工具",
 	}
+
+	// 添加版本标志
+	rootCmd.Version = fmt.Sprintf("%s (built at %s, commit %s)", version, buildTime, gitCommit)
+	rootCmd.SetVersionTemplate("FastTdl version {{.Version}}\n")
 	// 创建下载命令
 	var tdlCmd = &cobra.Command{
 		Use:   "tdl",
