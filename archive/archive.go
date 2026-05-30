@@ -183,9 +183,9 @@ func Audios(dir string) {
 	}
 }
 
-func Dji(src ,dst string){
+func Dji(src, dst string) {
 	log.Printf("开始处理Dji文件...\n")
-	if src==dst{
+	if src == dst {
 		log.Fatalf("源目录和目标目录不能相同\n")
 	}
 	for _, video := range finder.FindAllVideos(src) {
