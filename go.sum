@@ -41,6 +41,8 @@ github.com/zhangyiming748/archive v0.1.8 h1:KvSLqDYgpX1BhxpF2QbLlLEnTNnBrJo9DriK
 github.com/zhangyiming748/archive v0.1.8/go.mod h1:33SlkSpLJF94VymDW+h170zkb6U5TR2kmHZNiJFkogw=
 github.com/zhangyiming748/archive v0.1.9 h1:SMBfLFHVZV7/h2A1yXLv1LevUofxLOTqwsaBEvnUlwc=
 github.com/zhangyiming748/archive v0.1.9/go.mod h1:xLFuZhFUBlDbLf3YiQ6nOSYIDm2X6jUKKrlbaQgb6jc=
+github.com/zhangyiming748/archive v0.1.10 h1:glPkjOPoAfjgWmWOrsC96peIk8npkXua3jk6kMQt8H0=
+github.com/zhangyiming748/archive v0.1.10/go.mod h1:xLFuZhFUBlDbLf3YiQ6nOSYIDm2X6jUKKrlbaQgb6jc=
 github.com/zhangyiming748/finder v0.0.10 h1:RnuXUFlbnlr5wUz3aXHHHOrQLhO2BearXfy591IgnHk=
 github.com/zhangyiming748/finder v0.0.10/go.mod h1:92Nl48xt4VYxeyQIlYuxvhX+sCVba9SlKEWKMHzzDdA=
 github.com/zhangyiming748/lumberjack v0.0.1 h1:/r1XMBfGVZ/ZrRU56vl0aKeVddidi3388ETLLCWxoW4=
