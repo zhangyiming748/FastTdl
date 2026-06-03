@@ -65,15 +65,17 @@ func main() {
 		Run: func(cmd *cobra.Command, args []string) {
 			dir, _ := cmd.Flags().GetString("dir")
 			fhd, _ := cmd.Flags().GetBool("fhd")
-			fmt.Printf("Starting archive task...\nDirectory: %s\nFHD mode: %v\n", dir, fhd)
+			interactive, _ := cmd.Flags().GetBool("interactive")
+			fmt.Printf("开始执行归档任务...\n目录:%s\nFHD 模式：%v\n交互模式：%v\n", dir, fhd, interactive)
 			a.InitSqlte()
-			core.ArchiveAllFiles(dir, fhd)
+			core.ArchiveAllFiles(dir, fhd, interactive)
 		},
 	}
 
 	// 为 archive 命令添加标志
 	archiveCmd.Flags().StringP("dir", "d", "./", "Directory path to archive (required)")
 	archiveCmd.Flags().BoolP("fhd", "f", false, "Crop to 1080p")
+	archiveCmd.Flags().BoolP("interactive", "I", true, "Enable interactive mode (listen for 'q' to exit)")
 
 	// 设置必填标志
 	archiveCmd.MarkFlagRequired("dir")
