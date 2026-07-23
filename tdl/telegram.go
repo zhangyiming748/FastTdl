@@ -151,6 +151,20 @@ func ParseLines(lines []string) (ofs []constant.OneFile) {
 // parseOneLine 解析单行下载链接
 // line: 待解析的链接
 // returns: 解析后的下载任务信息，错误信息
+/*
+现在这个函数用来解析一个前面是 URL
+后边是各种属性的一行文字
+我现在需要的是根据我之前写好的 zh_cn2en_us.md 文件，这个 Markdown 文件里的表格记录的每一个 key 都是 subtag 
+如果这个 subtag在 tag 的位置出现了。 说明我之前可能是为了简便直接把 subtag 当成 tag 来用的
+所以这里我需要判断一下，如果 subtag 在 tag 的位置出现了，那么我需要把 tag 设置为 subtag，把 subtag 设置为空
+|Marie Rose|玛莉·萝丝;玛丽;玛莉;玛丽罗斯|
+比如 假设我写出来的是 ‘url#玛丽罗斯’
+目前的程序会把 tag 设置为Marie Rose
+我希望程序会根据
+|Marie Rose|玛莉·萝丝;玛丽;玛莉;玛丽罗斯|
+把tag 设置为表格的标题 死或生
+把 subtag 设置为Marie Rosec
+*/
 func parseOneLine(line string) (*constant.OneFile, error) {
 	log.Printf("解析行: %s\n", line)
 	of := new(constant.OneFile)
