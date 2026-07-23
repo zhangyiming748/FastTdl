@@ -16,9 +16,12 @@ import (
 // zh2enMap 存储中文到英文的映射关系
 var zh2enMap map[string]string
 
+// original2section 存储原名到所属章节（系列名）的映射关系
+var original2section map[string]string
+
 // LoadTranslationMap 加载中英文映射表（供外部调用）
 func LoadTranslationMap() {
-	zh2enMap = zh2en("zh_cn2en_us.md")
+	zh2enMap, original2section = zh2en("zh_cn2en_us.md")
 }
 
 // GenerateDownloadLinkByCapacity 根据容量生成多个下载任务
@@ -151,20 +154,6 @@ func ParseLines(lines []string) (ofs []constant.OneFile) {
 // parseOneLine 解析单行下载链接
 // line: 待解析的链接
 // returns: 解析后的下载任务信息，错误信息
-/*
-现在这个函数用来解析一个前面是 URL
-后边是各种属性的一行文字
-我现在需要的是根据我之前写好的 zh_cn2en_us.md 文件，这个 Markdown 文件里的表格记录的每一个 key 都是 subtag 
-如果这个 subtag在 tag 的位置出现了。 说明我之前可能是为了简便直接把 subtag 当成 tag 来用的
-所以这里我需要判断一下，如果 subtag 在 tag 的位置出现了，那么我需要把 tag 设置为 subtag，把 subtag 设置为空
-|Marie Rose|玛莉·萝丝;玛丽;玛莉;玛丽罗斯|
-比如 假设我写出来的是 ‘url#玛丽罗斯’
-目前的程序会把 tag 设置为Marie Rose
-我希望程序会根据
-|Marie Rose|玛莉·萝丝;玛丽;玛莉;玛丽罗斯|
-把tag 设置为表格的标题 死或生
-把 subtag 设置为Marie Rosec
-*/
 func parseOneLine(line string) (*constant.OneFile, error) {
 	log.Printf("解析行: %s\n", line)
 	of := new(constant.OneFile)
@@ -188,17 +177,14 @@ func parseOneLine(line string) (*constant.OneFile, error) {
 	} else if strings.Contains(of.Channel, "swxiu") {
 		tag = "dance"
 	}
-	if tag == "蒂法" || strings.ToUpper(tag) == "TIFA" {
-		tag = "最终幻想"
-		subtag = "蒂法"
-	}
-	if strings.ToUpper(tag) == "2B" {
-		tag = "NieR"
-		subtag = "2B"
-	}
-	if tag == "爱丽丝" || strings.ToUpper(tag) == "AERITH" {
-		tag = "最终幻想"
-		subtag = "爱丽丝"
+	// 通用逻辑：如果 tag 位置出现的是 subtag（角色别名），自动提升系列名为 tag，原名为 subtag
+	if subtag == "" && tag != "" {
+		if original, ok := zh2enMap[tag]; ok {
+			if section, hasSection := original2section[original]; hasSection && section != original {
+				tag = section
+				subtag = original
+			}
+		}
 	}
 	if err != nil {
 		return nil, err
@@ -321,18 +307,24 @@ func replace(src string) string {
 // zh2en 从文件中加载中英文映射关系
 // fp: 映射文件路径
 // returns: 中英文映射表
-func zh2en(fp string) map[string]string {
+func zh2en(fp string) (map[string]string, map[string]string) {
 	result := make(map[string]string)
+	orig2section := make(map[string]string)
 	seen := make(map[string]bool) // 用于记录已经处理过的key
 	content, err := os.ReadFile(fp)
 	if err != nil {
 		log.Printf("读取文件失败: %v\n", err)
-		return result
+		return result, orig2section
 	}
 	lines := strings.Split(string(content), "\n")
 
+	currentSection := ""
 	for _, line := range lines {
-		if line == "" || strings.HasPrefix(line, "#") || !strings.Contains(line, "|") || strings.Contains(line, ":---:") {
+		if line == "" || strings.Contains(line, ":---:") || !strings.Contains(line, "|") {
+			// 检查是否是章节标题
+			if strings.HasPrefix(line, "# ") {
+				currentSection = strings.TrimSpace(strings.TrimPrefix(line, "#"))
+			}
 			continue
 		}
 
@@ -347,6 +339,9 @@ func zh2en(fp string) map[string]string {
 			continue
 		}
 
+		// 记录原名到章节的映射
+		orig2section[original] = currentSection
+
 		for _, trans := range strings.Split(translations, ";") {
 			trans = strings.TrimSpace(trans)
 			if trans != "" && !seen[trans] { // 只处理未见过的key
@@ -355,5 +350,5 @@ func zh2en(fp string) map[string]string {
 			}
 		}
 	}
-	return result
+	return result, orig2section
 }
