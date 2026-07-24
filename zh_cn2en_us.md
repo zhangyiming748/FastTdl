@@ -8,6 +8,7 @@
 |Lady Alcina Dimitrescu|蒂米特雷斯库;迪米特雷斯库;八尺夫人|
 |Ashley Graham|碍事梨;阿什利|
 |Claire Redfield|克莱尔|
+|Grace Ashcroft|格蕾丝;格雷斯;格蕾斯|
 
 # 死或生
 
