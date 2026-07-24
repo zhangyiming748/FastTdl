@@ -5,6 +5,7 @@ import (
 	"log"
 	"os"
 	"path/filepath"
+	"runtime"
 	"strconv"
 	"strings"
 
@@ -16,6 +17,10 @@ func FindUniqueFile(dir string, searchStr string) (string, error) {
 	err := filepath.Walk(dir, func(path string, info os.FileInfo, err error) error {
 		if err != nil {
 			return err
+		}
+		// 在 macOS 上跳过以点开头的隐藏文件（外部磁盘会生成同名挂载点文件）
+		if runtime.GOOS == "darwin" && strings.HasPrefix(info.Name(), ".") {
+			return nil
 		}
 		// 检查是否是文件且文件名包含指定字符串
 		if !info.IsDir() && strings.Contains(info.Name(), searchStr) {
